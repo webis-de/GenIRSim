@@ -2,4 +2,6 @@ toc:
   - name: GenIRSim
     description: |
       TODO [[code](https://github.com/webis-de/scriptor)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
+  - Logbook
+  - LogbookEntry
   - Evaluator
