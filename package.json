@@ -1,0 +1,15 @@
+{
+  "name": "@webis-de/gen-ir-sim",
+  "version": "0.1.0",
+  "description": "Framework for Generative Information Retrieval system evaluation through simulation.",
+  "main": "src/gen-ir-sim.js",
+  "files": [ "bin", "src" ],
+  "bin": {
+    "simulate-search": "bin/simulate-search.js"
+  },
+  "scripts": {
+    "doc": "documentation build -f html -o doc/api/ --github --config doc/api/config.yml"
+  },
+  "author": "Johannes Kiesel <johannes.kiesel@uni-weimar.de>",
+  "license": "MIT"
+}
