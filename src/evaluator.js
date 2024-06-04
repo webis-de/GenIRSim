@@ -1,9 +1,17 @@
 import { Logbook } from "./logbook.js";
 
 /**
+ * An evaluator to measure some quality score for single turns of a conversation
+ * and/or an entire conversation.
+ *
+ * Evaluators can be stateful and must not be re-used between conversations.
+ * The method {@link Evaluator#evaluate} must always be called first to
+ * evaluate each turn, in order, starting with `turnIndex = 0`, and then to
+ * evaluate the entire conversation (leaving the `turnIndex` undefined).
+ *
  * @class Evaluator
- * @param {Object} configuration - The configuration for the evaluator.
- * @param {Logbook} log - A function that takes log messages.
+ * @param {Object} configuration - The configuration for the evaluator
+ * @param {Logbook} log - A function that takes log messages
  */
 export class Evaluator {
 
@@ -22,10 +30,10 @@ export class Evaluator {
   /**
    * Evaluates one specific turn or the entire conversation.
    *
-   * Evaluators might be stateful. This method must always be called first to
+   * Evaluators can be stateful. This method must always be called first to
    * evaluate each turn, in order, starting with 0, and then to evaluate the
-   * entire conversation (leaving the turnIndex undefined). Evaluators must not
-   * be re-used to evaluate multiple conversations.
+   * entire conversation (leaving the `turnIndex` undefined). Evaluators must
+   * not be re-used to evaluate multiple conversations.
    *
    * @param {Object} simulation - The simulation object returned by
    * {@link TODO}
@@ -37,7 +45,7 @@ export class Evaluator {
    * single turns or the complete conversation and that is what was asked
    */
   async evaluate(simulation, turnIndex) {
-    return null;
+    throw new Error("Not implemented");
   }
 
 }
