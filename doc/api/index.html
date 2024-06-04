@@ -3,7 +3,7 @@
 <head>
   <meta charset='utf-8'>
   <title>@webis-de/gen-ir-sim 0.1.0 | Documentation</title>
-  <meta name='description' content='Framework for Generative Information Retrieval system evaluation through simulation.'>
+  <meta name='description' content='Framework for evaluating Generative Information Retrieval systems through simulation.'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -39,9 +39,9 @@
               
                 
                 <li><a
-                  href='#logbook'
+                  href='#evaluator'
                   class=" toggle-sibling">
-                  Logbook
+                  Evaluator
                   <span class='icon'>▸</span>
                 </a>
                 
@@ -52,9 +52,9 @@
                       <li class='h5'><span>Instance members</span></li>
                       
                       <li><a
-                        href='#logbooklog'
+                        href='#evaluatorevaluate'
                         class='regular pre-open'>
-                        #log
+                        #evaluate
                       </a></li>
                       
                     </ul>
@@ -62,6 +62,16 @@
                   
                   
                 </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#evaluationresult'
+                  class="">
+                  EvaluationResult
+                  
+                </a>
                 
                 </li>
               
@@ -137,11 +147,29 @@
               
                 
                 <li><a
-                  href='#evaluator'
-                  class="">
-                  Evaluator
-                  
+                  href='#logbook'
+                  class=" toggle-sibling">
+                  Logbook
+                  <span class='icon'>▸</span>
                 </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#logbooklog'
+                        class='regular pre-open'>
+                        #log
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
                 
                 </li>
               
@@ -152,6 +180,34 @@
                   construct
                   
                 </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#templates'
+                  class=" toggle-sibling">
+                  templates
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
+                      <li><a
+                        href='#templatesrender'
+                        class='regular pre-open'>
+                        .render
+                      </a></li>
+                    
+                    </ul>
+                  
+                  
+                  
+                  
+                </div>
                 
                 </li>
               
@@ -184,21 +240,20 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='logbook'>
-      Logbook
+    <h3 class='fl m0' id='evaluator'>
+      Evaluator
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L88-L105'>
-      <span>src/logbook.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/evaluator.js#L8-L43'>
+      <span>src/evaluator.js</span>
       </a>
     
   </div>
   
 
-  <p>A logbook to log actions specific to one source.</p>
-
-    <div class='pre p1 fill-light mt0'>new Logbook(source: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, callback: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
+  
+    <div class='pre p1 fill-light mt0'>new Evaluator(configuration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, log: <a href="#logbook">Logbook</a>)</div>
   
   
 
@@ -215,8 +270,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>source</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The source for which to log entries
+            <span class='code bold'>configuration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The configuration for the evaluator.
 
           </div>
           
@@ -224,12 +279,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
-	    An optional function to call with each
-
-<a href="#logbookentry">LogbookEntry</a>
- created on 
-<a href="#logbooklog">Logbook#log</a>
+            <span class='code bold'>log</span> <code class='quiet'>(<a href="#logbook">Logbook</a>)</code>
+	    A function that takes log messages.
 
           </div>
           
@@ -254,11 +305,11 @@
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='logbooklog'>
+    <div class='border-bottom' id='evaluatorevaluate'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>log(action, object)</span>
+            <span class='code strong strong truncate'>evaluate(simulation, turnIndex?)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -268,16 +319,20 @@
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L101-L103'>
-      <span>src/logbook.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/evaluator.js#L39-L41'>
+      <span>src/evaluator.js</span>
       </a>
     
   </div>
   
 
-  <p>Logs one entry to the logbook.</p>
+  <p>Evaluates one specific turn or the entire conversation.</p>
+<p>Evaluators might be stateful. This method must always be called first to
+evaluate each turn, in order, starting with 0, and then to evaluate the
+entire conversation (leaving the turnIndex undefined). Evaluators must not
+be re-used to evaluate multiple conversations.</p>
 
-    <div class='pre p1 fill-light mt0'>log(action: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, object: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</div>
+    <div class='pre p1 fill-light mt0'>evaluate(simulation: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, turnIndex: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?): (<a href="#evaluationresult">EvaluationResult</a> | null)</div>
   
   
 
@@ -294,8 +349,10 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>action</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The action for which to log
+            <span class='code bold'>simulation</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The simulation object returned by
+
+<a href="TODO">TODO</a>
 
           </div>
           
@@ -303,10 +360,10 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            = <code>undefined</code>)</code>
-	    An optional object or string describing
-the event that is logged
+            <span class='code bold'>turnIndex</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?)</code>
+	    Index of the user's turn (or rather the
+response to that turn) to be evaluated, starting with 0, or undefined to
+evaluate the entire conversation
 
           </div>
           
@@ -317,6 +374,16 @@ the event that is logged
 
   
 
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>(<a href="#evaluationresult">EvaluationResult</a> | null)</code>:
+        The result of the evaluation, with
+at least the score property, or null if the Evaluator does not evaluate
+single turns or the complete conversation and that is what was asked
+
+      
+    
   
 
   
@@ -354,12 +421,84 @@ the event that is logged
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='evaluationresult'>
+      EvaluationResult
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/evaluator.js#L15-L20'>
+      <span>src/evaluator.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Object returned by <a href="#evaluatorevaluate">Evaluator#evaluate</a> with at least a score.</p>
+
+    <div class='pre p1 fill-light mt0'>EvaluationResult</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>score</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : A number between 0 and 1, with higher values
+indicating better responses
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='logbookentry'>
       LogbookEntry
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L10-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L10-L78'>
       <span>src/logbook.js</span>
       </a>
     
@@ -368,7 +507,7 @@ the event that is logged
 
   <p>One entry for the logbook, issued by the source to log for the action.</p>
 
-    <div class='pre p1 fill-light mt0'>new LogbookEntry(source: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, action: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, object: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</div>
+    <div class='pre p1 fill-light mt0'>new LogbookEntry(source: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, action: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, object: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)?)</div>
   
   
 
@@ -403,7 +542,7 @@ the event that is logged
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code>
+            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)?)</code>
 	    An optional object or string describing the
 event that is logged
 
@@ -444,7 +583,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L17-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L17-L17'>
       <span>src/logbook.js</span>
       </a>
     
@@ -507,7 +646,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L22-L22'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L22-L22'>
       <span>src/logbook.js</span>
       </a>
     
@@ -570,7 +709,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L27-L27'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L27-L27'>
       <span>src/logbook.js</span>
       </a>
     
@@ -633,7 +772,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L32-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L32-L32'>
       <span>src/logbook.js</span>
       </a>
     
@@ -658,9 +797,9 @@ event that is logged
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code>
-	    An optional object or string describing
-the event that is logged
+            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>))</code>
+	    An optional object or string
+that describes the event that is logged
 
           </div>
           
@@ -705,7 +844,7 @@ the event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L41-L44'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L41-L44'>
       <span>src/logbook.js</span>
       </a>
     
@@ -786,7 +925,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L50-L52'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L50-L52'>
       <span>src/logbook.js</span>
       </a>
     
@@ -852,7 +991,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L58-L60'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L58-L60'>
       <span>src/logbook.js</span>
       </a>
     
@@ -918,7 +1057,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/logbook.js#L66-L76'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L66-L76'>
       <span>src/logbook.js</span>
       </a>
     
@@ -987,20 +1126,21 @@ belong to the same action).</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='evaluator'>
-      Evaluator
+    <h3 class='fl m0' id='logbook'>
+      Logbook
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/evaluator.js#L7-L16'>
-      <span>src/evaluator.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L88-L105'>
+      <span>src/logbook.js</span>
       </a>
     
   </div>
   
 
-  
-    <div class='pre p1 fill-light mt0'>new Evaluator(configuration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, log: <a href="#logbook">Logbook</a>)</div>
+  <p>A logbook to log actions specific to one source.</p>
+
+    <div class='pre p1 fill-light mt0'>new Logbook(source: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, callback: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
   
   
 
@@ -1017,8 +1157,8 @@ belong to the same action).</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>configuration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    The configuration for the evaluator.
+            <span class='code bold'>source</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The source for which to log entries
 
           </div>
           
@@ -1026,8 +1166,88 @@ belong to the same action).</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>log</span> <code class='quiet'>(<a href="#logbook">Logbook</a>)</code>
-	    A function that takes log messages.
+            <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
+	    An optional function to call with each
+
+<a href="#logbookentry">LogbookEntry</a>
+ created on 
+<a href="#logbooklog">Logbook#log</a>
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='logbooklog'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>log(action, object?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/logbook.js#L101-L103'>
+      <span>src/logbook.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Logs one entry to the logbook.</p>
+
+    <div class='pre p1 fill-light mt0'>log(action: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, object: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>action</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The action for which to log
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)?)</code>
+	    An optional object or string describing
+the event that is logged
 
           </div>
           
@@ -1055,6 +1275,18 @@ belong to the same action).</p>
   
 </section>
 
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+
+  
+</section>
+
           
         
           
@@ -1068,7 +1300,7 @@ belong to the same action).</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/2da73e3ee4ba27d26f68b8187fb2f1ce756e9ae2/src/construct.js#L13-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/construct.js#L13-L35'>
       <span>src/construct.js</span>
       </a>
     
@@ -1186,6 +1418,166 @@ other sources)
   
 
   
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='templates'>
+      templates
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/templates.js#L25-L78'>
+      <span>src/templates.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Static methods for filling in text templates.</p>
+
+    <div class='pre p1 fill-light mt0'>templates</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='templatesrender'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>render(text, context, ignoreMissing = false)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bd76a54499e04329b81d1b671d10714e4af37ecb/src/templates.js#L25-L78'>
+      <span>src/templates.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Replaces occurrences of <code>{{path.to.variable}}</code> in the text with the
+corresponding values in the context object (e.g., replace with
+<code>context["path"]["to"]["variable"]</code>).</p>
+<p>If the input is not a string but an object or array, it is recursively cloned
+and occurences in the contents are replaced. Numbers, boolean, etc. are
+shallow copied.</p>
+
+    <div class='pre p1 fill-light mt0'>render(text: any, context: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, ignoreMissing: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(any)</code>
+	    The template text or an object or array structure that
+contains template texts (among others)
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>context</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The values of the variables that can be referenced
+in the text
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ignoreMissing</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?
+            = <code>false</code>)</code>
+	    Whether to ignore if a reference variable
+does not exist in the context (not changing the text) instead of throwing an
+error
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
 
   
 

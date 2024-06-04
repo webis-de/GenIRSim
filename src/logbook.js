@@ -4,12 +4,12 @@
  * @class LogbookEntry
  * @param {string} source - The source that produced this entry
  * @param {string} action - The action for which this entry was produced
- * @param {(Object|string)} object - An optional object or string describing the
+ * @param {(Object|string)} [object] - An optional object or string describing the
  * event that is logged
  */
 export class LogbookEntry {
 
-  constructor(source, action, object = undefined) {
+  constructor(source, action, object) {
     /**
      * The entry's creation date in milliseconds since epoch.
      * @type {number}
@@ -26,8 +26,8 @@ export class LogbookEntry {
      */
     this.action = action;
     /**
-     * @param {(Object|string)} object - An optional object or string describing
-     * the event that is logged
+     * @param {(Object|string|undefined)} object - An optional object or string
+     * that describes the event that is logged
      */
     this.object = object;
   }
@@ -95,10 +95,10 @@ export class Logbook {
   /**
    * Logs one entry to the logbook.
    * @param {string} action - The action for which to log
-   * @param {(Object|string)} object - An optional object or string describing
+   * @param {(Object|string)} [object] - An optional object or string describing
    * the event that is logged
    */
-  log(action, object = undefined) {
+  log(action, object) {
     this.callback(new LogbookEntry(this.source, action, object));
   }
 
