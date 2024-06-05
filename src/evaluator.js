@@ -1,6 +1,13 @@
 import { Logbook } from "./logbook.js";
 
 /**
+ * Object returned by {@link Evaluator#evaluate} with at least a score.
+ * @typedef {Object} EvaluationResult
+ * @property {number} score - A number between 0 and 1, with higher values
+ * indicating better responses
+ */
+
+/**
  * An evaluator to measure some quality score for single turns of a conversation
  * and/or an entire conversation.
  *
@@ -19,13 +26,6 @@ export class Evaluator {
     this.configuration = configuration;
     this.logbook = logbook;
   }
-
-  /**
-   * Object returned by {@link Evaluator#evaluate} with at least a score.
-   * @typedef {Object} EvaluationResult
-   * @property {number} score - A number between 0 and 1, with higher values
-   * indicating better responses
-   */
 
   /**
    * Evaluates one specific turn or the entire conversation.

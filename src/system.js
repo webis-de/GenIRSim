@@ -1,6 +1,19 @@
 import { Logbook } from "./logbook.js";
 
 /**
+ * Object that represents a system's respone to a user's utterance in the
+ * simulated conversation with at least the system's utterance.
+ * @typedef {Object} SystemResponse
+ * @property {string} utterance - The utterance of the system
+ */
+
+export const SYSTEM_RESPONSE = {
+  UTTERANCE: "utterance",
+  RESULTS: "results",
+  RESULTS_PAGE: "resultsPage"
+};
+
+/**
  * A generative information retrieval system.
  *
  * Systems can be stateful. However, users are not differentiated: the system
@@ -17,13 +30,6 @@ export class System {
     this.configuration = configuration;
     this.logbook = logbook;
   }
-  
-  /**
-   * Object that represents a system's respone to a user's utterance in the
-   * simulated conversation with at least the system's utterance.
-   * @typedef {Object} SystemResponse
-   * @property {string} utterance - The utterance of the system
-   */
 
   /**
    * Generates a response for the user's utterance.
@@ -38,5 +44,11 @@ export class System {
    */
   async search(userTurn) { throw new Error("Not implemented"); }
 
+}
+
+import { GenerativeElasticSystem } from "./systems/generative-elastic-system.js"
+
+export const systems = {
+  GenerativeElasticSystem
 }
 

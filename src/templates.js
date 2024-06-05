@@ -76,4 +76,33 @@ export function render(text, context, ignoreMissing = false) {
       return text;
   }
 }
-  
+
+/**
+ * Converts the messages exchanged with an LLM into a single string.
+ * @param {Array} messages - Messages for a chat API
+ * @returns {string} - The converted messages
+ * @memberof templates
+ */
+export function joinMessages(messages) {
+  return messages
+    .map(message => message.role + ": " + message.content)
+    .join("\n");
+}
+
+/**
+ * Converts the properties and values of an object into a single string.
+ * @param {Object} object - The object to be converted
+ * @param {Array} [keys] - The names of the properties to convert, if not all
+ * (the default)
+ * @returns {string} - The converted object
+ * @memberof templates
+ */
+export function joinProperties(object, keys = undefined) {
+  const keySet = new Set(keys);
+  return Object.entries(object).map((key, value) => {
+    if (keys === undefined || keySet.has(key)) {
+      return key + ": " + value;
+    }
+  }).filter(text => (text !== undefined)).join("\n");
+}
+

@@ -1,4 +1,4 @@
-import { User } from "../user.js";
+import { User, USER_TURN } from "../user.js";
 import { LLM } from "../llm.js";
 import { render } from "../templates.js";
 
@@ -32,7 +32,7 @@ export class StaticUser extends User {
 
   async ask(promptTemplate, context) {
     const message = this.llm.createUserMessage(render(promptTemplate, context));
-    const turn = await this.llm.json([message], ["utterance"]);
+    const turn = await this.llm.json([message], [ USER_TURN.UTTERANCE ]);
     return systemResponse;
   }
 

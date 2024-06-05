@@ -1,6 +1,17 @@
 import { Logbook } from "./logbook.js";
 
 /**
+ * Object that represents a user's turn in the simulated conversation with at
+ * least the user's utterance.
+ * @typedef {Object} UserTurn
+ * @property {string} utterance - The simulated utterance of the user
+ */
+
+export const USER_TURN = {
+  UTTERANCE: "utterance"
+};
+
+/**
  * Abstract class for simulators of a user of a generative information retrieval
  * system.
  *
@@ -19,13 +30,6 @@ export class User {
     this.configuration = configuration;
     this.logbook = logbook;
   }
-
-  /**
-   * Object that represents a user's turn in the simulated conversation with at
-   * least the user's utterance.
-   * @typedef {Object} UserTurn
-   * @property {string} utterance - The simulated utterance of the user
-   */
 
   /**
    * Starts a new simulation for the specified topic.
@@ -53,7 +57,7 @@ export class User {
 
 }
 
-import { StaticUser } from "./users/StaticUser.js"
+import { StaticUser } from "./users/static-user.js"
 
 export const users = {
   StaticUser
