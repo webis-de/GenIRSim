@@ -1,7 +1,8 @@
 import { Logbook } from "./logbook.js";
 
 /**
- * A simulator for a user of a generative information retrieval system.
+ * Abstract class for simulators of a user of a generative information retrieval
+ * system.
  *
  * Users can be stateful. Calling {@link User#start} is equivalent to starting
  * a new conversation. Simple users might reset at the start of that method,
@@ -50,5 +51,11 @@ export class User {
    */
   async followUp(systemResponse) { throw new Error("Not implemented"); }
 
+}
+
+import { StaticUser } from "./users/StaticUser.js"
+
+export const users = {
+  StaticUser
 }
 

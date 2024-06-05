@@ -63,12 +63,25 @@ async function generate(messages, configuration, logbook, action) {
 }
 
 /**
+ * Configuration for an LLM.
+ *
+ * Properties are `url` (see below) and all paramters for the chat completion
+ * endpoint, which includes the required `model`, but also optional parameters
+ * like `options.temperature` (see the
+ * {@link https://github.com/ollama/ollama/blob/main/docs/modelfile.md#parameter|modelfile parameter}
+ * of Ollama).
+ *
+ * @typedef {Object} LLMConfiguration
+ * @property {string} url - The complete URL of the LLM's chat API endpoint
+ * @property {string} model - The large language model name as per the API
+ */
+
+
+/**
  * A large language model.
  *
  * @class
- * @param {Object} configuration - The configuration object 
- * @param {string} configuration.url - The complete URL of the LLM's chat
- * API
+ * @param {LLMConfiguration} configuration - The configuration object 
  * @param {Logbook} logbook - The logbook to log to
  */
 export class LLM {
@@ -105,11 +118,34 @@ export class LLM {
     return {role: "user", content: message};
   }
 
+  /**
+   * Generates a chat completion.
+   * @param {Array} messages - The message history for the completion, use
+   * {@link LLM#createSystemMessage}, {@link LLM#createUserMessage}, and
+   * {@link LLM#createAssistantMessage} to create these
+   * @param {string} action - Name of the action for which the text is
+   * generated, used for logging
+   * @returns {string} - The completion
+   */
   async chat(messages, action) {
     return await generate(messages, this.configuration, this.logbook, action);
   }
 
-  async json(messages, action, requiredKeys = [], maxRetries = 2) {
+  /**
+   * Generates a chat completion in JSON format.
+   * @param {Array} messages - The message history for the completion, use
+   * {@link LLM#createSystemMessage}, {@link LLM#createUserMessage}, and
+   * {@link LLM#createAssistantMessage} to create these
+   * @param {string} action - Name of the action for which the text is
+   * generated, used for logging
+   * @param {Array} [requiredKeys] - Names of properties that the parsed JSON
+   * completion must have
+   * @param {number} [maxRetries] - Maximum number of times to retry the
+   * completion (if it can not be parsed and is missing a required key) before
+   * throwing an error
+   * @returns {Object} - The completion as parsed object
+   */
+  async json(messages, action, requiredKeys = [], maxRetries = 3) {
     retryLoop: for (let retry = 0; retry <= maxRetries; retry += 1) {
       const message = (await this.chat(messages, action))
         .trim()
@@ -119,14 +155,14 @@ export class LLM {
         for (const key of requiredKeys) {
           if (!(key in parsedMessage)) {
             this.logbook.log(action + " [failed " + (retry+1) + "/" + (maxRetries+1) + "]",
-              "Missing key '" + key + "'";
+              "Missing key '" + key + "'");
             continue retryLoop;
           }
         }
         return parsedMessage;
       } catch (error) {
         this.logbook.log(action + " [failed " + (retry+1) + "/" + (maxRetries+1) + "]",
-          "Failed parsing JSON";
+          "Failed parsing JSON");
         continue retryLoop;
       }
     }
@@ -135,3 +171,4 @@ export class LLM {
   }
 
 }
+

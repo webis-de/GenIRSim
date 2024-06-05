@@ -3,14 +3,18 @@ toc:
     description: |
       TODO [[code](https://github.com/webis-de/scriptor)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
   - Evaluator
-  - Logbook
   - System
+  - name: Users
   - User
+  - StaticUser
+  - name: Utility
+  - LLM
+  - Logbook
+  - templates
   - name: Types
   - EvaluationResult
+  - LLMConfiguration
   - LogbookEntry
   - SystemResponse
   - Topic
   - UserTurn
-  - name: Utility
-  - templates
