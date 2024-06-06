@@ -8,12 +8,11 @@ import { Logbook } from "./logbook.js";
  */
 
 /**
- * Constants for {@link SystemResponse} property names
+ * Constants for {@link SystemResponse} property names.
  */
 export const SYSTEM_RESPONSE = {
   /**
    * The utterance displayed by the system back to the user.
-   * @property SYSTEM_RESPONSE.UTTERANCE
    */
   UTTERANCE: "utterance",
   /**

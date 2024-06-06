@@ -7,7 +7,13 @@ import { Logbook } from "./logbook.js";
  * @property {string} utterance - The simulated utterance of the user
  */
 
+/**
+ * Constants for {@link UserTurn} property names.
+ */
 export const USER_TURN = {
+  /**
+   * The utterance sent from the user to the system.
+   */
   UTTERANCE: "utterance"
 };
 
