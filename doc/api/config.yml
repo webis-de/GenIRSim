@@ -2,6 +2,7 @@ toc:
   - name: GenIRSim
     description: |
       TODO [[code](https://github.com/webis-de/scriptor)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
+  - name: Evaluators
   - Evaluator
   - ReadabilityEvaluator
   - name: Systems
