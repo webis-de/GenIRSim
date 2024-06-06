@@ -3,6 +3,7 @@ toc:
     description: |
       TODO [[code](https://github.com/webis-de/scriptor)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
   - Evaluator
+  - ReadabilityEvaluator
   - name: Systems
   - System
   - GenerativeElasticSystem
@@ -15,6 +16,7 @@ toc:
   - templates
   - name: Types
   - EvaluationResult
+  - EVALUATION_RESULT
   - LLMConfiguration
   - LogbookEntry
   - SystemResponse

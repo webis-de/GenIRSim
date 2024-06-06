@@ -10,6 +10,5 @@ import { Logbook } from "./logbook.js";
 import { System } from "./system.js";
 import { User } from "./user.js";
 import { LLM } from "./llm.js";
-import { construct } from "./construct.js";
 import { templates } from "./templates.js";
 

@@ -8,6 +8,20 @@ import { Logbook } from "./logbook.js";
  */
 
 /**
+ * Constants for {@link EvaluationResult} property names.
+ */
+export const EVALUATION_RESULT = {
+  /**
+   * A number between 0 and 1, with higher values indicating better responses.
+   */
+  SCORE: "score",
+  /**
+   * A string explanation for the score.
+   */
+  EXPLANATION: "explanation"
+};
+
+/**
  * An evaluator to measure some quality score for single turns of a conversation
  * and/or an entire conversation.
  *
@@ -41,12 +55,19 @@ export class Evaluator {
    * response to that turn) to be evaluated, starting with 0, or undefined to
    * evaluate the entire conversation
    * @returns {(EvaluationResult|null)} - The result of the evaluation, with
-   * at least the score property, or null if the Evaluator does not evaluate
+   * at least the score property, or `null` if the Evaluator does not evaluate
    * single turns or the complete conversation and that is what was asked
    */
   async evaluate(simulation, turnIndex) {
     throw new Error("Not implemented");
   }
 
+}
+
+
+import { ReadabilityEvaluator } from "./evaluators/readability-evaluator.js"
+
+export const evaluators = {
+  ReadabilityEvaluator
 }
 
