@@ -12,11 +12,11 @@ import { render } from "../templates.js";
  * language model employed during simulation
  * @param {string} configuration.start - Template for the prompt to simulate the
  * first message for a topic. Variables:
- * - `{{x}}`: A propoerty `x` of the configuration for the user
+ * - `{{x}}`: A property `x` of the configuration for the user
  * - `{{variables.topic}}`: The {@link Topic} object
  * @param {string} configuration.followUp - Template for the prompt to simulate
  * a follow-up message to a system response. Variables:
- * - `{{x}}`: A propoerty `x` of the configuration for the user
+ * - `{{x}}`: A property `x` of the configuration for the user
  * - `{{variables.topic}}`: The {@link Topic} object
  * - `{{variables.systemResponse}}`: The {@link SystemResponse} object of the
  *   response to follow-up on

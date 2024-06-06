@@ -67,6 +67,16 @@
               
                 
                 <li><a
+                  href='#systems'
+                  class="h5 bold black caps">
+                  Systems
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#system'
                   class=" toggle-sibling">
                   System
@@ -81,6 +91,34 @@
                       
                       <li><a
                         href='#systemsearch'
+                        class='regular pre-open'>
+                        #search
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#generativeelasticsystem'
+                  class=" toggle-sibling">
+                  GenerativeElasticSystem
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#generativeelasticsystemsearch'
                         class='regular pre-open'>
                         #search
                       </a></li>
@@ -256,6 +294,18 @@
                         .render
                       </a></li>
                     
+                      <li><a
+                        href='#templatesjoinmessages'
+                        class='regular pre-open'>
+                        .joinMessages
+                      </a></li>
+                    
+                      <li><a
+                        href='#templatesjoinproperties'
+                        class='regular pre-open'>
+                        .joinProperties
+                      </a></li>
+                    
                     </ul>
                   
                   
@@ -377,6 +427,46 @@
               
                 
                 <li><a
+                  href='#system_response'
+                  class=" toggle-sibling">
+                  SYSTEM_RESPONSE
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
+                      <li><a
+                        href='#system_responseutterance'
+                        class='regular pre-open'>
+                        .UTTERANCE
+                      </a></li>
+                    
+                      <li><a
+                        href='#system_responseresults'
+                        class='regular pre-open'>
+                        .RESULTS
+                      </a></li>
+                    
+                      <li><a
+                        href='#system_responseresults_page'
+                        class='regular pre-open'>
+                        .RESULTS_PAGE
+                      </a></li>
+                    
+                    </ul>
+                  
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
                   href='#topic'
                   class="">
                   Topic
@@ -439,7 +529,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/evaluator.js#L16-L51'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/evaluator.js#L23-L51'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -519,7 +609,7 @@ evaluate the entire conversation (leaving the <code>turnIndex</code> undefined).
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/evaluator.js#L47-L49'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/evaluator.js#L47-L49'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -616,6 +706,19 @@ single turns or the complete conversation and that is what was asked
           
         
           
+            <div class='keyline-top-not py2'><section class='py2 clearfix'>
+
+  <h2 id='systems' class='mt0'>
+    Systems
+  </h2>
+
+  
+    
+  
+</section></div>
+          
+        
+          
           <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
@@ -626,7 +729,7 @@ single turns or the complete conversation and that is what was asked
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/system.js#L14-L41'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L40-L60'>
       <span>src/system.js</span>
       </a>
     
@@ -704,7 +807,7 @@ instantiated for each simulated user.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/system.js#L39-L39'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L58-L58'>
       <span>src/system.js</span>
       </a>
     
@@ -714,6 +817,339 @@ instantiated for each simulated user.</p>
   <p>Generates a response for the user's utterance.</p>
 <p>Systems can be stateful. However, users are not differentiated: the system
 can assume it is used by exactly one user.</p>
+
+    <div class='pre p1 fill-light mt0'>search(userTurn: <a href="#userturn">UserTurn</a>): <a href="#systemresponse">SystemResponse</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>userTurn</span> <code class='quiet'>(<a href="#userturn">UserTurn</a>)</code>
+	    The turn object with the user's utterance as
+
+<code>utterance</code>
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#systemresponse">SystemResponse</a></code>:
+        The system's response with a least the
+
+<code>utterance</code>
+ set
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='generativeelasticsystem'>
+      GenerativeElasticSystem
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/systems/generative-elastic-system.js#L74-L123'>
+      <span>src/systems/generative-elastic-system.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>A basic generative information retrieval system implemented using an
+<a href="#llm">LLM</a> and a Elasticsearch server.</p>
+<p>Properties of the <a href="#systemresponse">SystemResponse</a> objects that
+<a href="#generativeelasticsystemsearch">GenerativeElasticSystem#search</a> produces are determined by the
+<code>configuration.generation.message</code> extended with
+<a href="#system_responseresults">SYSTEM_RESPONSE.RESULTS</a> and (the same as one string)
+<a href="#system_responseresults_page">SYSTEM_RESPONSE.RESULTS_PAGE</a>.</p>
+
+    <div class='pre p1 fill-light mt0'>new GenerativeElasticSystem(configuration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, log: <a href="#logbook">Logbook</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>configuration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The configuration for the system
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.llm</span> <code class='quiet'><a href="#llmconfiguration">LLMConfiguration</a></code>
+  </td>
+  <td class='break-word'><span>The configuration for the
+language model employed during retrieval
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.preprocessing</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>No preprocessing if this
+property is 
+<code>undefined</code>
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.preprocessing.message</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>Template for the
+prompt to preprocess the user's utterance (no preprocessing will happen if
+
+<code>configuration.preprocessing</code>
+ is 
+<code>undefined</code>
+). The LLM's response must be
+formatted as JSON. Variables:
+<ul>
+<li><code>{{x}}</code>: A property <code>x</code> of the configuration for the system</li>
+<li><code>{{variables.messages}}</code>: The previous exchange betbeen user and system
+(assistant) rendered as string (<a href="templates#joinMessages">templates#joinMessages</a>)</li>
+<li><code>{{variables.userTurn}}</code>: The last <a href="#userturn">UserTurn</a>, especially with
+<code>variables.userTurn.utterance</code></li>
+</ul>
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.preprocessing.requiredKeys</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?</code>
+  </td>
+  <td class='break-word'><span>The properties
+that the preprocessing response must have (none by default)
+</span></td>
+</tr>
+
+
+  
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.search</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span></span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.search.query</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The Elasticsearch query object
+for retrieving results, but every string in it is treated as a template.
+Variables are the same as for 
+<code>configuration.preprocessing.message</code>
+, plus:
+<ul>
+<li><code>{{variables.preprocessing}}</code>: The parsed output of the preprocessing (if
+preprocessing was performed)</li>
+</ul>
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.search.url</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The complete URL of the
+Elasticsearch server's API endpoint (up to but excluding 
+<code>_search</code>
+)
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.search.size</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  </td>
+  <td class='break-word'><span>The number of results to retrieve
+</span></td>
+</tr>
+
+
+  
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.generation</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span></span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.generation.message</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>Template for the
+prompt to generate a system response for the user's utterance from the
+retrieved search results. The LLM's response must be formatted as JSON.
+Variables are the same as for 
+<code>configuration.search.query</code>
+, plus:
+<ul>
+<li><code>{{variables.results}}</code>: The retrieved results rendered as a string</li>
+</ul>
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.generation.requiredKeys</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?</code>
+  </td>
+  <td class='break-word'><span>The properties
+that the generation response must have (at least 
+<code>utterance</code>
+)
+</span></td>
+</tr>
+
+
+  
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>log</span> <code class='quiet'>(<a href="#logbook">Logbook</a>)</code>
+	    A function that takes log messages
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='generativeelasticsystemsearch'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>search(userTurn)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/systems/generative-elastic-system.js#L90-L121'>
+      <span>src/systems/generative-elastic-system.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Retrieves results for the user's query.</p>
 
     <div class='pre p1 fill-light mt0'>search(userTurn: <a href="#userturn">UserTurn</a>): <a href="#systemresponse">SystemResponse</a></div>
   
@@ -812,7 +1248,7 @@ can assume it is used by exactly one user.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/user.js#L16-L54'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/user.js#L27-L58'>
       <span>src/user.js</span>
       </a>
     
@@ -892,7 +1328,7 @@ method must be called at least once before calling <a href="#userfollowup">User#
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/user.js#L41-L41'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/user.js#L45-L45'>
       <span>src/user.js</span>
       </a>
     
@@ -989,7 +1425,7 @@ be called at least once before calling <a href="#userfollowup">User#followUp</a>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/user.js#L52-L52'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/user.js#L56-L56'>
       <span>src/user.js</span>
       </a>
     
@@ -1092,8 +1528,8 @@ least once before calling this method.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/users/StaticUser.js#L25-L50'>
-      <span>src/users/StaticUser.js</span>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/users/static-user.js#L25-L50'>
+      <span>src/users/static-user.js</span>
       </a>
     
   </div>
@@ -1153,7 +1589,7 @@ language model employed during simulation
   <td class='break-word'><span>Template for the prompt to simulate the
 first message for a topic. Variables:
 <ul>
-<li><code>{{x}}</code>: A propoerty <code>x</code> of the configuration for the user</li>
+<li><code>{{x}}</code>: A property <code>x</code> of the configuration for the user</li>
 <li><code>{{variables.topic}}</code>: The <a href="#topic">Topic</a> object</li>
 </ul>
 </span></td>
@@ -1167,7 +1603,7 @@ first message for a topic. Variables:
   <td class='break-word'><span>Template for the prompt to simulate
 a follow-up message to a system response. Variables:
 <ul>
-<li><code>{{x}}</code>: A propoerty <code>x</code> of the configuration for the user</li>
+<li><code>{{x}}</code>: A property <code>x</code> of the configuration for the user</li>
 <li><code>{{variables.topic}}</code>: The <a href="#topic">Topic</a> object</li>
 <li><code>{{variables.systemResponse}}</code>: The <a href="#systemresponse">SystemResponse</a> object of the
 response to follow-up on</li>
@@ -1239,7 +1675,7 @@ response to follow-up on</li>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L87-L173'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L87-L173'>
       <span>src/llm.js</span>
       </a>
     
@@ -1314,7 +1750,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L99-L101'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L99-L101'>
       <span>src/llm.js</span>
       </a>
     
@@ -1394,7 +1830,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L108-L110'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L108-L110'>
       <span>src/llm.js</span>
       </a>
     
@@ -1474,7 +1910,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L117-L119'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L117-L119'>
       <span>src/llm.js</span>
       </a>
     
@@ -1554,7 +1990,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L130-L132'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L130-L132'>
       <span>src/llm.js</span>
       </a>
     
@@ -1652,7 +2088,7 @@ generated, used for logging
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L148-L171'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L148-L171'>
       <span>src/llm.js</span>
       </a>
     
@@ -1781,7 +2217,7 @@ throwing an error
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L88-L105'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L88-L105'>
       <span>src/logbook.js</span>
       </a>
     
@@ -1860,7 +2296,7 @@ throwing an error
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L101-L103'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L101-L103'>
       <span>src/logbook.js</span>
       </a>
     
@@ -1950,7 +2386,7 @@ the event that is logged
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/templates.js#L25-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/templates.js#L25-L78'>
       <span>src/templates.js</span>
       </a>
     
@@ -2000,7 +2436,7 @@ the event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/templates.js#L25-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/templates.js#L25-L78'>
       <span>src/templates.js</span>
       </a>
     
@@ -2086,6 +2522,177 @@ error
       </div>
     </div>
   
+    <div class='border-bottom' id='templatesjoinmessages'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>joinMessages(messages)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/templates.js#L86-L90'>
+      <span>src/templates.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Converts the messages exchanged with an LLM into a single string.</p>
+
+    <div class='pre p1 fill-light mt0'>joinMessages(messages: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>messages</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Messages for a chat API
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        The converted messages
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='templatesjoinproperties'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>joinProperties(object, keys = undefined)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/templates.js#L100-L107'>
+      <span>src/templates.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Converts the properties and values of an object into a single string.</p>
+
+    <div class='pre p1 fill-light mt0'>joinProperties(object: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, keys: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object to be converted
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>keys</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?
+            = <code>undefined</code>)</code>
+	    The names of the properties to convert, if not all
+(the default)
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        The converted object
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
 </div>
 
   
@@ -2123,7 +2730,7 @@ error
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/evaluator.js#L23-L28'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/evaluator.js#L3-L8'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -2195,7 +2802,7 @@ indicating better responses
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/llm.js#L65-L77'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/llm.js#L65-L77'>
       <span>src/llm.js</span>
       </a>
     
@@ -2278,7 +2885,7 @@ of Ollama).</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L10-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L10-L78'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2363,7 +2970,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L17-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L17-L17'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2426,7 +3033,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L22-L22'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L22-L22'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2489,7 +3096,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L27-L27'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L27-L27'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2552,7 +3159,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L32-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L32-L32'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2624,7 +3231,7 @@ that describes the event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L41-L44'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L41-L44'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2705,7 +3312,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L50-L52'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L50-L52'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2771,7 +3378,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L58-L60'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L58-L60'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2837,7 +3444,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/logbook.js#L66-L76'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/logbook.js#L66-L76'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2911,7 +3518,7 @@ belong to the same action).</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/system.js#L21-L26'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L3-L8'>
       <span>src/system.js</span>
       </a>
     
@@ -2978,12 +3585,246 @@ simulated conversation with at least the system's utterance.</p>
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='system_response'>
+      SYSTEM_RESPONSE
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L13-L27'>
+      <span>src/system.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Constants for <a href="#systemresponse">SystemResponse</a> property names</p>
+
+    <div class='pre p1 fill-light mt0'>SYSTEM_RESPONSE</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='system_responseutterance'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>UTTERANCE</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L18-L18'>
+      <span>src/system.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>The utterance displayed by the system back to the user.</p>
+
+    <div class='pre p1 fill-light mt0'>UTTERANCE</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='system_responseresults'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>RESULTS</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L22-L22'>
+      <span>src/system.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>The results that the system retrieved to answer the user's utterance.</p>
+
+    <div class='pre p1 fill-light mt0'>RESULTS</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='system_responseresults_page'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>RESULTS_PAGE</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/system.js#L26-L26'>
+      <span>src/system.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>The <code>results</code> as one string that represents the results page of the system.</p>
+
+    <div class='pre p1 fill-light mt0'>RESULTS_PAGE</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='topic'>
       Topic
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/index.js#L1-L6'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/index.js#L1-L6'>
       <span>src/index.js</span>
       </a>
     
@@ -3055,7 +3896,7 @@ information task to be accomplished
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/user.js#L23-L28'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/user.js#L3-L8'>
       <span>src/user.js</span>
       </a>
     
@@ -3127,7 +3968,7 @@ least the user's utterance.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/bf4424b07dbf58221b76fb5438805f5aab34fb43/src/construct.js#L13-L35'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/8acd38bd03fa1443ec2c6b4206e9cf3a77be9112/src/construct.js#L13-L35'>
       <span>src/construct.js</span>
       </a>
     

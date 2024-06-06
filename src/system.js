@@ -7,9 +7,22 @@ import { Logbook } from "./logbook.js";
  * @property {string} utterance - The utterance of the system
  */
 
+/**
+ * Constants for {@link SystemResponse} property names
+ */
 export const SYSTEM_RESPONSE = {
+  /**
+   * The utterance displayed by the system back to the user.
+   * @property SYSTEM_RESPONSE.UTTERANCE
+   */
   UTTERANCE: "utterance",
+  /**
+   * The results that the system retrieved to answer the user's utterance.
+   */
   RESULTS: "results",
+  /**
+   * The `results` as one string that represents the results page of the system.
+   */
   RESULTS_PAGE: "resultsPage"
 };
 

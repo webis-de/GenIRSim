@@ -2,7 +2,7 @@ import { Logbook } from "../logbook.js";
 import { System, SYSTEM_RESPONSE } from "../system.js";
 import { render, joinMessages, joinProperties } from "../templates.js";
 
-export async function queryElastic(query, searchConfiguration, logbook) {
+async function queryElastic(query, searchConfiguration, logbook) {
   const data = {query: query};
   const body = JSON.stringify(data);
   const headers = new Headers();
@@ -25,6 +25,52 @@ export async function queryElastic(query, searchConfiguration, logbook) {
   return results;
 }
 
+/**
+ * A basic generative information retrieval system implemented using an
+ * {@link LLM} and a Elasticsearch server.
+ *
+ * Properties of the {@link SystemResponse} objects that
+ * {@link GenerativeElasticSystem#search} produces are determined by the
+ * `configuration.generation.message` extended with
+ * {@link SYSTEM_RESPONSE.RESULTS} and (the same as one string)
+ * {@link SYSTEM_RESPONSE.RESULTS_PAGE}.
+ *
+ * @class GenerativeElasticSystem
+ * @param {Object} configuration - The configuration for the system
+ * @param {LLMConfiguration} configuration.llm - The configuration for the
+ * language model employed during retrieval
+ * @param {Object} [configuration.preprocessing] - No preprocessing if this
+ * property is `undefined`
+ * @param {string} [configuration.preprocessing.message] - Template for the
+ * prompt to preprocess the user's utterance (no preprocessing will happen if
+ * `configuration.preprocessing` is `undefined`). The LLM's response must be
+ * formatted as JSON. Variables:
+ * - `{{x}}`: A property `x` of the configuration for the system
+ * - `{{variables.messages}}`: The previous exchange betbeen user and system
+ *   (assistant) rendered as string ({@link templates#joinMessages})
+ * - `{{variables.userTurn}}`: The last {@link UserTurn}, especially with
+ *   `variables.userTurn.utterance`
+ * @param {Array} [configuration.preprocessing.requiredKeys] - The properties
+ * that the preprocessing response must have (none by default)
+ * @param {string} configuration.search.query - The Elasticsearch query object
+ * for retrieving results, but every string in it is treated as a template.
+ * Variables are the same as for `configuration.preprocessing.message`, plus:
+ * - `{{variables.preprocessing}}`: The parsed output of the preprocessing (if
+ *   preprocessing was performed)
+ * @param {Object} configuration.search
+ * @param {string} configuration.search.url - The complete URL of the
+ * Elasticsearch server's API endpoint (up to but excluding `_search`)
+ * @param {number} configuration.search.size - The number of results to retrieve
+ * @param {Object} configuration.generation
+ * @param {string} configuration.generation.message - Template for the
+ * prompt to generate a system response for the user's utterance from the
+ * retrieved search results. The LLM's response must be formatted as JSON.
+ * Variables are the same as for `configuration.search.query`, plus:
+ * - `{{variables.results}}`: The retrieved results rendered as a string
+ * @param {Array} [configuration.generation.requiredKeys] - The properties
+ * that the generation response must have (at least `utterance`)
+ * @param {Logbook} log - A function that takes log messages
+ */
 export class GenerativeElasticSystem extends System {
 
   constructor(configuration, logbook) {
@@ -33,6 +79,14 @@ export class GenerativeElasticSystem extends System {
     this.messages = [];
   }
 
+  /**
+   * Retrieves results for the user's query.
+   *
+   * @param {UserTurn} userTurn - The turn object with the user's utterance as
+   * `utterance`
+   * @returns {SystemResponse} - The system's response with a least the
+   * `utterance` set
+   */
   async search(userTurn) {
     this.messages.push(this.llm.createUserMessage(userTurn.utterance));
     const context = Object.assign({
