@@ -87,7 +87,7 @@ export class LogbookEntry {
  */
 export class Logbook {
 
-  constructor(source, callback = (entry => {})) {
+  constructor(source, callback = console.log) {
     this.source = source;
     this.callback = callback;
   }

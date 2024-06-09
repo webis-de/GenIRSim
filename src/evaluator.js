@@ -49,8 +49,7 @@ export class Evaluator {
    * entire conversation (leaving the `turnIndex` undefined). Evaluators must
    * not be re-used to evaluate multiple conversations.
    *
-   * @param {Object} simulation - The simulation object returned by
-   * {@link TODO}
+   * @param {Object} simulation - The {@link Simulation} to evaluate
    * @param {number} [turnIndex] - Index of the user's turn (or rather the
    * response to that turn) to be evaluated, starting with 0, or undefined to
    * evaluate the entire conversation
