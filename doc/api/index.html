@@ -39,6 +39,46 @@
               
                 
                 <li><a
+                  href='#run'
+                  class="">
+                  run
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#simulate'
+                  class="">
+                  simulate
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#evaluate'
+                  class="">
+                  evaluate
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#evaluators'
+                  class="h5 bold black caps">
+                  Evaluators
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#evaluator'
                   class=" toggle-sibling">
                   Evaluator
@@ -586,12 +626,517 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='run'>
+      run
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/index.js#L174-L182'>
+      <span>src/index.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Simulates and evaluates an interaction with a generative information
+retrieval system.</p>
+
+    <div class='pre p1 fill-light mt0'>run(configuration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, logCallback: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>?, additionalUsers: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, additionalSystems: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, additionalEvaluators: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>configuration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The configuration for the simulation and
+evaluation
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.simulation</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span>The configuration for the
+simulation, see 
+<a href="#simulate">simulate</a>
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.evaluation</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span>The configuration for the
+evaluation, see 
+<a href="#evaluate">evaluate</a>
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>logCallback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>?
+            = <code>console.log</code>)</code>
+	    The function to consume all
+
+<a href="#logbookentry">LogbookEntry</a>
+ of the simulation and evaluation
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>additionalUsers</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>{}</code>)</code>
+	    Object that contains non-standard {User}
+classes as values; if 
+<code>configuration.simulation.user.class</code>
+ is the same as a
+key of this object, the corresponding class will be instantiated and used
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>additionalSystems</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>{}</code>)</code>
+	    Object that contains non-standard
+{System} classes as values; if 
+<code>configuration.simulation.system.class</code>
+ is the
+same as a key of this object, the corresponding class will be instantiated
+and used
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>additionalEvaluators</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>{}</code>)</code>
+	    Object that contains non-standard
+{Evaluator} classes as values; if
+
+<code>configuration.evaluation.evaluators.[evaluatorName].class</code>
+ is the same as a
+key of this object, the corresponding class will be instantiated and used
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='simulate'>
+      simulate
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/index.js#L52-L82'>
+      <span>src/index.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Simulates an interaction with a generative information retrieval system.</p>
+<p>Unless you do not want to evaluate, use <a href="#run">run</a> instead.</p>
+
+    <div class='pre p1 fill-light mt0'>simulate(configuration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, logCallback: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>?, additionalUsers: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, additionalSystems: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>configuration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The configuration for the simulation
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.topic</span> <code class='quiet'><a href="#topic">Topic</a></code>
+  </td>
+  <td class='break-word'><span>The topic for the simulation
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.user</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span>The configuration passed to the user in
+the constructor
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.user.class</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The name of the user class, either
+one of the standard classes of GenIRSim or one in 
+<code>additionalUsers</code>
+</span></td>
+</tr>
+
+
+  
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.system</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span>The configuration passed to the system
+in the constructor
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>configuration.system.class</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The name of the system class,
+either one of the standard classes of GenIRSim or one in 
+<code>additionalSystems</code>
+</span></td>
+</tr>
+
+
+  
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.maxTurns</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</code>
+  </td>
+  <td class='break-word'><span>The maximum number of user turns
+to simulate (default: 3)
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>logCallback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>?
+            = <code>console.log</code>)</code>
+	    The function to consume all
+
+<a href="#logbookentry">LogbookEntry</a>
+ of the simulation
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>additionalUsers</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>{}</code>)</code>
+	    Object that contains non-standard {User}
+classes as values; if 
+<code>configuration.user.class</code>
+ is the same as a key of this
+object, the corresponding class will be instantiated and used
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>additionalSystems</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>{}</code>)</code>
+	    Object that contains non-standard
+{System} classes as values; if 
+<code>configuration.system.class</code>
+ is the same as a
+key of this object, the corresponding class will be instantiated and used
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='evaluate'>
+      evaluate
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/index.js#L119-L148'>
+      <span>src/index.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Evaluates a simulated interaction with a generative information retrieval system.</p>
+
+    <div class='pre p1 fill-light mt0'>evaluate(simulation: any, configuration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, logCallback: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>?, additionalEvaluators: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>simulation</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>configuration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The configuration for the evaluation
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>configuration.evaluators</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  </td>
+  <td class='break-word'><span>An object where each value is
+another configuration object that (1) is passed to the respective evaluator
+in the the constructor and (2) has a property 
+<code>class</code>
+ that is the name of the
+evaluator class, either one of the standard classes of GenIRSim or one in
+
+<code>additionalEvaluators</code>
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>logCallback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>?
+            = <code>console.log</code>)</code>
+	    The function to consume all
+
+<a href="#logbookentry">LogbookEntry</a>
+ of the evaluation
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>additionalEvaluators</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>{}</code>)</code>
+	    Object that contains non-standard
+{Evaluator} classes as values; if
+
+<code>configuration.evaluators.[evaluatorName].class</code>
+ is the same as a key of this
+object, the corresponding class will be instantiated and used
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <div class='keyline-top-not py2'><section class='py2 clearfix'>
+
+  <h2 id='evaluators' class='mt0'>
+    Evaluators
+  </h2>
+
+  
+    
+  
+</section></div>
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='evaluator'>
       Evaluator
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluator.js#L37-L65'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluator.js#L37-L64'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -671,7 +1216,7 @@ evaluate the entire conversation (leaving the <code>turnIndex</code> undefined).
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluator.js#L61-L63'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluator.js#L60-L62'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -702,9 +1247,9 @@ not be re-used to evaluate multiple conversations.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>simulation</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    The simulation object returned by
-
-<a href="TODO">TODO</a>
+	    The 
+<a href="Simulation">Simulation</a>
+ to evaluate
 
           </div>
           
@@ -780,7 +1325,7 @@ single turns or the complete conversation and that is what was asked
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluators/readability-evaluator.js#L335-L354'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluators/readability-evaluator.js#L335-L354'>
       <span>src/evaluators/readability-evaluator.js</span>
       </a>
     
@@ -896,7 +1441,7 @@ used to calculate the score
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L39-L59'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L39-L59'>
       <span>src/system.js</span>
       </a>
     
@@ -974,7 +1519,7 @@ instantiated for each simulated user.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L57-L57'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L57-L57'>
       <span>src/system.js</span>
       </a>
     
@@ -1069,7 +1614,7 @@ can assume it is used by exactly one user.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/systems/generative-elastic-system.js#L74-L123'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/systems/generative-elastic-system.js#L74-L123'>
       <span>src/systems/generative-elastic-system.js</span>
       </a>
     
@@ -1309,7 +1854,7 @@ that the generation response must have (at least
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/systems/generative-elastic-system.js#L90-L121'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/systems/generative-elastic-system.js#L90-L121'>
       <span>src/systems/generative-elastic-system.js</span>
       </a>
     
@@ -1415,7 +1960,7 @@ that the generation response must have (at least
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/user.js#L33-L64'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/user.js#L33-L64'>
       <span>src/user.js</span>
       </a>
     
@@ -1495,7 +2040,7 @@ method must be called at least once before calling <a href="#userfollowup">User#
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/user.js#L51-L51'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/user.js#L51-L51'>
       <span>src/user.js</span>
       </a>
     
@@ -1592,7 +2137,7 @@ be called at least once before calling <a href="#userfollowup">User#followUp</a>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/user.js#L62-L62'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/user.js#L62-L62'>
       <span>src/user.js</span>
       </a>
     
@@ -1695,7 +2240,7 @@ least once before calling this method.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/users/static-user.js#L25-L50'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/users/static-user.js#L25-L50'>
       <span>src/users/static-user.js</span>
       </a>
     
@@ -1842,7 +2387,7 @@ response to follow-up on</li>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L87-L173'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L87-L173'>
       <span>src/llm.js</span>
       </a>
     
@@ -1917,7 +2462,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L99-L101'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L99-L101'>
       <span>src/llm.js</span>
       </a>
     
@@ -1997,7 +2542,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L108-L110'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L108-L110'>
       <span>src/llm.js</span>
       </a>
     
@@ -2077,7 +2622,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L117-L119'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L117-L119'>
       <span>src/llm.js</span>
       </a>
     
@@ -2157,7 +2702,7 @@ response to follow-up on</li>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L130-L132'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L130-L132'>
       <span>src/llm.js</span>
       </a>
     
@@ -2255,7 +2800,7 @@ generated, used for logging
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L148-L171'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L148-L171'>
       <span>src/llm.js</span>
       </a>
     
@@ -2384,7 +2929,7 @@ throwing an error
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L88-L105'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L88-L105'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2463,7 +3008,7 @@ throwing an error
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L101-L103'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L101-L103'>
       <span>src/logbook.js</span>
       </a>
     
@@ -2553,7 +3098,7 @@ the event that is logged
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/templates.js#L25-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/templates.js#L25-L78'>
       <span>src/templates.js</span>
       </a>
     
@@ -2603,7 +3148,7 @@ the event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/templates.js#L25-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/templates.js#L25-L78'>
       <span>src/templates.js</span>
       </a>
     
@@ -2703,7 +3248,7 @@ error
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/templates.js#L86-L90'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/templates.js#L86-L90'>
       <span>src/templates.js</span>
       </a>
     
@@ -2783,7 +3328,7 @@ error
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/templates.js#L100-L107'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/templates.js#L100-L107'>
       <span>src/templates.js</span>
       </a>
     
@@ -2897,7 +3442,7 @@ error
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluator.js#L3-L8'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluator.js#L3-L8'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -2969,7 +3514,7 @@ indicating better responses
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluator.js#L13-L22'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluator.js#L13-L22'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -3019,7 +3564,7 @@ indicating better responses
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluator.js#L17-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluator.js#L17-L17'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -3077,7 +3622,7 @@ indicating better responses
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/evaluator.js#L21-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/evaluator.js#L21-L21'>
       <span>src/evaluator.js</span>
       </a>
     
@@ -3145,7 +3690,7 @@ indicating better responses
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/llm.js#L65-L77'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/llm.js#L65-L77'>
       <span>src/llm.js</span>
       </a>
     
@@ -3228,7 +3773,7 @@ of Ollama).</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L10-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L10-L78'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3313,7 +3858,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L17-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L17-L17'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3376,7 +3921,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L22-L22'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L22-L22'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3439,7 +3984,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L27-L27'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L27-L27'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3502,7 +4047,7 @@ event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L32-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L32-L32'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3574,7 +4119,7 @@ that describes the event that is logged
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L41-L44'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L41-L44'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3655,7 +4200,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L50-L52'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L50-L52'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3721,7 +4266,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L58-L60'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L58-L60'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3787,7 +4332,7 @@ belong to the same action).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/logbook.js#L66-L76'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/logbook.js#L66-L76'>
       <span>src/logbook.js</span>
       </a>
     
@@ -3861,7 +4406,7 @@ belong to the same action).</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L3-L8'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L3-L8'>
       <span>src/system.js</span>
       </a>
     
@@ -3933,7 +4478,7 @@ simulated conversation with at least the system's utterance.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L13-L26'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L13-L26'>
       <span>src/system.js</span>
       </a>
     
@@ -3983,7 +4528,7 @@ simulated conversation with at least the system's utterance.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L17-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L17-L17'>
       <span>src/system.js</span>
       </a>
     
@@ -4041,7 +4586,7 @@ simulated conversation with at least the system's utterance.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L21-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L21-L21'>
       <span>src/system.js</span>
       </a>
     
@@ -4099,7 +4644,7 @@ simulated conversation with at least the system's utterance.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/system.js#L25-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/system.js#L25-L25'>
       <span>src/system.js</span>
       </a>
     
@@ -4167,7 +4712,7 @@ simulated conversation with at least the system's utterance.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/index.js#L1-L6'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/index.js#L19-L24'>
       <span>src/index.js</span>
       </a>
     
@@ -4239,7 +4784,7 @@ information task to be accomplished
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/user.js#L3-L8'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/user.js#L3-L8'>
       <span>src/user.js</span>
       </a>
     
@@ -4311,7 +4856,7 @@ least the user's utterance.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/user.js#L13-L18'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/user.js#L13-L18'>
       <span>src/user.js</span>
       </a>
     
@@ -4361,7 +4906,7 @@ least the user's utterance.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/68de2263509d3c2aee72474578438f6bd55a996e/src/user.js#L17-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/johanneskiesel/GenIRSim/blob/d362a0a702392d3fe27c6ea6d335b9f396b0ca14/src/user.js#L17-L17'>
       <span>src/user.js</span>
       </a>
     

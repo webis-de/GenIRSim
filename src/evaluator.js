@@ -64,9 +64,3 @@ export class Evaluator {
 }
 
 
-import { ReadabilityEvaluator } from "./evaluators/readability-evaluator.js"
-
-export const evaluators = {
-  ReadabilityEvaluator
-}
-

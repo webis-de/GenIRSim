@@ -1,6 +1,7 @@
 import { Logbook } from "../logbook.js";
 import { System, SYSTEM_RESPONSE } from "../system.js";
 import { render, joinMessages, joinProperties } from "../templates.js";
+import { LLM } from "../llm.js"
 
 async function queryElastic(query, searchConfiguration, logbook) {
   const data = {query: query};
@@ -75,7 +76,7 @@ export class GenerativeElasticSystem extends System {
 
   constructor(configuration, logbook) {
     super(configuration, logbook);
-    this.llm = new llms.LLM(configuration.llm, this.log);
+    this.llm = new LLM(configuration.llm, this.logbook);
     this.messages = [];
   }
 
@@ -100,19 +101,19 @@ export class GenerativeElasticSystem extends System {
       context.variables.preprocessing = await this.llm.json(
         [ this.llm.createUserMessage(render(this.configuration.preprocessing.message, context)) ],
         "preprocessing",
-        this.configuration.preprocessing.requiredKeys | []);
+        this.configuration.preprocessing.requiredKeys || []);
     }
 
     const query = render(this.configuration.search.query, context);
     const results = await queryElastic(query, this.configuration.search, this.logbook);
     context.variables.results = results
-      .map((result, index) => "[" + (index+1) + "]\n" + joinProperties(result["_source"]))
+      .map((result, index) => "[" + (index+1) + "]\n" + joinProperties(result))
       .join("\n\n");
 
     const systemResponse = await this.llm.json(
       [ this.llm.createUserMessage(render(this.configuration.generation.message, context)) ],
       "generation",
-      (this.configuration.message.requiredKeys | []).concat([ SYSTEM_RESPONSE.UTTERANCE ]));
+      (this.configuration.generation.requiredKeys || []).concat([ SYSTEM_RESPONSE.UTTERANCE ]));
     this.messages.push(this.llm.createAssistantMessage(systemResponse[SYSTEM_RESPONSE.UTTERANCE]));
 
     systemResponse[SYSTEM_RESPONSE.RESULTS] = results;

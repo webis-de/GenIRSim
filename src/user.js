@@ -63,9 +63,3 @@ export class User {
 
 }
 
-import { StaticUser } from "./users/static-user.js"
-
-export const users = {
-  StaticUser
-}
-

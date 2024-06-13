@@ -58,9 +58,3 @@ export class System {
 
 }
 
-import { GenerativeElasticSystem } from "./systems/generative-elastic-system.js"
-
-export const systems = {
-  GenerativeElasticSystem
-}
-

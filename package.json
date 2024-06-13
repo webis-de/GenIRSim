@@ -10,6 +10,7 @@
   "scripts": {
     "doc": "documentation build -f html -o doc/api/ --github --config doc/api/config.yml"
   },
+  "type": "module",
   "author": "Johannes Kiesel <johannes.kiesel@uni-weimar.de>",
   "license": "MIT"
 }

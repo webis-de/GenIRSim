@@ -67,7 +67,7 @@ export function render(text, context, ignoreMissing = false) {
         return text.map(entry => render(entry, context, ignoreMissing));
       } else {
         const clone = Object.assign({}, text);
-        for ([key, value] of Object.entries(text)) {
+        for (const [key, value] of Object.entries(text)) {
           clone[key] = render(value, context, ignoreMissing);
         }
         return clone;
@@ -99,9 +99,9 @@ export function joinMessages(messages) {
  */
 export function joinProperties(object, keys = undefined) {
   const keySet = new Set(keys);
-  return Object.entries(object).map((key, value) => {
+  return Object.keys(object).map(key => {
     if (keys === undefined || keySet.has(key)) {
-      return key + ": " + value;
+      return key + ": " + object[key];
     }
   }).filter(text => (text !== undefined)).join("\n");
 }

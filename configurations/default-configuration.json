@@ -1,0 +1,48 @@
+{
+  "simulation": {
+    "topic": {
+      "description": "I have to write an essay about the Turing Test for school, but have no idea what that is."
+    },
+    "user": {
+      "class": "StaticUser",
+      "llm": {
+        "url": "https://llm.srv.webis.de/api/chat",
+        "model": "default"
+      },
+      "start": "You have the following task: {{variables.topic.description}}\n\n{{formatting}}\n\n",
+      "followup": "{{variables.systemResponse}}\n\nFollow up on the response above. {{formatting}}\n\n",
+      "formatting": "Format your message as JSON with exactly these keys:\n- key='utterance': The short utterance you would send to the conversational search system to solve your task.\n- key='expectation': A description of what you expect the system's answer to contain."
+    },
+    "system": {
+      "class": "GenerativeElasticSystem",
+      "llm": {
+        "url": "https://llm.srv.webis.de/api/chat",
+        "model": "default"
+      },
+      "search": {
+        "url": "http://localhost:9200/wikipedia/",
+        "query": {
+          "match": {
+            "text": {
+              "query": "{{variables.userTurn.utterance}}"
+            }
+          }
+        },
+        "size": 3
+      },
+      "generation": {
+        "message": "\n\nIn order to answer the following QUERY, you found the following information:\n\n{{variables.results}}\n\nNow use this information to write a short summarizing answer of about 50 words for the QUERY.\n\nQUERY: {{variables.userTurn.utterance}}\n\n{{generation.formatting}}\n\n",
+        "formatting": "Format your message as JSON with this key:\n- key='utterance': The short summarizing answer."
+      }
+    },
+    "maxTurns": 1
+  },
+  "evaluation": {
+    "evaluators": {
+      "Readability": {
+        "class": "ReadabilityEvaluator",
+        "measure": "fleschKincaidGrade"
+      }
+    }
+  }
+}
