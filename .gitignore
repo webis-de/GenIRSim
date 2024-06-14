@@ -1,3 +1,4 @@
 elasticsearch-wikipedia-index/
 elasticsearch-wikipedia-index.zip
 eval.json
+node_modules/

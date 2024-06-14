@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>User Simulation</title>
+<!-- Load helpers -->
+<script src="lib/texts.js"></script>
+<script src="lib/llms.js"></script>
+<!-- Load user-simulators -->
+<script src="lib/users/DefaultUser.js"></script>
+<script src="lib/users.js"></script>
+<!-- Load systems -->
+<script src="lib/systems/elastic.js"></script>            <!-- generic code for elastic search -->
+<script src="lib/systems/DefaultElasticRag.js"></script>  <!-- specific system -->
+<script src="lib/systems.js"></script>                    <!-- object that contains all systems -->
+<!-- Load evaluators -->
+<script src="lib/evaluators/readability.js"></script>             <!-- third-party library -->
+<script src="lib/evaluators/ReadabilityEvaluator.js"></script>    <!-- specific evaluator -->
+<script src="lib/evaluators/PromptBasedEvaluator.js"></script>    <!-- specific evaluator -->
+<script src="lib/evaluators.js"></script>                         <!-- object that contains all evaluators-->
+<!-- Load main simulation functions -->
+<script src="lib/simulations.js"></script>
+<link rel="stylesheet" href="web/web.css">
+<link rel="stylesheet" href="web/loader.css">
+</head>
+<body>
+
+<h1>
+Conversational Search User Simulator
+</h1>
+<main>
+
+<div id="simulation"><h2>Simulation</h2>
+<button id="start" type="button" onclick="executeBoth()">start</button>
+<div id="chat"></div>
+</div> <!-- #simulation -->
+
+<div id="configuration"><h2>Configuration</h2>
+<div class="drop-zone" data-target="configuration">
+drop or <label for="picker">browse</label><input type="file" id="picker" name="configuration" accept="text/plain, application/json" onchange="loadConfigurationFromFile(this);"> to load another
+</div>
+<div class="editor"></div>
+<div class="buttons"></div>
+<h2>Log</h2>
+<details class="log-container" open>
+<summary>Log messages</summary>
+<div id="log"></div>
+</div>
+
+</main>
+<script src="web/configuration.js"></script>
+<script src="web/chat.js"></script>
+</body>
+</html>

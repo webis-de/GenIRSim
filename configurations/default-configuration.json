@@ -32,6 +32,7 @@
       },
       "generation": {
         "message": "\n\nIn order to answer the following QUERY, you found the following information:\n\n{{variables.results}}\n\nNow use this information to write a short summarizing answer of about 50 words for the QUERY.\n\nQUERY: {{variables.userTurn.utterance}}\n\n{{generation.formatting}}\n\n",
+        "searchResultKeys": [ "title", "text" ],
         "formatting": "Format your message as JSON with this key:\n- key='utterance': The short summarizing answer."
       }
     },

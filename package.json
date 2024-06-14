@@ -5,7 +5,11 @@
   "main": "src/index.js",
   "files": [ "bin", "src" ],
   "bin": {
-    "simulate-search": "bin/simulate-search.js"
+    "simulate": "bin/simulate.js",
+    "simulation-server": "bin/simulation-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.17.0"
   },
   "scripts": {
     "doc": "documentation build -f html -o doc/api/ --github --config doc/api/config.yml"

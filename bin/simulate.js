@@ -33,7 +33,7 @@ async function runWithParameters(configurationJson, header, rows) {
 }
 
 if (process.argv.length < 3 || process.argv.length > 4) {
-  console.error("Usage: " + process.argv[0] + " " + process.argv[1] + " <configuration-file> [<parameter-file>]");
+  console.error("Usage: <configuration-file> [<parameter-file>]");
 } else {
   const configurationFile = process.argv[2];
   const configurationJson = fs.readFileSync(configurationFile, "utf8");
