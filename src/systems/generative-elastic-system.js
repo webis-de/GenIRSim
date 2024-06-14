@@ -68,6 +68,8 @@ async function queryElastic(query, searchConfiguration, logbook) {
  * retrieved search results. The LLM's response must be formatted as JSON.
  * Variables are the same as for `configuration.search.query`, plus:
  * - `{{variables.results}}`: The retrieved results rendered as a string
+ * @param {Array} [configuration.generation.searchResultKeys] - The properties
+ * of each result that are used to render the result in the generation message
  * @param {Array} [configuration.generation.requiredKeys] - The properties
  * that the generation response must have (at least `utterance`)
  * @param {Logbook} log - A function that takes log messages
@@ -78,6 +80,7 @@ export class GenerativeElasticSystem extends System {
     super(configuration, logbook);
     this.llm = new LLM(configuration.llm, this.logbook);
     this.messages = [];
+    this.searchResultKeys = configuration.generation.searchResultKeys;
   }
 
   /**
@@ -107,7 +110,7 @@ export class GenerativeElasticSystem extends System {
     const query = render(this.configuration.search.query, context);
     const results = await queryElastic(query, this.configuration.search, this.logbook);
     context.variables.results = results
-      .map((result, index) => "[" + (index+1) + "]\n" + joinProperties(result))
+      .map((result, index) => "[" + (index+1) + "]\n" + joinProperties(result, this.searchResultKeys))
       .join("\n\n");
 
     const systemResponse = await this.llm.json(

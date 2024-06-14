@@ -1,16 +1,17 @@
 import { Logbook } from "./logbook.js";
 
-import { StaticUser } from "./users/static-user.js"
+import { USER_TURN } from "./user.js";
+import { StaticUser } from "./users/static-user.js";
 const users = {
   StaticUser
 }
 
-import { GenerativeElasticSystem } from "./systems/generative-elastic-system.js"
+import { GenerativeElasticSystem } from "./systems/generative-elastic-system.js";
 const systems = {
   GenerativeElasticSystem
 }
 
-import { ReadabilityEvaluator } from "./evaluators/readability-evaluator.js"
+import { ReadabilityEvaluator } from "./evaluators/readability-evaluator.js";
 const evaluators = {
   ReadabilityEvaluator
 }
@@ -21,6 +22,28 @@ const evaluators = {
  * @typedef {Object} Topic
  * @property {string} description - A natural language description of the
  * information task to be accomplished
+ */
+
+/**
+ * Object that represents a completed simulation.
+ * @typedef {Object} Simulation
+ * @property {Object} configuration - The configuration of the simulation
+ * @property {Array} turns - List of simulated {@link UserTurn}s (each one
+ * includes the system's response)
+ */
+
+/**
+ * Object that represents the evaluation of a simulation.
+ * @typedef {Object} Evaluation
+ * @property {Object} configuration - The configuration of the evaluation
+ * @property {Simulation} simulation - The simulation that was evaluated
+ * @property {Array} userTurnsEvaluations - For each user turn of the
+ * simulation, in order, an object where the keys are the names of the
+ * configured evaluators (if they evaluated the specific turn of the simulation)
+ * and the values are the respective {@link EvaluationResult}s
+ * @property {Object} overallEvaluations - An object where the keys are the
+ * names of the configured evaluators (if they evaluated the overall simulation)
+ * and the values are the respective {@link EvaluationResult}s
  */
 
 /**
@@ -48,6 +71,7 @@ const evaluators = {
  * @param {Object} [additionalSystems] - Object that contains non-standard
  * {System} classes as values; if `configuration.system.class` is the same as a
  * key of this object, the corresponding class will be instantiated and used
+ * @returns {Simulation} - The simulation object
  */
 export async function simulate(
     configuration, logCallback = console.log,
@@ -67,33 +91,33 @@ export async function simulate(
 
   // first turn
   let userTurn = await user.start(configuration.topic);
-  simulation.turns = [userTurn];
+  simulation.userTurns = [userTurn];
   userTurn.systemResponse = await system.search(userTurn);
 
-  // follow-up turns
+  // follow-up userTurns
   const maxTurns = (configuration.maxTurns || 3);
   for (let t = 2; t <= configuration.maxTurns; t += 1) {
     userTurn = await user.followup(userTurn.systemResponse);
-    simulation.turns.push(userTurn);
-    userTurn.systemResponse = await system.search(userTurn);
+    simulation.userTurns.push(userTurn);
+    userTurn[USER_TURN.SYSTEM_RESPONSE] = await system.search(userTurn);
   }
 
   return simulation;
 }
 
-async function evaluateTurn(instantiatedEvaluators, logbook, simulation, turnIndex) {
+async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex) {
   const evaluations = {};
   for (const [name, evaluator] of Object.entries(instantiatedEvaluators)) {
-    if (turnIndex !== undefined) {
-      logbook.log("evaluate.turn" + turnIndex + "." + name,
-        {turn: turnIndex, evaluator: name});
+    if (userTurnIndex !== undefined) {
+      logbook.log("evaluate.userTurn" + userTurnIndex + "." + name,
+        {userTurn: userTurnIndex, evaluator: name});
     } else {
       logbook.log("evaluate.overall." + name, {evaluator: name});
     }
-    const evaluation = await evaluator.evaluate(simulation, turnIndex);
+    const evaluation = await evaluator.evaluate(simulation, userTurnIndex);
     if (evaluation !== null) {
       logbook.log("evaluated",
-        {turn: turnIndex, evaluator: name, result: evaluation});
+        {userTurn: userTurnIndex, evaluator: name, result: evaluation});
       evaluations[name] = evaluation;
     }
   }
@@ -103,6 +127,7 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, turnInd
 /**
  * Evaluates a simulated interaction with a generative information retrieval system.
  *
+ * @param {Simulation} simulation - The simulation to evaluate
  * @param {Object} configuration - The configuration for the evaluation
  * @param {Object} configuration.evaluators - An object where each value is
  * another configuration object that (1) is passed to the respective evaluator
@@ -115,6 +140,7 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, turnInd
  * {Evaluator} classes as values; if
  * `configuration.evaluators.[evaluatorName].class` is the same as a key of this
  * object, the corresponding class will be instantiated and used
+ * @returns {Evaluation} - The evaluation object
  */
 export async function evaluate(
     simulation, configuration, logCallback = console.log,
@@ -132,10 +158,10 @@ export async function evaluate(
       evaluatorConfiguration, evaluatorLogbook);
   });
 
-  const turnsEvaluations = [];
-  for (let turnIndex = 0; turnIndex < simulation.turns.length; turnIndex += 1) {
-    if (simulation.turns[turnIndex].response !== undefined) {
-      turnsEvaluations.push(evaluateTurn(instantiatedEvaluators, logbook, simulation, turnIndex));
+  const userTurnsEvaluations = [];
+  for (let userTurnIndex = 0; userTurnIndex < simulation.userTurns.length; userTurnIndex += 1) {
+    if (simulation.userTurns[userTurnIndex].systemResponse !== undefined) {
+      userTurnsEvaluations.push(evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex));
     }
   }
   const overallEvaluations = evaluateTurn(instantiatedEvaluators, logbook, simulation);
@@ -143,7 +169,7 @@ export async function evaluate(
   return {
     configuration: configuration,
     simulation: simulation,
-    turnsEvaluations: turnsEvaluations,
+    userTurnsEvaluations: userTurnsEvaluations,
     overallEvaluations: overallEvaluations
   };
 }
@@ -171,6 +197,7 @@ export async function evaluate(
  * {Evaluator} classes as values; if
  * `configuration.evaluation.evaluators.[evaluatorName].class` is the same as a
  * key of this object, the corresponding class will be instantiated and used
+ * @returns {Evaluation} - The evaluation object
  */
 export async function run(configuration, logCallback = console.log,
     additionalUsers = {}, additionalSystems = {},
@@ -182,17 +209,17 @@ export async function run(configuration, logCallback = console.log,
   return evaluation;
 }
 
-import { Evaluator } from "./evaluator.js";
+import { Evaluator, EVALUATION_RESULT } from "./evaluator.js";
 import { LogbookEntry } from "./logbook.js";
-import { System } from "./system.js";
+import { System, SYSTEM_RESPONSE } from "./system.js";
 import { User } from "./user.js";
 import { LLM } from "./llm.js";
 import * as templates from "./templates.js";
 
 export {
-  User,
-  System,
-  Evaluator,
+  User, USER_TURN,
+  System, SYSTEM_RESPONSE,
+  Evaluator, EVALUATION_RESULT,
   Logbook,
   LogbookEntry,
   LLM,

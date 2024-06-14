@@ -1,6 +1,7 @@
 import { Logbook } from "../logbook.js";
 import { Evaluator, EVALUATION_RESULT } from "../evaluator.js";
 import { USER_TURN } from "../user.js";
+import { SYSTEM_RESPONSE } from "../system.js";
 
 // Source: https://github.com/sahava/readability-score-javascript
 function calculateReadability(text) {
@@ -338,12 +339,12 @@ export class ReadabilityEvaluator extends Evaluator {
     super(configuration, logbook);
   }
 
-  async evaluate(simulation, turnIndex) {
-    if (turnIndex === undefined) {
+  async evaluate(simulation, userTurnIndex) {
+    if (userTurnIndex === undefined) {
       return null; // only evaluates last response
     }
 
-    const result = calculateReadability(simulation.userTurns[turnIndex]["response"][USER_TURN.UTTERANCE]);
+    const result = calculateReadability(simulation.userTurns[userTurnIndex][USER_TURN.SYSTEM_RESPONSE][SYSTEM_RESPONSE.UTTERANCE]);
     result[EVALUATION_RESULT.SCORE] = 1 / result[this.configuration.measure];
     result[EVALUATION_RESULT.EXPLANATION] = "The score is the inverse of the "
       + this.configuration.measure + " (which is "

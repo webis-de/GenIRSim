@@ -19,10 +19,12 @@ toc:
   - Logbook
   - templates
   - name: Types
+  - Evaluation
   - EvaluationResult
   - EVALUATION_RESULT
   - LLMConfiguration
   - LogbookEntry
+  - Simulation
   - SystemResponse
   - SYSTEM_RESPONSE
   - Topic

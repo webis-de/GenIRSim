@@ -4,7 +4,10 @@ import { Logbook } from "./logbook.js";
  * Object that represents a user's turn in the simulated conversation with at
  * least the user's utterance.
  * @typedef {Object} UserTurn
- * @property {string} utterance - The simulated utterance of the user
+ * @property {string} utterance - The simulated utterance sent from the user to
+ * the system
+ * @property {SystemResponse} systemResponse - The response sent from the system
+ * to the user as a reply
  */
 
 /**
@@ -12,9 +15,13 @@ import { Logbook } from "./logbook.js";
  */
 export const USER_TURN = {
   /**
-   * The utterance sent from the user to the system.
+   * The simulated utterance sent from the user to the system.
    */
-  UTTERANCE: "utterance"
+  UTTERANCE: "utterance",
+  /**
+   * The {@link SystemResponse} sent from the system to the user as a reply.
+   */
+  SYSTEM_RESPONSE: "systemResponse"
 };
 
 /**
