@@ -108,12 +108,6 @@ export async function simulate(
 async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex) {
   const evaluations = {};
   for (const [name, evaluator] of Object.entries(instantiatedEvaluators)) {
-    if (userTurnIndex !== undefined) {
-      logbook.log("evaluate.userTurn" + userTurnIndex + "." + name,
-        {userTurn: userTurnIndex, evaluator: name});
-    } else {
-      logbook.log("evaluate.overall." + name, {evaluator: name});
-    }
     const evaluation = await evaluator.evaluate(simulation, userTurnIndex);
     if (evaluation !== null) {
       logbook.log("evaluated",
@@ -160,11 +154,14 @@ export async function evaluate(
 
   const userTurnsEvaluations = [];
   for (let userTurnIndex = 0; userTurnIndex < simulation.userTurns.length; userTurnIndex += 1) {
+    logbook.log("evaluate", {userTurn: userTurnIndex});
     if (simulation.userTurns[userTurnIndex].systemResponse !== undefined) {
-      userTurnsEvaluations.push(evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex));
+      const evaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex);
+      userTurnsEvaluations.push(evaluations);
     }
   }
-  const overallEvaluations = evaluateTurn(instantiatedEvaluators, logbook, simulation);
+  logbook.log("evaluate", "overall");
+  const overallEvaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation);
 
   return {
     configuration: configuration,
