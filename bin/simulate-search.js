@@ -8,7 +8,7 @@ async function run(configurationJson, replacements = undefined) {
     ? configurationJson
     : genirsim.templates.texts.render(configurationJson, replacements, true));
   const evaluation = await genirsim.run(configuration,
-    entry => console.log(JSON.stringify(entry)));
+    entry => console.error(JSON.stringify(entry)));
   console.log(JSON.stringify(evaluation));
 }
 

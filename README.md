@@ -1,1 +1,3 @@
-documentation build -f html -o doc/api/ --github --config doc/api/config.yml
+```
+npm exec simulate-search configurations/default-configuration.json > eval.json
+```
