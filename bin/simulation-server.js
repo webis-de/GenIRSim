@@ -2,7 +2,6 @@
 
 import * as genirsim from "../src/index.js";
 
-
 //////
 // WEB SOCKET
 ////
@@ -35,17 +34,21 @@ import path from "path";
 import process from "process";
 
 const PORT = 8000;
-const PATH = path.normalize(path.join(process.cwd(), "web"));
+const PATH = path.normalize(path.join(process.cwd(), "static"));
 
 const MIME_TYPES = {
   default: "application/octet-stream",
+  css: "text/css",
   html: "text/html; charset=UTF-8",
   js: "application/javascript",
-  css: "text/css"
+  json: "application/json",
+  tsv: "text/tab-separated-values"
 };
 
 const server = http.createServer(async (request, response) => {
-    const file = path.normalize(path.join(PATH, request.url));
+    let file = path.normalize(path.join(PATH, request.url));
+    if (file === PATH + "/") { file = path.join(PATH, "index.html"); }
+
     if (!file.startsWith(PATH)
         || !fs.existsSync(file)
         || !fs.lstatSync(file).isFile()) {
@@ -64,7 +67,4 @@ server.on("upgrade", (request, socket, head) => {
   });
 });
 server.listen(PORT);
-
-
-
 
