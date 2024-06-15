@@ -1,0 +1,19 @@
+#editor details {
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+#editor details > details {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#editor textarea, #editor input {
+  width: 100%;
+  resize: vertical;
+  box-sizing: border-box;
+  border: 0px;
+}
+#editor textarea {
+  height: 200px;
+}
+

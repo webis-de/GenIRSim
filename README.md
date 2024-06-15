@@ -2,6 +2,7 @@
 npm exec simulate-search configurations/default-configuration.json > eval.json
 ```
 
+To run web server: 
 ```
-window.location.protocol.replace("http", "ws") + "//" + window.location.host
+npm install ws
 ```

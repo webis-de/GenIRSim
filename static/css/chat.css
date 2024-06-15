@@ -1,0 +1,78 @@
+#chat {
+  border: 1px solid black;
+  padding: 10px;
+  overflow-y: scroll;
+  white-space: break-spaces;
+}
+#chat .bubble {
+  width: 80%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+#chat .bubble.topic {
+  margin-left: auto;
+  margin-right: auto;
+  font-style: italic;
+}
+#chat .bubble.topic::before {
+  content: "Simulation starts for topic:";
+  display: block;
+  font-style: initial;
+}
+#chat .bubble.user {
+  background-color: aquamarine;
+}
+#chat .bubble.user::before {
+  content: "User: ";
+  font-weight: bold;
+}
+#chat .bubble.system {
+  background-color: aliceblue;
+  margin-left: auto;
+}
+#chat .bubble.system::before {
+  content: "System: ";
+  font-weight: bold;
+}
+#chat .bubble.info {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#chat .bubble.error {
+  background-color: red;
+  margin-left: auto;
+  margin-right: auto;
+}
+#chat .scores {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#chat .scores > span {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+#chat .scores > span > label {
+  background-color: yellow;
+  border: 1px solid black;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 2px;
+  padding-left: 7px;
+  padding-right: 5px;
+}
+#chat .scores > span > span {
+  background-color: white;
+  border: 1px solid black;
+  border-left-color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 7px;
+}

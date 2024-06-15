@@ -13,8 +13,10 @@ webSocketServer.on('connection', socket => {
     try {
       const configuration = JSON.parse(message.toString());
       console.log("Running for: " + JSON.stringify(configuration));
-      const evaluation = await genirsim.run(configuration,
-        entry => socket.send(JSON.stringify(entry)));
+      const options = {
+        logCallback: entry => socket.send(JSON.stringify(entry))
+      };
+      const evaluation = await genirsim.run(configuration, options);
       socket.send(JSON.stringify(evaluation));
       socket.close();
     } catch (error) {

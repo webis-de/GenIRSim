@@ -82,8 +82,8 @@ export async function simulate(configuration, options = undefined) {
   const additionalUsers = (options || {}).additionalUsers || {};
   const additionalSystems = (options || {}).additionalSystems || {};
 
-  const logbook = new Logbook("controller", logCallback);
-  logbook.log("simulate");
+  const controllerLogbook = new Logbook("controller", logCallback);
+  controllerLogbook.log("simulate");
   const availableUsers =
     Object.assign(Object.assign({}, users), additionalUsers);
   const availableSystems =
@@ -108,6 +108,7 @@ export async function simulate(configuration, options = undefined) {
     userTurn[USER_TURN.SYSTEM_RESPONSE] = await system.search(userTurn);
   }
 
+  controllerLogbook.log("done");
   return simulation;
 }
 
@@ -146,9 +147,10 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
 export async function evaluate(simulation, configuration, options = undefined) {
   const logCallback = (options || {}).logCallback || defaultLogCallback;
   const additionalEvaluators = (options || {}).additionalEvaluators || {};
+  const controllerLogbook = new Logbook("controller", logCallback);
+  controllerLogbook.log("evaluate");
 
   const logbook = new Logbook("evaluation", logCallback);
-  logbook.log("evaluate");
   const availableEvaluators =
     Object.assign(Object.assign({}, evaluators), additionalEvaluators);
 
@@ -171,6 +173,7 @@ export async function evaluate(simulation, configuration, options = undefined) {
   logbook.log("evaluate", "overall");
   const overallEvaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation);
 
+  controllerLogbook.log("done");
   return {
     configuration: configuration,
     simulation: simulation,
