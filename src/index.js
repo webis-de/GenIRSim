@@ -1,4 +1,5 @@
 import { Logbook } from "./logbook.js";
+import * as templates from "./templates.js";
 
 import { USER_TURN } from "./user.js";
 import { StaticUser } from "./users/static-user.js";
@@ -16,6 +17,7 @@ const evaluators = {
   ReadabilityEvaluator
 }
 
+const defaultLogCallback = entry => console.error(JSON.stringify(entry));
 
 /**
  * Object that represents a topic (or task, information need).
@@ -63,25 +65,29 @@ const evaluators = {
  * either one of the standard classes of GenIRSim or one in `additionalSystems`
  * @param {number} [configuration.maxTurns] - The maximum number of user turns
  * to simulate (default: 3)
- * @param {function} [logCallback] - The function to consume all
+ * @param {Object} [options] -
+ * @param {function} [options.logCallback] - The function to consume all
  * {@link LogbookEntry} of the simulation
- * @param {Object} [additionalUsers] - Object that contains non-standard {User}
- * classes as values; if `configuration.user.class` is the same as a key of this
- * object, the corresponding class will be instantiated and used
- * @param {Object} [additionalSystems] - Object that contains non-standard
- * {System} classes as values; if `configuration.system.class` is the same as a
- * key of this object, the corresponding class will be instantiated and used
+ * @param {Object} [options.additionalUsers] - Object that contains non-standard
+ * {User} classes as values; if `configuration.user.class` is the same as a key
+ * of this object, the corresponding class will be instantiated and used
+ * @param {Object} [options.additionalSystems] - Object that contains
+ * non-standard {System} classes as values; if `configuration.system.class` is
+ * the same as a key of this object, the corresponding class will be
+ * instantiated and used
  * @returns {Simulation} - The simulation object
  */
-export async function simulate(
-    configuration, logCallback = console.log,
-    additionalUsers = {}, additionalSystems = {}) {
+export async function simulate(configuration, options = undefined) {
+  const logCallback = (options || {}).logCallback || defaultLogCallback;
+  const additionalUsers = (options || {}).additionalUsers || {};
+  const additionalSystems = (options || {}).additionalSystems || {};
+
   const logbook = new Logbook("controller", logCallback);
   logbook.log("simulate");
   const availableUsers =
-    Object.assign(Object.assign({}, users), additionalUsers || {});
+    Object.assign(Object.assign({}, users), additionalUsers);
   const availableSystems =
-    Object.assign(Object.assign({}, systems), additionalSystems || {});
+    Object.assign(Object.assign({}, systems), additionalSystems);
 
   const user = new availableUsers[configuration.user.class](
     configuration.user, new Logbook("user", logCallback));
@@ -128,21 +134,23 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
  * in the the constructor and (2) has a property `class` that is the name of the
  * evaluator class, either one of the standard classes of GenIRSim or one in
  * `additionalEvaluators`
- * @param {function} [logCallback] - The function to consume all
+ * @param {Object} [options] -
+ * @param {function} [options.logCallback] - The function to consume all
  * {@link LogbookEntry} of the evaluation
- * @param {Object} [additionalEvaluators] - Object that contains non-standard
- * {Evaluator} classes as values; if
+ * @param {Object} [options.additionalEvaluators] - Object that contains
+ * non-standard {Evaluator} classes as values; if
  * `configuration.evaluators.[evaluatorName].class` is the same as a key of this
  * object, the corresponding class will be instantiated and used
  * @returns {Evaluation} - The evaluation object
  */
-export async function evaluate(
-    simulation, configuration, logCallback = console.log,
-    additionalEvaluators = {}) {
+export async function evaluate(simulation, configuration, options = undefined) {
+  const logCallback = (options || {}).logCallback || defaultLogCallback;
+  const additionalEvaluators = (options || {}).additionalEvaluators || {};
+
   const logbook = new Logbook("evaluation", logCallback);
   logbook.log("evaluate");
   const availableEvaluators =
-    Object.assign(Object.assign({}, evaluators), additionalEvaluators || {});
+    Object.assign(Object.assign({}, evaluators), additionalEvaluators);
 
   const instantiatedEvaluators = {};
   Object.keys(configuration.evaluators || {}).forEach(name => {
@@ -175,35 +183,77 @@ export async function evaluate(
  * Simulates and evaluates an interaction with a generative information
  * retrieval system.
  *
- * @param {Object} configuration - The configuration for the simulation and
- * evaluation
+ * @param {(Object|string)} configuration - The configuration for the simulation
+ * and evaluation, either as object or a JSON string
  * @param {Object} configuration.simulation - The configuration for the
  * simulation, see {@link simulate}
  * @param {Object} configuration.evaluation - The configuration for the
  * evaluation, see {@link evaluate}
- * @param {function} [logCallback] - The function to consume all
+ * @param {Object} [options] -
+ * @param {function} [options.logCallback] - The function to consume all
  * {@link LogbookEntry} of the simulation and evaluation
- * @param {Object} [additionalUsers] - Object that contains non-standard {User}
+ * @param {Object} [options.additionalUsers] - Object that contains non-standard {User}
  * classes as values; if `configuration.simulation.user.class` is the same as a
  * key of this object, the corresponding class will be instantiated and used
- * @param {Object} [additionalSystems] - Object that contains non-standard
+ * @param {Object} [options.additionalSystems] - Object that contains non-standard
  * {System} classes as values; if `configuration.simulation.system.class` is the
  * same as a key of this object, the corresponding class will be instantiated
  * and used
- * @param {Object} [additionalEvaluators] - Object that contains non-standard
+ * @param {Object} [options.additionalEvaluators] - Object that contains non-standard
  * {Evaluator} classes as values; if
  * `configuration.evaluation.evaluators.[evaluatorName].class` is the same as a
  * key of this object, the corresponding class will be instantiated and used
- * @returns {Evaluation} - The evaluation object
+ * @param {(Object|Array|String)} [replacements] - An object that specifies
+ * the value to replace template variables in the `configuration`
+ * (`{{variable}}`) by. If the `configuration` is a `string`, the replacement
+ * happens before JSON parsing, allowing to replace variables with JSON
+ * structures. Variables in the `configuration` for which no value is specified
+ * in `replacements` are ignored. If `replacements` is an array, this function
+ * is executed for each of its elements and the resulting list of evaluation
+ * objects is returned. If `replacements` is a string, it is treated as a
+ * tab-separated values files that specifies an array of replacements: the first
+ * line specifying the variable name of a column and the values in that column
+ * in other lines being the respective replacement.
+ * @returns {(Evaluation|Array)} - The evaluation object or an array of these if
+ * `replacements` is an array or string; an empty object is returned in case of
+ * an error
  */
-export async function run(configuration, logCallback = console.log,
-    additionalUsers = {}, additionalSystems = {},
-    additionalEvaluators = {}) {
-  const simulation = await simulate(configuration.simulation, logCallback,
-    additionalUsers, additionalSystems);
-  const evaluation = await evaluate(simulation, configuration.evaluation,
-    logCallback, additionalEvaluators);
-  return evaluation;
+export async function run(
+    configuration,
+    options = undefined,
+    replacements = undefined) {
+  const logCallback = (options || {}).logCallback || defaultLogCallback;
+  const logbook = new Logbook("controller", logCallback);
+  if (replacements === undefined) {
+    if (typeof(configuration) === "string") {
+      return await run(JSON.parse(configuration), options);
+    } else {
+      try {
+        const simulation = await simulate(configuration.simulation, options);
+        return await evaluate(simulation, configuration.evaluation, options);
+      } catch (error) {
+        logbook.log("error", error.toString());
+        return {};
+      }
+    }
+  } else if (typeof(replacements) === "object") {
+    if (Array.isArray(replacements)) {
+      return await Promise.all(replacements.map(
+        async (singleReplacements, index) => {
+          logbook.log("run", index);
+          return await run(configuration, options, singleReplacements);
+        }));
+    } else {
+      return await run(
+        templates.render(configuration, replacements, { ignoreMissing: true }),
+        options);
+    }
+  } else if (typeof(replacements) === "string") {
+    return await run(configuration, options, templates.tsv2Contexts(replacements));
+  } else {
+    throw new Error("Replacements of type " + typeof(replacements)
+      + " not supported");
+  }
 }
 
 import { Evaluator, EVALUATION_RESULT } from "./evaluator.js";
@@ -211,7 +261,6 @@ import { LogbookEntry } from "./logbook.js";
 import { System, SYSTEM_RESPONSE } from "./system.js";
 import { User } from "./user.js";
 import { LLM } from "./llm.js";
-import * as templates from "./templates.js";
 
 export {
   User, USER_TURN,
