@@ -97,9 +97,12 @@ export class Logbook {
    * @param {string} action - The action for which to log
    * @param {(Object|string)} [object] - An optional object or string describing
    * the event that is logged
+   * @returns {LogbookEntry} - The logged entry
    */
   log(action, object) {
-    this.callback(new LogbookEntry(this.source, action, object));
+    const entry = new LogbookEntry(this.source, action, object);
+    this.callback(entry);
+    return entry;
   }
 
 }

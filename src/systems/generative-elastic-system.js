@@ -20,7 +20,7 @@ async function queryElastic(query, searchConfiguration, logbook) {
     result.key = index + 1;
     result.id = hit["_id"];
     result.score = hit["_score"];
-    logbook.log("result[" + index + "]", result);
+    logbook.log("result", result);
     return result;
   });
   return results;

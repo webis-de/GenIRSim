@@ -21,22 +21,18 @@
   display: block;
   font-style: initial;
 }
-#chat .bubble.user {
-  background-color: aquamarine;
-}
-#chat .bubble.user::before {
+#chat .bubble[data-source="user"]::before {
   content: "User: ";
   font-weight: bold;
 }
-#chat .bubble.system {
-  background-color: aliceblue;
+#chat .bubble[data-source="system"] {
   margin-left: auto;
 }
-#chat .bubble.system::before {
+#chat .bubble[data-source="system"]::before {
   content: "System: ";
   font-weight: bold;
 }
-#chat .bubble.info {
+#chat .bubble[data-source="controller"] {
   text-align: center;
   margin-left: auto;
   margin-right: auto;

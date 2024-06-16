@@ -51,14 +51,31 @@ main .pane > .area {
   }
 }
 
+[data-source="user"] {
+  background-color: #E6F8B8;
+}
+[data-source="system"] {
+  background-color: #D3F8F7;
+}
+[data-source="evaluation"] {
+  background-color: #FFEC99;
+}
 
 summary {
   cursor: pointer;
   padding: 5px;
-  border-bottom: 1px solid black;
 }
 summary:hover {
   background-color: lightgray;
+}
+details.empty summary {
+  cursor: default;
+}
+details.empty summary:hover {
+  background-color: initial;
+}
+details.empty summary::marker {
+  color: rgba(0,0,0,0);
 }
 
 .buttons {
@@ -67,6 +84,11 @@ summary:hover {
 }
 .bubble .buttons {
   text-align: center;
+}
+.buttons > a[disabled], .drop-zone label[disabled], button[disabled] {
+  cursor: not-allowed;
+  color: #888888;
+  background: #CCCCCC;
 }
 .buttons > a, .drop-zone label, button {
   text-decoration: none;

@@ -1,7 +1,14 @@
 #messages {
-  color: white;
-  background-color: black;
   overflow-y: scroll;
   white-space: break-spaces;
+  border: 1px solid black;
+  padding: 2px;
+}
+
+#messages details {
+  border-bottom: 1px solid black;
+}
+#messages details:not(.empty) > div {
+  padding-bottom: 10px;
 }
 
