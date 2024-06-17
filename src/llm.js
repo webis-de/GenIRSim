@@ -1,4 +1,5 @@
 import { Logbook } from "./logbook.js";
+import { jsonrepair } from "jsonrepair";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamDefaultReader/read#examples
 async function* fetchLines(url, params) {
@@ -60,6 +61,61 @@ async function generate(messages, configuration, logbook, action) {
     const body = JSON.stringify(data);
     fetchJsonLines(url, { method: "POST", body: body }, handler);
   });
+}
+
+function parseJson(message, requiredKeys) {
+  let processedMessage = message
+    .trim()
+    .replace(/^```(json)?/, "")
+    .replace(/```$/, "")
+    .trim();
+  try {
+    return JSON.parse(processedMessage);
+  } catch (error) {
+    console.error("Invalid json (after 1): " + processedMessage);
+  }
+
+  /*
+   * {
+   * - key: "foo",
+   *   value: "bar
+   * }
+   */
+  processedMessage = processedMessage.replaceAll(
+    /(- )?['"]?key['"]?\s*[:=]\s*['"]([^'"]*)['"],\s*['"]?value['"]?\s*[:=]\s*/g,
+    '"$2":'
+  );
+  try {
+    return JSON.parse(processedMessage);
+  } catch (error) {
+    console.error("Invalid json (after 2): " + processedMessage);
+  }
+
+  /*
+   * {
+   *   "foo1": "bar"
+   * },
+   * {
+   *   "foo2": "bar"
+   * }
+   */
+  processedMessage = processedMessage.replaceAll(/},\s*{/g, ",");
+  try {
+    return JSON.parse(processedMessage);
+  } catch (error) {
+    console.error("Invalid json (after 3): " + processedMessage);
+  }
+
+  /*
+   * Use JSON repair library
+   */
+  processedMessage = jsonrepair(processedMessage);
+  try {
+    return JSON.parse(processedMessage);
+  } catch (error) {
+    console.error("Invalid json (after 4): " + processedMessage);
+    throw error;
+  }
 }
 
 /**
@@ -147,11 +203,9 @@ export class LLM {
    */
   async json(messages, action, requiredKeys = [], maxRetries = 3) {
     retryLoop: for (let retry = 0; retry <= maxRetries; retry += 1) {
-      const message = (await this.chat(messages, action))
-        .trim()
-        .replace(/^```json/, "").replace(/```$/, "").trim();
+      const message = await this.chat(messages, action);
       try {
-        const parsedMessage = JSON.parse(message);
+        const parsedMessage = parseJson(message, requiredKeys);
         for (const key of requiredKeys) {
           if (!(key in parsedMessage)) {
             this.logbook.log(action + " [failed " + (retry+1) + "/" + (maxRetries+1) + "]",
@@ -159,10 +213,12 @@ export class LLM {
             continue retryLoop;
           }
         }
+        this.logbook.log(action + ".response.parsed", parsedMessage);
         return parsedMessage;
       } catch (error) {
         this.logbook.log(action + " [failed " + (retry+1) + "/" + (maxRetries+1) + "]",
           "Failed parsing JSON");
+        console.error(error);
         continue retryLoop;
       }
     }

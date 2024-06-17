@@ -78,7 +78,7 @@ export async function run(configuration) {
       log(message);
       if (message.source === "user" || message.source === "system") {
         const chatBubble = ensureChatBubble(message.source);
-        if (message.action === "turn") {
+        if (message.action === "turn complete") {
           chatBubble.innerText = message.data.utterance;
         }
       } else if (message.source === "evaluation"

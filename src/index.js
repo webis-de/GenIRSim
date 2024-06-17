@@ -83,7 +83,6 @@ export async function simulate(configuration, options = undefined) {
   const additionalSystems = (options || {}).additionalSystems || {};
 
   const controllerLogbook = new Logbook("controller", logCallback);
-  controllerLogbook.log("simulate");
   const availableUsers =
     Object.assign(Object.assign({}, users), additionalUsers);
   const availableSystems =
@@ -97,24 +96,25 @@ export async function simulate(configuration, options = undefined) {
     configuration.system, systemLogBook);
   const simulation = { configuration: Object.assign({}, configuration) };
 
+  controllerLogbook.log("simulate turn 1");
   // first turn
   let userTurn = await user.start(configuration.topic);
   simulation.userTurns = [userTurn];
-  userLogBook.log("turn", userTurn);
+  userLogBook.log("turn complete", userTurn);
   userTurn[USER_TURN.SYSTEM_RESPONSE] = await system.search(userTurn);
-  systemLogBook.log("turn", userTurn[USER_TURN.SYSTEM_RESPONSE]);
+  systemLogBook.log("turn complete", userTurn[USER_TURN.SYSTEM_RESPONSE]);
 
   // follow-up userTurns
   const maxTurns = (configuration.maxTurns || 3);
   for (let t = 2; t <= configuration.maxTurns; t += 1) {
+    controllerLogbook.log("simulate turn " + t);
     userTurn = await user.followUp(userTurn.systemResponse);
     simulation.userTurns.push(userTurn);
-    userLogBook.log("turn", userTurn);
+    userLogBook.log("turn complete", userTurn);
     userTurn[USER_TURN.SYSTEM_RESPONSE] = await system.search(userTurn);
-    systemLogBook.log("turn", userTurn[USER_TURN.SYSTEM_RESPONSE]);
+    systemLogBook.log("turn complete", userTurn[USER_TURN.SYSTEM_RESPONSE]);
   }
 
-  controllerLogbook.log("done");
   return simulation;
 }
 
@@ -124,10 +124,10 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
     const evaluation = await evaluator.evaluate(simulation, userTurnIndex);
     if (evaluation !== null) {
       if (userTurnIndex !== undefined) {
-        logbook.log("turn[" + userTurnIndex + "].result",
+        logbook.log("turn " + (userTurnIndex + 1) + " result",
           {userTurnIndex, evaluator: name, result: evaluation});
       } else {
-        logbook.log("overall.result",
+        logbook.log("overall result",
           {evaluator: name, result: evaluation});
       }
       evaluations[name] = evaluation;
@@ -175,16 +175,15 @@ export async function evaluate(simulation, configuration, options = undefined) {
 
   const userTurnsEvaluations = [];
   for (let userTurnIndex = 0; userTurnIndex < simulation.userTurns.length; userTurnIndex += 1) {
-    logbook.log("turn[" + userTurnIndex + "].evaluate");
+    logbook.log("turn " + (userTurnIndex + 1));
     if (simulation.userTurns[userTurnIndex].systemResponse !== undefined) {
       const evaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex);
       userTurnsEvaluations.push(evaluations);
     }
   }
-  logbook.log("overall.evaluate");
+  logbook.log("overall");
   const overallEvaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation);
 
-  controllerLogbook.log("done");
   return {
     configuration: configuration,
     simulation: simulation,

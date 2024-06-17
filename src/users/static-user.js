@@ -32,7 +32,7 @@ export class StaticUser extends User {
 
   async ask(promptTemplate, context) {
     const message = this.llm.createUserMessage(render(promptTemplate, context));
-    const turn = await this.llm.json([message], [ USER_TURN.UTTERANCE ]);
+    const turn = await this.llm.json([message], "generation", [ USER_TURN.UTTERANCE ]);
     return turn;
   }
 

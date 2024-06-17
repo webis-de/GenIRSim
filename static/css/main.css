@@ -68,6 +68,12 @@ summary {
 summary:hover {
   background-color: lightgray;
 }
+details summary {
+	transition: margin-bottom 250ms ease-out;
+}
+details[open]:not(.empty) > summary {
+	margin-bottom: 5px;
+}
 details.empty summary {
   cursor: default;
 }

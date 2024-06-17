@@ -7,7 +7,8 @@
       "class": "StaticUser",
       "llm": {
         "url": "https://llm.srv.webis.de/api/chat",
-        "model": "default"
+        "model": "default",
+        "keep_alive": "24h"
       },
       "start": "You have the following task: {{variables.topic.description}}\n\n{{formatting}}\n\n",
       "followUp": "{{variables.systemResponse.utterance}}\n\nFollow up on the response above. {{formatting}}\n\n",
@@ -17,7 +18,8 @@
       "class": "GenerativeElasticSystem",
       "llm": {
         "url": "https://llm.srv.webis.de/api/chat",
-        "model": "default"
+        "model": "default",
+        "keep_alive": "24h"
       },
       "search": {
         "url": "http://localhost:9200/wikipedia/",
@@ -32,11 +34,14 @@
       },
       "generation": {
         "message": "\n\nIn order to answer the following QUERY, you found the following information:\n\n{{variables.results}}\n\nNow use this information to write a short summarizing answer of about 50 words for the QUERY.\n\nQUERY: {{variables.userTurn.utterance}}\n\n{{generation.formatting}}\n\n",
-        "searchResultKeys": [ "title", "text" ],
-        "formatting": "Format your message as JSON with this key:\n- key='utterance': The short summarizing answer."
+        "searchResultKeys": [
+          "title",
+          "text"
+        ],
+        "formatting": "Format your message as JSON with the single key 'utterance'."
       }
     },
-    "maxTurns": 1
+    "maxTurns": 2
   },
   "evaluation": {
     "evaluators": {

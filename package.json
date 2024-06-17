@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "Framework for evaluating Generative Information Retrieval systems through simulation.",
   "main": "src/index.js",
-  "files": [ "bin", "src" ],
+  "files": [
+    "bin",
+    "src"
+  ],
   "bin": {
     "simulate": "bin/simulate.js",
     "simulation-server": "bin/simulation-server.js"
@@ -11,7 +14,13 @@
   "scripts": {
     "doc": "documentation build -f html -o doc/api/ --github --config doc/api/config.yml"
   },
+  "dependencies": {
+    "jsonrepair": "^3.8.0"
+  },
   "type": "module",
   "author": "Johannes Kiesel <johannes.kiesel@uni-weimar.de>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.17.1"
+  }
 }

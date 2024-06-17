@@ -10,7 +10,7 @@ async function queryElastic(query, searchConfiguration, logbook) {
   headers.append("Content-Type", "application/json");
   const params = { method: "POST", headers: headers, body: body };
 
-  logbook.log("retrieve", query);
+  logbook.log("retrieval.query", query);
   const response = await fetch(
     searchConfiguration.url + "_search?size=" + searchConfiguration.size,
     params);
@@ -20,7 +20,7 @@ async function queryElastic(query, searchConfiguration, logbook) {
     result.key = index + 1;
     result.id = hit["_id"];
     result.score = hit["_score"];
-    logbook.log("result", result);
+    logbook.log("retrieval.result", result);
     return result;
   });
   return results;
