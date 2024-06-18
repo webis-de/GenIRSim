@@ -336,10 +336,10 @@ function calculateReadability(text) {
 export class ReadabilityEvaluator extends Evaluator {
 
   constructor(configuration, logbook) {
-    super(configuration, logbook);
+    super(configuration);
   }
 
-  async evaluate(simulation, userTurnIndex) {
+  async evaluate(simulation, userTurnIndex, logbook) {
     if (userTurnIndex === undefined) {
       return null; // only evaluates last response
     }

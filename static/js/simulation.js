@@ -57,6 +57,65 @@ function ensureChatBubble(side) {
   return bubbleElement;
 }
 
+function ensureScoreBadge(message) {
+  let userTurnIndex = undefined;
+  if (message.data !== undefined && message.data.userTurnIndex !== undefined) {
+    userTurnIndex = message.data.userTurnIndex;
+  } else {
+    const match = message.action.match(/^turn ([0-9]*)/);
+    if (match !== null) { userTurnIndex = parseInt(match[1]); }
+  }
+
+  let evaluator = undefined
+  if (message.data !== undefined && message.data.evaluator !== undefined) {
+    evaluator = message.data.evaluator;
+  } else {
+    const match = message.action.match(/^turn [0-9]* ([^\.]*)/);
+    if (match !== null) { evaluator = match[1]; }
+  }
+  if (userTurnIndex === undefined || evaluator === undefined) { return null; }
+
+  let scoreElement = document.querySelector(
+    "#chat .badge[data-user-turn-index='"+userTurnIndex
+    +"'][data-evaluator='"+evaluator+"'] .score");
+  if (scoreElement !== null) { return scoreElement; }
+
+  const turnElement =
+    document.querySelectorAll(".bubble[data-source='system']")[userTurnIndex];
+  if (turnElement === undefined) {
+    throw new Error("No bubble for system turn " + userTurnIndex);
+  }
+  let scoresElement = turnElement.querySelector(".scores");
+  if (scoresElement === null) {
+    scoresElement = document.createElement("div");
+    scoresElement.classList.add("scores");
+    turnElement.appendChild(scoresElement);
+  }
+
+  const badgeElement = document.createElement("span");
+  badgeElement.classList.add("badge");
+  badgeElement.setAttribute("data-user-turn-index", userTurnIndex);
+  badgeElement.setAttribute("data-evaluator", evaluator);
+  scoresElement.appendChild(badgeElement)
+
+  const labelElement = document.createElement("label");
+  labelElement.classList.add("evaluator");
+  labelElement.textContent = evaluator;
+  badgeElement.appendChild(labelElement);
+
+  scoreElement = document.createElement("span");
+  scoreElement.classList.add("score");
+  badgeElement.appendChild(scoreElement);
+
+  const loaderElement = document.createElement("span");
+  loaderElement.classList.add("loader");
+  scoreElement.appendChild(loaderElement)
+
+  badgeElement.scrollIntoView({block: "end", behavior:"smooth"});
+
+  return scoreElement;
+}
+
 
 export async function run(configuration) {
   const startButtonElement = document.getElementById("start");
@@ -81,8 +140,18 @@ export async function run(configuration) {
         if (message.action === "turn complete") {
           chatBubble.innerText = message.data.utterance;
         }
-      } else if (message.source === "evaluation"
-        && message.action.match(/\.result$/) !== null) {
+      } else if (message.source === "evaluation") {
+        const scoreBadge = ensureScoreBadge(message);
+        const data = message.data;
+        if (scoreBadge !== null
+            && message.action.match(/ result$/) !== null
+            && data !== undefined && data.result !== undefined
+            && data.result.score !== undefined) {
+          scoreBadge.innerText = data.result.score.toFixed(2);
+          if (data.result.explanation !== undefined) { 
+            scoreBadge.setAttribute("title", data.result.explanation);
+          }
+        }
       }
     } else if (message.overallEvaluations) { // final result
       console.log(message);

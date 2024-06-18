@@ -12,7 +12,7 @@
       },
       "start": "You have the following task: {{variables.topic.description}}\n\n{{formatting}}\n\n",
       "followUp": "{{variables.systemResponse.utterance}}\n\nFollow up on the response above. {{formatting}}\n\n",
-      "formatting": "Format your message as JSON with exactly these keys:\n- key='utterance': The short utterance you would send to the conversational search system to solve your task.\n- key='expectation': A description of what you expect the system's answer to contain."
+      "formatting": "Format your message as JSON with exactly these keys:\n- key='expectation': A description of what you expect the system's answer to the utterance to contain.\n- key='utterance': The short utterance you would send to the conversational search system to solve your task."
     },
     "system": {
       "class": "GenerativeElasticSystem",

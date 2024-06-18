@@ -33,15 +33,19 @@ export const USER_TURN = {
  * whereas others might have a cross-conversation state. In any case, that
  * method must be called at least once before calling {@link User#followUp}.
  *
+ * The constructor of a user must have two parameters:
+ * - The `configuration` that has to be passed via `super(configuration)` and
+ *   is then available via `this.configuration`.
+ * - A {@link Logbook} that can be used to {@link Logbook#log|log} the
+ *   initialization process.
+ *
  * @class User
  * @param {Object} configuration - The configuration for the user
- * @param {Logbook} log - A function that takes log messages
  */
 export class User {
 
-  constructor(configuration, logbook) {
+  constructor(configuration) {
     this.configuration = configuration;
-    this.logbook = logbook;
   }
 
   /**
@@ -53,9 +57,11 @@ export class User {
    * be called at least once before calling {@link User#followUp}.
    *
    * @property {Topic} topic - The topic
+   * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
+   * messages
    * @returns {UserTurn} - The turn with at least the `utterance` set
    */
-  async start(topic) { throw new Error("Not implemented"); }
+  async start(topic, logbook) { throw new Error("Not implemented"); }
 
   /**
    * Follows up on a system response to a previous utterance.
@@ -64,9 +70,11 @@ export class User {
    * least once before calling this method.
    *
    * @property {SystemResponse} response - The latest response of the system
+   * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
+   * messages
    * @returns {UserTurn} - The turn with at least the `utterance` set
    */
-  async followUp(systemResponse) { throw new Error("Not implemented"); }
+  async followUp(systemResponse, logbook) { throw new Error("Not implemented"); }
 
 }
 

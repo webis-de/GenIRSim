@@ -30,15 +30,19 @@ export const EVALUATION_RESULT = {
  * evaluate each turn, in order, starting with `turnIndex = 0`, and then to
  * evaluate the entire conversation (leaving the `turnIndex` undefined).
  *
+ * The constructor of an evaluator must have two parameters:
+ * - The `configuration` that has to be passed via `super(configuration)` and
+ *   is then available via `this.configuration`.
+ * - A {@link Logbook} that can be used to {@link Logbook#log|log} the
+ *   initialization process.
+ *
  * @class Evaluator
  * @param {Object} configuration - The configuration for the evaluator
- * @param {Logbook} log - A function that takes log messages
  */
 export class Evaluator {
 
-  constructor(configuration, logbook) {
+  constructor(configuration) {
     this.configuration = configuration;
-    this.logbook = logbook;
   }
 
   /**
@@ -50,14 +54,16 @@ export class Evaluator {
    * not be re-used to evaluate multiple conversations.
    *
    * @param {Simulation} simulation - The simulation to evaluate
-   * @param {number} [turnIndex] - Index of the user's turn (or rather the
+   * @param {number} turnIndex - Index of the user's turn (or rather the
    * response to that turn) to be evaluated, starting with 0, or undefined to
    * evaluate the entire conversation
+   * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
+   * messages
    * @returns {(EvaluationResult|null)} - The result of the evaluation, with
    * at least the score property, or `null` if the Evaluator does not evaluate
    * single turns or the complete conversation and that is what was asked
    */
-  async evaluate(simulation, turnIndex) {
+  async evaluate(simulation, turnIndex, logbook) {
     throw new Error("Not implemented");
   }
 

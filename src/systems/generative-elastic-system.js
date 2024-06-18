@@ -77,8 +77,7 @@ async function queryElastic(query, searchConfiguration, logbook) {
 export class GenerativeElasticSystem extends System {
 
   constructor(configuration, logbook) {
-    super(configuration, logbook);
-    this.llm = new LLM(configuration.llm, this.logbook);
+    super(configuration);
     this.messages = [];
     this.searchResultKeys = configuration.generation.searchResultKeys;
   }
@@ -88,11 +87,14 @@ export class GenerativeElasticSystem extends System {
    *
    * @param {UserTurn} userTurn - The turn object with the user's utterance as
    * `utterance`
+   * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
+   * messages
    * @returns {SystemResponse} - The system's response with a least the
    * `utterance` set
    */
-  async search(userTurn) {
-    this.messages.push(this.llm.createUserMessage(userTurn.utterance));
+  async search(userTurn, logbook) {
+    const llm = new LLM(this.configuration.llm, logbook);
+    this.messages.push(llm.createUserMessage(userTurn.utterance));
     const context = Object.assign({
       variables: {
         messages: joinMessages(this.messages),
@@ -101,23 +103,23 @@ export class GenerativeElasticSystem extends System {
     }, this.configuration);
 
     if (this.configuration.preprocessing) {
-      context.variables.preprocessing = await this.llm.json(
-        [ this.llm.createUserMessage(render(this.configuration.preprocessing.message, context)) ],
+      context.variables.preprocessing = await llm.json(
+        [ llm.createUserMessage(render(this.configuration.preprocessing.message, context)) ],
         "preprocessing",
         this.configuration.preprocessing.requiredKeys || []);
     }
 
     const query = render(this.configuration.search.query, context);
-    const results = await queryElastic(query, this.configuration.search, this.logbook);
+    const results = await queryElastic(query, this.configuration.search, logbook);
     context.variables.results = results
       .map((result, index) => "[" + (index+1) + "]\n" + joinProperties(result, this.searchResultKeys))
       .join("\n\n");
 
-    const systemResponse = await this.llm.json(
-      [ this.llm.createUserMessage(render(this.configuration.generation.message, context)) ],
+    const systemResponse = await llm.json(
+      [ llm.createUserMessage(render(this.configuration.generation.message, context)) ],
       "generation",
       (this.configuration.generation.requiredKeys || []).concat([ SYSTEM_RESPONSE.UTTERANCE ]));
-    this.messages.push(this.llm.createAssistantMessage(systemResponse[SYSTEM_RESPONSE.UTTERANCE]));
+    this.messages.push(llm.createAssistantMessage(systemResponse[SYSTEM_RESPONSE.UTTERANCE]));
 
     systemResponse[SYSTEM_RESPONSE.RESULTS] = results;
     systemResponse[SYSTEM_RESPONSE.RESULTS_PAGE] = context.variables.results;

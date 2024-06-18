@@ -32,15 +32,19 @@ export const SYSTEM_RESPONSE = {
  * can assume it is used by exactly one user. A separate system object must be
  * instantiated for each simulated user.
  *
+ * The constructor of a system must have two parameters:
+ * - The `configuration` that has to be passed via `super(configuration)` and
+ *   is then available via `this.configuration`.
+ * - A {@link Logbook} that can be used to {@link Logbook#log|log} the
+ *   initialization process.
+ *
  * @class System
  * @param {Object} configuration - The configuration for the system
- * @param {Logbook} log - A function that takes log messages
  */
 export class System {
 
-  constructor(configuration, logbook) {
+  constructor(configuration) {
     this.configuration = configuration;
-    this.logbook = logbook;
   }
 
   /**
@@ -51,10 +55,12 @@ export class System {
    *
    * @param {UserTurn} userTurn - The turn object with the user's utterance as
    * `utterance`
+   * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
+   * messages
    * @returns {SystemResponse} - The system's response with a least the
    * `utterance` set
    */
-  async search(userTurn) { throw new Error("Not implemented"); }
+  async search(userTurn, logbook) { throw new Error("Not implemented"); }
 
 }
 

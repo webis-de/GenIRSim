@@ -25,26 +25,28 @@ import { render } from "../templates.js";
 export class StaticUser extends User {
 
   constructor(configuration, logbook) {
-    super(configuration, logbook)
-    this.llm = new LLM(this.configuration.llm, this.logbook);
+    super(configuration)
     this.context = Object.assign({variables:{}}, this.configuration);
   }
 
-  async ask(promptTemplate, context) {
-    const message = this.llm.createUserMessage(render(promptTemplate, context));
-    const turn = await this.llm.json([message], "generation", [ USER_TURN.UTTERANCE ]);
+  async ask(promptTemplate, context, logbook) {
+    const llm = new LLM(this.configuration.llm, logbook);
+    const messages = [ llm.createUserMessage(render(promptTemplate, context)) ];
+    const action = "generation"
+    const requiredKeys = [ USER_TURN.UTTERANCE ];
+    const turn = await llm.json(messages, action, requiredKeys);
     return turn;
   }
 
-  async start(topic) {
+  async start(topic, logbook) {
     this.context.variables.topic = topic;
-    return await this.ask(this.configuration.start, this.context);
+    return await this.ask(this.configuration.start, this.context, logbook);
   }
 
-  async followUp(systemResponse) {
+  async followUp(systemResponse, logbook) {
     const context = Object.assign({}, this.context);
     context.variables.systemResponse = systemResponse;
-    return await this.ask(this.configuration.followUp, context);
+    return await this.ask(this.configuration.followUp, context, logbook);
   }
 
 }

@@ -82,14 +82,16 @@ export class LogbookEntry {
  *
  * @class Logbook
  * @param {string} source - The source for which to log entries
- * @param {function} callback - An optional function to call with each
+ * @param {function} [callback] - An optional function to call with each
  * {@link LogbookEntry} created on {@link Logbook#log}
+ * @param {string} [prefix] An optional prefix to the action logged
  */
 export class Logbook {
 
-  constructor(source, callback = console.log) {
+  constructor(source, callback = console.log, prefix = undefined) {
     this.source = source;
     this.callback = callback;
+    this.prefix = prefix;
   }
 
   /**
@@ -100,7 +102,10 @@ export class Logbook {
    * @returns {LogbookEntry} - The logged entry
    */
   log(action, object) {
-    const entry = new LogbookEntry(this.source, action, object);
+    const prefixedAction = this.prefix !== undefined
+      ? this.prefix + action
+      : action;
+    const entry = new LogbookEntry(this.source, prefixedAction, object);
     this.callback(entry);
     return entry;
   }
