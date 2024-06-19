@@ -12,7 +12,7 @@
     "simulation-server": "bin/simulation-server.js"
   },
   "scripts": {
-    "doc": "documentation build -f html -o docs/api/ --github --config docs/api/config.yml"
+    "doc": "documentation build -f html -o docs/ --github --config docs/config.yml"
   },
   "repository": {
     "type": "git",

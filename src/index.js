@@ -65,7 +65,7 @@ const defaultLogCallback = entry => console.error(JSON.stringify(entry));
  * either one of the standard classes of GenIRSim or one in `additionalSystems`
  * @param {number} [configuration.maxTurns] - The maximum number of user turns
  * to simulate (default: 3)
- * @param {Object} [options] -
+ * @param {Object} [options]
  * @param {function} [options.logCallback] - The function to consume all
  * {@link LogbookEntry} of the simulation
  * @param {Object} [options.additionalUsers] - Object that contains non-standard
@@ -155,7 +155,7 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
  * in the the constructor and (2) has a property `class` that is the name of the
  * evaluator class, either one of the standard classes of GenIRSim or one in
  * `additionalEvaluators`
- * @param {Object} [options] -
+ * @param {Object} [options]
  * @param {function} [options.logCallback] - The function to consume all
  * {@link LogbookEntry} of the evaluation
  * @param {Object} [options.additionalEvaluators] - Object that contains
@@ -211,7 +211,7 @@ export async function evaluate(simulation, configuration, options = undefined) {
  * simulation, see {@link simulate}
  * @param {Object} configuration.evaluation - The configuration for the
  * evaluation, see {@link evaluate}
- * @param {Object} [options] -
+ * @param {Object} [options]
  * @param {function} [options.logCallback] - The function to consume all
  * {@link LogbookEntry} of the simulation and evaluation
  * @param {Object} [options.additionalUsers] - Object that contains non-standard {User}
