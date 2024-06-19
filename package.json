@@ -12,15 +12,13 @@
     "simulation-server": "bin/simulation-server.js"
   },
   "scripts": {
-    "doc": "documentation build -f html -o doc/api/ --github --config doc/api/config.yml"
+    "doc": "documentation build -f html -o docs/api/ --github --config docs/api/config.yml"
   },
   "dependencies": {
-    "jsonrepair": "^3.8.0"
+    "jsonrepair": "^3.8.0",
+    "ws": "^8.17.1"
   },
   "type": "module",
   "author": "Johannes Kiesel <johannes.kiesel@uni-weimar.de>",
-  "license": "MIT",
-  "dependencies": {
-    "ws": "^8.17.1"
-  }
+  "license": "MIT"
 }

@@ -68,5 +68,7 @@ server.on("upgrade", (request, socket, head) => {
     webSocketServer.emit("connection", websocket, request);
   });
 });
+
+console.log("Starting server on port " + PORT);
 server.listen(PORT);
 

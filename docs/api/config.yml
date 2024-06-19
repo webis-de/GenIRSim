@@ -1,7 +1,7 @@
 toc:
   - name: GenIRSim
     description: |
-      TODO [[code](https://github.com/webis-de/scriptor)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
+      TODO [[code](https://github.com/webis-de/GenIRSim)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
   - run
   - simulate
   - evaluate
