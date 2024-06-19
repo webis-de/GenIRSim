@@ -14,11 +14,19 @@
   "scripts": {
     "doc": "documentation build -f html -o docs/api/ --github --config docs/api/config.yml"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webis-de/GenIRSim.git"
+  },
   "dependencies": {
     "jsonrepair": "^3.8.0",
     "ws": "^8.17.1"
   },
   "type": "module",
+  "bugs": {
+    "url": "https://github.com/webis-de/GenIRSim/issues"
+  },
+  "homepage": "https://github.com/webis-de/GenIRSim#readme",
   "author": "Johannes Kiesel <johannes.kiesel@uni-weimar.de>",
   "license": "MIT"
 }
