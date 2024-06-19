@@ -10,9 +10,9 @@
         "model": "default",
         "keep_alive": "24h"
       },
-      "start": "You have the following task: {{variables.topic.description}}\n\n{{formatting}}\n\n",
-      "followUp": "{{variables.systemResponse.utterance}}\n\nFollow up on the response above. {{formatting}}\n\n",
-      "formatting": "Format your message as JSON with exactly these keys:\n- key='expectation': A description of what you expect the system's answer to the utterance to contain.\n- key='utterance': The short utterance you would send to the conversational search system to solve your task."
+      "start": "### Task:\n{{variables.topic.description}}\n\nNow write a message for a conversational search system to request the information you are lacking.\n\n{{formatting}}\n\n",
+      "followUp": "### Task:\n{{variables.topic.description}}\n\n### Information:\n{{variables.systemResponse.utterance}}\n\n### Instruction: Follow-up questions are the questions elicited from readers as they naturally read through text. Given the information, write a follow-up questions that you would ask if you were reading this information for the first time.\n\n{{formatting}}\n\n",
+      "formatting": "Format your message as JSON with exactly these keys:\n- key='expectation': A description of what you expect the system's answer to your message to contain.\n- key='utterance': Your short message."
     },
     "system": {
       "class": "GenerativeElasticSystem",
@@ -45,9 +45,39 @@
   },
   "evaluation": {
     "evaluators": {
-      "Readability": {
+      "Simplicity": {
         "class": "ReadabilityEvaluator",
         "measure": "fleschKincaidGrade"
+      },
+      "Topic Relevance": {
+        "class": "PromptedEvaluator",
+        "llm": {
+          "url": "https://llm.srv.webis.de/api/chat",
+          "model": "default",
+          "keep_alive": "24h"
+        },
+        "prompt": "### Task:\n{{variables.simulation.configuration.topic.description}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the topic relevance of the response: whether the response is relevant for fulfilling the task.\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to topic) and 1 (response completely fulfills the task).",
+        "requiredKeys": [ "explanation" ]
+      },
+      "Request Relevance": {
+        "class": "PromptedEvaluator",
+        "llm": {
+          "url": "https://llm.srv.webis.de/api/chat",
+          "model": "default",
+          "keep_alive": "24h"
+        },
+        "prompt": "### Request:\n{{variables.userTurn.utterance}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the request relevance of the response: whether the response is relevant for answering the request.\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to request) and 1 (response completely answers the request).",
+        "requiredKeys": [ "explanation" ]
+      },
+      "Expectation Match": {
+        "class": "PromptedEvaluator",
+        "llm": {
+          "url": "https://llm.srv.webis.de/api/chat",
+          "model": "default",
+          "keep_alive": "24h"
+        },
+        "prompt": "### Expectation:\n{{variables.userTurn.expectation}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the expectation match of the response: whether the response matches the expectation.\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (no connection between response and expectation) and 1 (response completely matches the expectation).",
+        "requiredKeys": [ "explanation" ]
       }
     }
   }

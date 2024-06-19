@@ -8,8 +8,8 @@
     "src"
   ],
   "bin": {
-    "simulate": "bin/simulate.js",
-    "simulation-server": "bin/simulation-server.js"
+    "genirsim": "bin/genirsim.js",
+    "genirsim-server": "bin/genirsim-server.js"
   },
   "scripts": {
     "doc": "documentation build -f html -o docs/ --github --config docs/config.yml"

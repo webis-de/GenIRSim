@@ -134,6 +134,9 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
     const evaluation =
       await evaluator.evaluate(simulation, userTurnIndex, evaluatorLogbook);
     if (evaluation !== null) {
+      if (typeof(evaluation.score) === "string") {
+        evaluation.score = parseInt(evaluation.score);
+      }
       if (userTurnIndex !== undefined) {
         logbook.log(turnName + " result",
           {userTurnIndex, evaluator: name, result: evaluation});
