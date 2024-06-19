@@ -46,7 +46,7 @@ export function render(text, context, options = undefined) {
             for (let p = 0; p < path.length; p += 1) {
               scope = scope[path[p]];
               if (scope === undefined) {
-                if (options.ignoreMissing) {
+                if (options !== undefined && options.ignoreMissing) {
                   output += "{{" + path.join(".") + "}}";
                   continue matchloop;
                 } else {

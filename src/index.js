@@ -12,8 +12,10 @@ const systems = {
   GenerativeElasticSystem
 }
 
+import { PromptedEvaluator } from "./evaluators/prompted-evaluator.js";
 import { ReadabilityEvaluator } from "./evaluators/readability-evaluator.js";
 const evaluators = {
+  PromptedEvaluator,
   ReadabilityEvaluator
 }
 
@@ -168,7 +170,6 @@ export async function evaluate(simulation, configuration, options = undefined) {
   const logCallback = (options || {}).logCallback || defaultLogCallback;
   const additionalEvaluators = (options || {}).additionalEvaluators || {};
   const controllerLogbook = new Logbook("controller", logCallback);
-  controllerLogbook.log("evaluate");
 
   const logbook = new Logbook("evaluation", logCallback);
   const availableEvaluators =
@@ -184,15 +185,16 @@ export async function evaluate(simulation, configuration, options = undefined) {
 
   const userTurnsEvaluations = [];
   for (let userTurnIndex = 0; userTurnIndex < simulation.userTurns.length; userTurnIndex += 1) {
-    logbook.log("turn " + userTurnIndex);
+    controllerLogbook.log("evaluate turn " + userTurnIndex);
     if (simulation.userTurns[userTurnIndex].systemResponse !== undefined) {
       const evaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex);
       userTurnsEvaluations.push(evaluations);
     }
   }
-  logbook.log("overall");
+  controllerLogbook.log("evaluate overall simulation");
   const overallEvaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation);
 
+  controllerLogbook.log("done");
   return {
     configuration: configuration,
     simulation: simulation,

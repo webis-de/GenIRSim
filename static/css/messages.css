@@ -11,4 +11,7 @@
 #messages details:not(.empty) > div {
   padding-bottom: 10px;
 }
+#messages details[data-source="controller"] {
+	margin-top: 20px;
+}
 

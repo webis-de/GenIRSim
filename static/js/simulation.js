@@ -15,7 +15,11 @@ function log(logEntry) {
     logContainerParentElement.setAttribute("data-source", logEntry.source);
     logContainerParentElement.setAttribute("data-action", logEntry.action);
     const logContainerTitleElement = document.createElement("summary");
-    logContainerTitleElement.textContent = logEntry.source + ": " + logEntry.action;
+    if (logEntry.source === "controller") {
+      logContainerTitleElement.textContent = logEntry.action;
+    } else {
+      logContainerTitleElement.textContent = logEntry.source + ": " + logEntry.action;
+    }
     logContainerParentElement.appendChild(logContainerTitleElement);
     logContainerElement = document.createElement("div");
     logContainerParentElement.appendChild(logContainerElement);
@@ -149,11 +153,32 @@ export async function run(configuration) {
             && data.result.score !== undefined) {
           scoreBadge.innerText = data.result.score.toFixed(2);
           if (data.result.explanation !== undefined) { 
-            scoreBadge.setAttribute("title", data.result.explanation);
+            if (typeof(data.result.explanation) === "string") {
+              scoreBadge.setAttribute("title", data.result.explanation);
+            } else {
+              scoreBadge.setAttribute("title",
+                JSON.stringify(data.result.explanation));
+            }
           }
         }
       }
     } else if (message.overallEvaluations) { // final result
+      const chatBubble = ensureChatBubble("controller");
+      const loaderElement = chatBubble.querySelector(".loader");
+      if (loaderElement !== null) {
+        loaderElement.parentElement.removeChild(loaderElement);
+      }
+
+      const buttonsElement = document.createElement("div");
+      buttonsElement.classList.add("buttons");
+      const buttonElement = document.createElement("a");
+      const data = encodeURIComponent(JSON.stringify(message, null, 2));
+      buttonElement.textContent = "download";
+      buttonElement.setAttribute("href", "data:text/json;charset=utf8," + data);
+      const date = new Date().toJSON().replaceAll(/[:.]/g, "-");
+      buttonElement.setAttribute("download", "genirsim-evaluation-" + date + ".json");
+      buttonsElement.appendChild(buttonElement);
+      chatBubble.appendChild(buttonsElement);
       console.log(message);
     } else { // something else => error
       console.error(message);

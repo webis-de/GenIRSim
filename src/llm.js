@@ -64,6 +64,7 @@ async function generate(messages, configuration, logbook, action) {
 }
 
 function parseJson(message, requiredKeys) {
+  let failed = 0;
   let processedMessage = message
     .trim()
     .replace(/^```(json)?/, "")
@@ -72,7 +73,36 @@ function parseJson(message, requiredKeys) {
   try {
     return JSON.parse(processedMessage);
   } catch (error) {
-    console.error("Invalid json (after 1): " + processedMessage);
+    failed += 1;
+    console.error("Invalid json (after " + failed + "): " + processedMessage);
+  }
+
+  /*
+   * Something else after the JSON
+   */
+  processedMessage = processedMessage.replaceAll(
+    /}\n\n.*/g,
+    '}'
+  );
+  try {
+    return JSON.parse(processedMessage);
+  } catch (error) {
+    failed += 1;
+    console.error("Invalid json (after " + failed + "): " + processedMessage);
+  }
+
+  /*
+   * - key="foo": "bar",
+   */
+  processedMessage = processedMessage.replaceAll(
+    /-?\s*['"]?key['"]?\s*[=]\s*['"]([^'"]*)['"]\s*:/g,
+    '"$1":'
+  );
+  try {
+    return JSON.parse(processedMessage);
+  } catch (error) {
+    failed += 1;
+    console.error("Invalid json (after " + failed + "): " + processedMessage);
   }
 
   /*
@@ -82,13 +112,14 @@ function parseJson(message, requiredKeys) {
    * }
    */
   processedMessage = processedMessage.replaceAll(
-    /(- )?['"]?key['"]?\s*[:=]\s*['"]([^'"]*)['"],\s*['"]?value['"]?\s*[:=]\s*/g,
-    '"$2":'
+    /-?\s*?['"]?key['"]?\s*[:=]\s*['"]([^'"]*)['"],\s*['"]?value['"]?\s*[:=]\s*/g,
+    '"$1":'
   );
   try {
     return JSON.parse(processedMessage);
   } catch (error) {
-    console.error("Invalid json (after 2): " + processedMessage);
+    failed += 1;
+    console.error("Invalid json (after " + failed + "): " + processedMessage);
   }
 
   /*
@@ -103,7 +134,8 @@ function parseJson(message, requiredKeys) {
   try {
     return JSON.parse(processedMessage);
   } catch (error) {
-    console.error("Invalid json (after 3): " + processedMessage);
+    failed += 1;
+    console.error("Invalid json (after " + failed + "): " + processedMessage);
   }
 
   /*
@@ -113,7 +145,8 @@ function parseJson(message, requiredKeys) {
   try {
     return JSON.parse(processedMessage);
   } catch (error) {
-    console.error("Invalid json (after 4): " + processedMessage);
+    failed += 1;
+    console.error("Invalid json (after " + failed + "): " + processedMessage);
     throw error;
   }
 }

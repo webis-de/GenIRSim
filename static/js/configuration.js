@@ -79,7 +79,7 @@ export function loadFromFile(fileElement) {
     event.stopPropagation();
     event.preventDefault();
     dropZone.classList.remove("active");
-    loadConfigurationFromFile(event.dataTransfer);
+    loadFromFile(event.dataTransfer);
   }, false);
 }
 

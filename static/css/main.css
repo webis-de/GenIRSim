@@ -32,6 +32,7 @@ main .pane {
 }
 main #simulation {
   min-width: 400px;
+  flex-shrink: 0.5;
 }
 main .pane > .area {
   flex-grow: 1;
@@ -87,6 +88,7 @@ details.empty summary::marker {
 .buttons {
   text-align: right;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 .bubble .buttons {
   text-align: center;

@@ -341,7 +341,7 @@ export class ReadabilityEvaluator extends Evaluator {
 
   async evaluate(simulation, userTurnIndex, logbook) {
     if (userTurnIndex === undefined) {
-      return null; // only evaluates last response
+      return null; // does not evaluate overall simulation
     }
 
     const result = calculateReadability(simulation.userTurns[userTurnIndex][USER_TURN.SYSTEM_RESPONSE][SYSTEM_RESPONSE.UTTERANCE]);

@@ -71,7 +71,8 @@ async function queryElastic(query, searchConfiguration, logbook) {
  * @param {Array} [configuration.generation.searchResultKeys] - The properties
  * of each result that are used to render the result in the generation message
  * @param {Array} [configuration.generation.requiredKeys] - The properties
- * that the generation response must have (at least `utterance`)
+ * that the generated response must have (in addition to
+ * {@link SYSTEM_RESPONSE.UTTERANCE})
  * @param {Logbook} log - A function that takes log messages
  */
 export class GenerativeElasticSystem extends System {
