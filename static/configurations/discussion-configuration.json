@@ -21,7 +21,7 @@
         "keep_alive": "24h"
       },
       "search": {
-        "url": "http://localhost:9200/kialo/",
+        "url": "https://elastic-genirsim.web.webis.de/kialo/",
         "query": {
           "match": {
             "claim": {
