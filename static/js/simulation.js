@@ -143,6 +143,7 @@ export async function run(configuration) {
         const chatBubble = ensureChatBubble(message.source);
         if (message.action === "turn complete") {
           chatBubble.innerText = message.data.utterance;
+          chatElement.scrollTo({top: chatElement.scrollHeight, behavior: "smooth"});
         }
       } else if (message.source === "evaluation") {
         const scoreBadge = ensureScoreBadge(message);

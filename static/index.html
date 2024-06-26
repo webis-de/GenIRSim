@@ -32,7 +32,7 @@
 <script type="module">
 import * as configuration from "./js/configuration.js";
 import * as simulation from "./js/simulation.js";
-configuration.loadFromUrl("configurations/default-configuration.json");
+configuration.loadFromUrl("configurations/discussion-configuration.json");
 const picker = document.getElementById("picker");
 picker.addEventListener("change", (event) => configuration.loadFromFile(picker));
 document.getElementById("download").addEventListener("click",
