@@ -8,15 +8,13 @@ npm install
 npm exec genirsim configurations/default-configuration.json > eval.json
 ```
 
-To run [web server](http://localhost:8000):
+To run the [web server](http://localhost:8000):
 ```
 npm install
 npm exec genirsim-server
 ```
-
-
-## Maintenance
+or
 ```
-npm run doc
-docker build -t ghcr.io/webis-de/genirsim:$(jq -r '.version' package.json) .
+docker run --rm -it -v 8000:8000 ghcr.io/webis-de/genirsim:$(jq -r '.version' package.json)
 ```
+
