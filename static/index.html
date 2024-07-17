@@ -14,23 +14,23 @@
 <h1>GenIRSim</h1>
 <main>
 
-<div id="configuration" class="pane"><h2>Configuration</h2>
+<details id="configuration" class="pane" open><summary><h2>Configuration</h2></summary>
 <div class="drop-zone" data-target="configuration"><select id="configurationSelect"><option>pick</option></select> or upload: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
 <div class="buttons">Download:
 <button id="downloadConfiguration" type="button">complete</button><button id="downloadConfigurationSimulation" type="button">simulation</button><button id="downloadConfigurationEvaluation" type="button">evaluation</button></div>
-<div class="run-buttons" class="buttons">Run:
-<button id="run" type="button">complete</button><button id="runSimulation" type="button">simulation</button><button id="runEvaluation" type="button">evaluation</button></div>
 <div id="editor"></div>
-</div> <!-- #configuration -->
+</details> <!-- #configuration -->
 
 <div id="simulation" class="pane"><h2>Simulation</h2>
 <div class="drop-zone" data-target="simulation">upload: drop here or <label for="simulationPicker">browse</label><input type="file" id="simulationPicker" name="simulation" accept="text/plain, application/json"></div>
+<div class="run-buttons" class="buttons">Run:
+<button id="run" type="button">complete</button><button id="runSimulation" type="button">simulation</button><button id="runEvaluation" type="button">evaluation</button></div>
 <div id="chat" class="area"></div>
 </div> <!-- #simulation -->
 
-<div id="log" class="pane"><h2>Log</h2>
+<details id="log" class="pane" open><summary><h2>Log</h2></summary>
 <div id="messages" class="area"></div>
-</div> <!-- #log -->
+</details> <!-- #log -->
 
 </main>
 <script type="module">

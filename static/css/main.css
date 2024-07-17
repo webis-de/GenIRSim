@@ -39,6 +39,22 @@ main .pane > .area {
   margin-bottom: 5px;
   height: 600px;
 }
+main details.pane:not([open]) {
+  width: 30px;
+}
+main details.pane > summary {
+  display: block;
+  padding: 0px;
+}
+main details.pane:not([open]) > summary {
+  transform: rotate(90deg) translateX(-5px);
+  transform-origin: bottom left;
+  width: min-content;
+  transform-box: content-box;
+}
+main details.pane:not([open]) > summary h2 {
+  margin: 0px;
+}
 
 @media (max-width: 1000px) {
   main {
