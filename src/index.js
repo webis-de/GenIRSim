@@ -19,6 +19,8 @@ const evaluators = {
   ReadabilityEvaluator
 }
 
+import { performance } from "perf_hooks";
+
 const defaultLogCallback = entry => console.error(JSON.stringify(entry));
 
 /**
@@ -34,6 +36,8 @@ const defaultLogCallback = entry => console.error(JSON.stringify(entry));
  * @property {Object} configuration - The configuration of the simulation
  * @property {Array} turns - List of simulated {@link UserTurn}s (each one
  * includes the system's response)
+ * @property {number} milliseconds - Time taken for the simulation in
+ * milliseconds
  */
 
 /**
@@ -44,10 +48,14 @@ const defaultLogCallback = entry => console.error(JSON.stringify(entry));
  * @property {Array} userTurnsEvaluations - For each user turn of the
  * simulation, in order, an object where the keys are the names of the
  * configured evaluators (if they evaluated the specific turn of the simulation)
- * and the values are the respective {@link EvaluationResult}s
+ * and the values are the respective {@link EvaluationResult}s (and one
+ * property, `milliseconds` gives the time taken for evaluation in milliseconds)
  * @property {Object} overallEvaluations - An object where the keys are the
  * names of the configured evaluators (if they evaluated the overall simulation)
- * and the values are the respective {@link EvaluationResult}s
+ * and the values are the respective {@link EvaluationResult}s (and one
+ * property, `milliseconds` gives the time taken for evaluation in milliseconds)
+ * @property {number} millisecondsEvaluation - Time taken for the evaluation in
+ * milliseconds
  */
 
 /**
@@ -80,6 +88,7 @@ const defaultLogCallback = entry => console.error(JSON.stringify(entry));
  * @returns {Simulation} - The simulation object
  */
 export async function simulate(configuration, options = undefined) {
+  const millisecondsStartSimulation = performance.now();
   const logCallback = (options || {}).logCallback || defaultLogCallback;
   const additionalUsers = (options || {}).additionalUsers || {};
   const additionalSystems = (options || {}).additionalSystems || {};
@@ -100,34 +109,43 @@ export async function simulate(configuration, options = undefined) {
 
   controllerLogbook.log("simulate turn 0");
   // first turn
+  let millisecondsStartTurn = performance.now();
   let userTurn = await user.start(configuration.topic,
     new Logbook("user", logCallback, "turn 0 "));
   simulation.userTurns = [userTurn];
   userLogBook.log("turn complete", userTurn);
   userTurn[USER_TURN.SYSTEM_RESPONSE] = await system.search(userTurn,
     new Logbook("system", logCallback, "turn 0 "));
+  userTurn[USER_TURN.SYSTEM_RESPONSE].milliseconds =
+    performance.now() - millisecondsStartTurn;
   systemLogBook.log("turn complete", userTurn[USER_TURN.SYSTEM_RESPONSE]);
 
   // follow-up userTurns
   const maxTurns = (configuration.maxTurns || 3);
   for (let userTurnIndex = 1; userTurnIndex < configuration.maxTurns; userTurnIndex += 1) {
     controllerLogbook.log("simulate turn " + userTurnIndex);
+    millisecondsStartTurn = performance.now();
     userTurn = await user.followUp(userTurn.systemResponse,
       new Logbook("user", logCallback, "turn " + userTurnIndex + " "));
     simulation.userTurns.push(userTurn);
     userLogBook.log("turn complete", userTurn);
     userTurn[USER_TURN.SYSTEM_RESPONSE] = await system.search(userTurn,
       new Logbook("system", logCallback, "turn " + userTurnIndex + " "));
+    userTurn[USER_TURN.SYSTEM_RESPONSE].milliseconds =
+      performance.now() - millisecondsStartTurn;
     systemLogBook.log("turn complete", userTurn[USER_TURN.SYSTEM_RESPONSE]);
   }
 
+  simulation.milliseconds = performance.now() - millisecondsStartSimulation;
   return simulation;
 }
 
 async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex) {
+  const millisecondsStartTurn = performance.now();
   const turnName = userTurnIndex !== undefined ? "turn " + userTurnIndex : "overall";
   const evaluations = {};
   for (const [name, evaluator] of Object.entries(instantiatedEvaluators)) {
+    const millisecondsStartEvaluator = performance.now();
     const evaluatorLogbook =
       new Logbook("evaluation", logbook.callback, turnName + " " + name + ".");
 
@@ -144,9 +162,11 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
         logbook.log(turnName + " result",
           {evaluator: name, result: evaluation});
       }
+      evaluation.milliseconds = performance.now() - millisecondsStartEvaluator;
       evaluations[name] = evaluation;
     }
   }
+  evaluations.milliseconds = performance.now() - millisecondsStartTurn;
   return evaluations;
 }
 
@@ -170,6 +190,7 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
  * @returns {Evaluation} - The evaluation object
  */
 export async function evaluate(simulation, configuration, options = undefined) {
+  const millisecondsStartEvaluation = performance.now();
   const logCallback = (options || {}).logCallback || defaultLogCallback;
   const additionalEvaluators = (options || {}).additionalEvaluators || {};
   const controllerLogbook = new Logbook("controller", logCallback);
@@ -202,7 +223,8 @@ export async function evaluate(simulation, configuration, options = undefined) {
     configuration: configuration,
     simulation: simulation,
     userTurnsEvaluations: userTurnsEvaluations,
-    overallEvaluations: overallEvaluations
+    overallEvaluations: overallEvaluations,
+    millisecondsEvaluation: performance.now() - millisecondsStartEvaluation
   };
 }
 

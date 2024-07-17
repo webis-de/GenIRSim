@@ -8,6 +8,8 @@ import { Logbook } from "./logbook.js";
  * the system
  * @property {SystemResponse} systemResponse - The response sent from the system
  * to the user as a reply
+ * @property {number} [milliseconds] - Time taken for simulation in milliseconds
+ * (this property is automatically added by GenIRSim)
  */
 
 /**

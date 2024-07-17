@@ -1,7 +1,9 @@
 toc:
   - name: GenIRSim
     description: |
-      TODO [[code](https://github.com/webis-de/GenIRSim)] [[package](https://www.npmjs.com/package/@webis-de/scriptor)]
+      Flexible and easy-to-use simulation and evaluation framework for generative IR
+
+      [[code](https://github.com/webis-de/GenIRSim)] [[docker](https://github.com/webis-de/GenIRSim/pkgs/container/GenIRSim)] [[package](https://www.npmjs.com/package/@webis-de/gen-ir-sim)]
   - run
   - simulate
   - evaluate

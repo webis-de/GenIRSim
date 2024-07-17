@@ -5,6 +5,8 @@ import { Logbook } from "./logbook.js";
  * @typedef {Object} EvaluationResult
  * @property {number} score - A number between 0 and 1, with higher values
  * indicating better responses
+ * @property {number} [milliseconds] - Time taken for evaluation in milliseconds
+ * (this property is automatically added by GenIRSim)
  */
 
 /**
