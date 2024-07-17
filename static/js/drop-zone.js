@@ -1,4 +1,5 @@
-function fade(dropZoneElement, className) {
+export function fade(dropZoneElement, success = true) {
+  const className = success ? "success" : "error";
   dropZoneElement.classList.add(className);
   setTimeout(() => {
     dropZoneElement.classList.add("fade");
@@ -16,11 +17,8 @@ function loadFromFile(dropZoneElement, fileElement, loader) {
     const reader = new FileReader();
     reader.onload = fileEvent => {
       const text = reader.result;
-      if (loader(JSON.parse(text))) {
-        fade(dropZoneElement, "success");
-      } else {
-        fade(dropZoneElement, "error");
-      }
+      const success = loader(JSON.parse(text));
+      fade(dropZoneElement, success);
     };
     reader.readAsText(file);
   }

@@ -15,7 +15,7 @@
 <main>
 
 <div id="configuration" class="pane"><h2>Configuration</h2>
-<div class="drop-zone" data-target="configuration">upload: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
+<div class="drop-zone" data-target="configuration"><select id="configurationSelect"><option>pick</option></select> or upload: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
 <div class="buttons">Download:
 <button id="downloadConfiguration" type="button">complete</button><button id="downloadConfigurationSimulation" type="button">simulation</button><button id="downloadConfigurationEvaluation" type="button">evaluation</button></div>
 <div class="run-buttons" class="buttons">Run:
@@ -37,7 +37,6 @@
 import * as configuration from "./js/configuration.js";
 import * as simulation from "./js/simulation.js";
 import * as dropZone from "./js/drop-zone.js";
-configuration.loadFromUrl("configurations/discussion-configuration.json");
 
 const configurationDropZone = document.querySelector(".drop-zone[data-target='configuration']");
 dropZone.createDropZone(configurationDropZone, configuration.load);
@@ -59,6 +58,31 @@ document.getElementById("runSimulation").addEventListener("click",
 document.getElementById("runEvaluation").addEventListener("click",
   () => simulation.run("evaluate", configuration.get().evaluation));
 document.getElementById("runEvaluation").setAttribute("disabled", "");
+
+const configurationDirectory = "configurations";
+const defaultConfiguration = "discussion.json"
+configuration.loadFromUrl(configurationDirectory + "/" + defaultConfiguration);
+fetch(configurationDirectory)
+  .then(response => response.json())
+  .then(configurationFiles => {
+      const configurationSelectElement = document.getElementById("configurationSelect");
+      for (const configurationFile of configurationFiles) {
+        const optionElement = document.createElement("option");
+        optionElement.innerText = configurationFile.split(".")[0];
+        optionElement.setAttribute("value", configurationFile);
+        configurationSelectElement.appendChild(optionElement);
+      }
+      configurationSelectElement.addEventListener("change", async event => {
+        const value = configurationSelectElement.value;
+        if (value.match("\.json$")) {
+          const success = await configuration.loadFromUrl(configurationDirectory + "/" + value);
+          dropZone.fade(configurationDropZone, success);
+          setTimeout(() => {
+            configurationSelectElement.value = "pick";
+          }, 500);
+        }
+      });
+    });
 </script>
 </body>
 </html>

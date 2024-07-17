@@ -66,10 +66,12 @@ const server = http.createServer(async (request, response) => {
     let file = path.normalize(path.join(PATH, request.url));
     if (file === PATH + "/") { file = path.join(PATH, "index.html"); }
 
-    if (!file.startsWith(PATH)
-        || !fs.existsSync(file)
-        || !fs.lstatSync(file).isFile()) {
+    if (!file.startsWith(PATH) || !fs.existsSync(file)) {
       response.writeHead(404);
+      response.end()
+    } else if (!fs.lstatSync(file).isFile()) {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.write(JSON.stringify(fs.readdirSync(file)));
       response.end()
     } else {
       const mimeType = MIME_TYPES[path.extname(file).substring(1).toLowerCase()]
