@@ -11,15 +11,30 @@ const webSocketServer = new WebSocketServer({ noServer: true });
 webSocketServer.on('connection', socket => {
   socket.on('message', async message => {
     try {
-      const configuration = JSON.parse(message.toString());
-      console.log("Running for: " + JSON.stringify(configuration));
       const options = {
         logCallback: entry => socket.send(JSON.stringify(entry))
       };
-      const evaluation = await genirsim.run(configuration, options);
-      socket.send(JSON.stringify(evaluation));
+      const data = JSON.parse(message.toString());
+      if (data.call === "run") {
+        console.log("Running for: " + JSON.stringify(data.configuration));
+        const evaluation = await genirsim.run(data.configuration, options);
+        socket.send(JSON.stringify(evaluation));
+      } else if (data.call === "simulate") {
+        console.log("Simulating for: " + JSON.stringify(data.configuration));
+        const simulation = await genirsim.simulate(data.configuration, options);
+        socket.send(JSON.stringify(simulation));
+      } else if (data.call === "evaluate") {
+        console.log("Evaluating for: " + JSON.stringify(data.configuration)
+          + " the simulation " + JSON.stringify(data.simulation));
+        const evaluation = await genirsim.evaluate(
+          data.simulation, data.configuration, options);
+        socket.send(JSON.stringify(evaluation));
+      } else {
+        throw "Invalid call: " + message.toString();
+      }
       socket.close();
     } catch (error) {
+      socket.send(JSON.stringify({error: error}));
       console.error(error);
     }
   });

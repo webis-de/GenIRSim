@@ -1,5 +1,16 @@
 import { Mutex } from 'https://cdn.jsdelivr.net/npm/async-mutex@0.5.0/+esm';
 
+function get() {
+  const downloadButtonElement = document.querySelector("[data-download='simulation']");
+  if (downloadButtonElement === null) {
+    console.error("No button for downloading the simulation");
+    return false;
+  }
+
+  return JSON.parse(decodeURIComponent(
+    downloadButtonElement.getAttribute("href").split(",",2)[1]));
+}
+
 const logElement = document.getElementById("messages");
 let lastEntry = {};
 let logContainerElement = null;
@@ -120,13 +131,75 @@ function ensureScoreBadge(message) {
   return scoreElement;
 }
 
+function createDownloadButton(name, result) {
+  const buttonElement = document.createElement("a");
+  const data = encodeURIComponent(JSON.stringify(result, null, 2));
+  buttonElement.textContent = name;
+  buttonElement.setAttribute("href", "data:text/json;charset=utf8," + data);
+  const date = new Date().toJSON().replaceAll(/[:.]/g, "-");
+  buttonElement.setAttribute("download", "genirsim-" + name + "-" + date + ".json");
+  buttonElement.setAttribute("data-download", name);
+  return buttonElement;
+}
 
-export async function run(configuration) {
-  const startButtonElement = document.getElementById("start");
-  startButtonElement.setAttribute("disabled", "");
+function createResultBubble(result, simulationOnly) {
+  const chatBubble = ensureChatBubble("controller");
+  const loaderElement = chatBubble.querySelector(".loader");
+  if (loaderElement !== null) {
+    loaderElement.parentElement.removeChild(loaderElement);
+  }
+
+  const buttonsElement = document.createElement("div");
+  buttonsElement.innerText = "Download: ";
+  buttonsElement.classList.add("buttons");
+  if (simulationOnly) {
+    buttonsElement.appendChild(createDownloadButton("simulation", result));
+  } else {
+    buttonsElement.appendChild(createDownloadButton("simulation", result.simulation));
+    buttonsElement.appendChild(createDownloadButton("evaluation", result));
+  }
+  chatBubble.appendChild(buttonsElement);
+
+  document.getElementById("runEvaluation").removeAttribute("disabled");
+}
+
+export function load(simulation) {
+  if (!(simulation.userTurns)) { return false; }
+
+  bubbleElement = null;
+  chatElement.innerHTML = '';
+  for (const userTurn of simulation.userTurns) {
+    ensureChatBubble("user").innerText = userTurn.utterance;
+    ensureChatBubble("system").innerText = userTurn.systemResponse.utterance;
+  }
+  createResultBubble(simulation, true);
+  return true;
+}
+
+export async function run(call, configuration) {
+  const disabledButtons = new Set();
+  for (const buttonElement of Array.from(document.querySelectorAll(".run-buttons button"))) {
+    if (!buttonElement.hasAttribute("disabled")) {
+      buttonElement.setAttribute("disabled", "");
+      disabledButtons.add(buttonElement);
+    }
+  }
+
   const url = window.location.protocol.replace("http", "ws")
     + "//" + window.location.host;
-  chatElement.innerHTML = '';
+  bubbleElement = null;
+  let existingSimulation = null;
+  if (call !== "evaluate") {
+    chatElement.innerHTML = '';
+  } else {
+    existingSimulation = get();
+    for (const scoresElement of Array.from(document.querySelectorAll(".scores"))) {
+      scoresElement.parentElement.removeChild(scoresElement);
+    }
+    for (const controllerElement of Array.from(document.querySelectorAll("[data-source='controller']"))) {
+      controllerElement.parentElement.removeChild(controllerElement);
+    }
+  }
   logElement.innerHTML = '';
   loaderElement = document.createElement("span");
   loaderElement.classList.add("loader");
@@ -163,36 +236,32 @@ export async function run(configuration) {
           }
         }
       }
-    } else if (message.overallEvaluations) { // final result
-      const chatBubble = ensureChatBubble("controller");
-      const loaderElement = chatBubble.querySelector(".loader");
-      if (loaderElement !== null) {
-        loaderElement.parentElement.removeChild(loaderElement);
-      }
-
-      const buttonsElement = document.createElement("div");
-      buttonsElement.classList.add("buttons");
-      const buttonElement = document.createElement("a");
-      const data = encodeURIComponent(JSON.stringify(message, null, 2));
-      buttonElement.textContent = "download";
-      buttonElement.setAttribute("href", "data:text/json;charset=utf8," + data);
-      const date = new Date().toJSON().replaceAll(/[:.]/g, "-");
-      buttonElement.setAttribute("download", "genirsim-evaluation-" + date + ".json");
-      buttonsElement.appendChild(buttonElement);
-      chatBubble.appendChild(buttonsElement);
-      console.log(message);
+    } else if (message.userTurns) { // only simulation result
+      createResultBubble(message, true);
+    } else if (message.overallEvaluations) { // evaluation result
+      createResultBubble(message, false);
     } else { // something else => error
       console.error(message);
     }
     release();
   };
   socket.onopen = (event) => {
-    socket.send(JSON.stringify(configuration));
+    const data = {
+      call: call,
+      configuration: configuration
+    };
+    if (call == "evaluate") {
+      data.simulation = existingSimulation;
+    }
+    socket.send(JSON.stringify(data));
   };
   socket.onclose = (event) => {
     loaderElement.parentElement.removeChild(loaderElement);
     loaderElement = null;
-    startButtonElement.removeAttribute("disabled");
+    for (const buttonElement of disabledButtons) {
+      buttonElement.removeAttribute("disabled");
+    }
   };
 }
+
 

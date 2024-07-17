@@ -24,18 +24,58 @@ function makeInput(path, configuration) {
   return element;
 }
 
-export function load(configuration) {
-  const editorElement = document.querySelector("#editor");
-  editorElement.innerHTML = "";
-  console.log("Loading configuration:\n" + JSON.stringify(configuration, null, 1));
+function keysAre(configuration, keys) {
+  if (Object.keys(configuration).length !== keys.length) { return false; }
+  for (const key of keys) {
+    if (configuration[key] === undefined) { return false; }
+  }
+  return true;
+}
 
-  for (const key of Object.keys(configuration)) {
-    const topElement = makeFoldable(key, true);
-    editorElement.appendChild(topElement);
-    for (const [subKey, subConfiguration] of Object.entries(configuration[key])) {
-      const subElement = makeInput(key + "." + subKey, subConfiguration);
-      topElement.appendChild(subElement);
+export function load(configuration) {
+  if (keysAre(configuration, ["simulation", "evaluation"])
+      || keysAre(configuration, ["simulation"])
+      || keysAre(configuration, ["evaluation"])) {
+    const editorElement = document.querySelector("#editor");
+    editorElement.innerHTML = "";
+    console.log("Loading configuration:\n" + JSON.stringify(configuration, null, 1));
+
+    for (const key of Object.keys(configuration)) {
+      const topElement = makeFoldable(key, true);
+      editorElement.appendChild(topElement);
+      for (const [subKey, subConfiguration] of Object.entries(configuration[key])) {
+        const subElement = makeInput(key + "." + subKey, subConfiguration);
+        topElement.appendChild(subElement);
+      }
     }
+
+    if (configuration.simulation && configuration.evaluation) {
+      document.getElementById("downloadConfiguration").removeAttribute("disabled");
+      document.getElementById("run").removeAttribute("disabled");
+    } else {
+      document.getElementById("downloadConfiguration").setAttribute("disabled", "");
+      document.getElementById("run").setAttribute("disabled", "");
+    }
+    if (configuration.simulation) {
+      document.getElementById("downloadConfigurationSimulation").removeAttribute("disabled");
+      document.getElementById("runSimulation").removeAttribute("disabled");
+    } else {
+      document.getElementById("downloadConfigurationSimulation").setAttribute("disabled", "");
+      document.getElementById("runSimulation").setAttribute("disabled", "");
+    }
+    if (configuration.evaluation) {
+      document.getElementById("downloadConfigurationEvaluation").removeAttribute("disabled");
+    } else {
+      document.getElementById("downloadConfigurationEvaluation").setAttribute("disabled", "");
+    }
+    return true;
+  } else if (keysAre(configuration, ["topic", "user", "system", "maxTurns"])) {
+    return load({simulation: configuration});
+  } else if (keysAre(configuration, ["evaluators"])) {
+    return load({evaluation: configuration});
+  } else {
+    console.error("Invalid configuration");
+    return false;
   }
 }
 
@@ -43,44 +83,6 @@ export async function loadFromUrl(url) {
   return fetch(url)
     .then(response => response.json())
     .then(configuration => load(configuration));
-}
-
-export function loadFromFile(fileElement) {
-  const files = fileElement.files;
-  if (files.length > 0) {
-    const file = files[0];
-    const reader = new FileReader();
-    reader.onload = fileEvent => {
-      const configurationText = reader.result;
-      load(JSON.parse(configurationText));
-    };
-    reader.readAsText(file);
-  }
-}
-
-{
-  const dropZone = document.querySelector(".drop-zone[data-target='configuration']");
-  dropZone.addEventListener("dragenter", event => {
-    event.stopPropagation();
-    event.preventDefault();
-    dropZone.classList.add("active");
-  }, false);
-  dropZone.addEventListener("dragleave", event => {
-    event.stopPropagation();
-    event.preventDefault();
-    dropZone.classList.remove("active");
-  }, false);
-  dropZone.addEventListener("dragover", event => {
-    event.stopPropagation();
-    event.preventDefault();
-    dropZone.classList.add("active");
-  }, false);
-  dropZone.addEventListener("drop", event => {
-    event.stopPropagation();
-    event.preventDefault();
-    dropZone.classList.remove("active");
-    loadFromFile(event.dataTransfer);
-  }, false);
 }
 
 export function get() {
@@ -107,13 +109,14 @@ export function get() {
   return configuration;
 }
 
-export function download() {
+export function download(configuration, suffix = "") {
   const downloadElement = document.createElement("a");
   downloadElement.style.display = "none";
-  const data = encodeURIComponent(JSON.stringify(get(), null, 2));
+  const data = encodeURIComponent(JSON.stringify(configuration, null, 2));
   downloadElement.setAttribute("href", "data:text/json;charset=utf8," + data);
   const date = new Date().toJSON().replaceAll(/[:.]/g, "-");
-  downloadElement.setAttribute("download", "genirsim-configuration-" + date + ".json");
+  downloadElement.setAttribute("download",
+    "genirsim-configuration" + suffix + "-" + date + ".json");
   document.body.appendChild(downloadElement);
   downloadElement.click();
   document.body.removeChild(downloadElement);

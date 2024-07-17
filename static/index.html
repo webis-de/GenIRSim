@@ -15,12 +15,16 @@
 <main>
 
 <div id="configuration" class="pane"><h2>Configuration</h2>
-<div class="drop-zone" data-target="configuration">upload: drop here or <label for="picker">browse</label><input type="file" id="picker" name="configuration" accept="text/plain, application/json"></div>
-<div class="buttons"><button id="download" type="button">download</a><button id="start" type="button">start</button></div>
+<div class="drop-zone" data-target="configuration">upload: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
+<div class="buttons">Download:
+<button id="downloadConfiguration" type="button">complete</button><button id="downloadConfigurationSimulation" type="button">simulation</button><button id="downloadConfigurationEvaluation" type="button">evaluation</button></div>
+<div class="run-buttons" class="buttons">Run:
+<button id="run" type="button">complete</button><button id="runSimulation" type="button">simulation</button><button id="runEvaluation" type="button">evaluation</button></div>
 <div id="editor"></div>
 </div> <!-- #configuration -->
 
 <div id="simulation" class="pane"><h2>Simulation</h2>
+<div class="drop-zone" data-target="simulation">upload: drop here or <label for="simulationPicker">browse</label><input type="file" id="simulationPicker" name="simulation" accept="text/plain, application/json"></div>
 <div id="chat" class="area"></div>
 </div> <!-- #simulation -->
 
@@ -32,13 +36,29 @@
 <script type="module">
 import * as configuration from "./js/configuration.js";
 import * as simulation from "./js/simulation.js";
+import * as dropZone from "./js/drop-zone.js";
 configuration.loadFromUrl("configurations/discussion-configuration.json");
-const picker = document.getElementById("picker");
-picker.addEventListener("change", (event) => configuration.loadFromFile(picker));
-document.getElementById("download").addEventListener("click",
-  () => configuration.download());
-document.getElementById("start").addEventListener("click",
-  () => simulation.run(configuration.get()));
+
+const configurationDropZone = document.querySelector(".drop-zone[data-target='configuration']");
+dropZone.createDropZone(configurationDropZone, configuration.load);
+
+const simulationDropZone = document.querySelector(".drop-zone[data-target='simulation']");
+dropZone.createDropZone(simulationDropZone, simulation.load);
+
+document.getElementById("downloadConfiguration").addEventListener("click",
+  () => configuration.download(configuration.get()));
+document.getElementById("downloadConfigurationSimulation").addEventListener("click",
+  () => configuration.download(configuration.get().simulation, "-simulation"));
+document.getElementById("downloadConfigurationEvaluation").addEventListener("click",
+  () => configuration.download(configuration.get().evaluation, "-evaluation"));
+
+document.getElementById("run").addEventListener("click",
+  () => simulation.run("run", configuration.get()));
+document.getElementById("runSimulation").addEventListener("click",
+  () => simulation.run("simulate", configuration.get().simulation));
+document.getElementById("runEvaluation").addEventListener("click",
+  () => simulation.run("evaluate", configuration.get().evaluation));
+document.getElementById("runEvaluation").setAttribute("disabled", "");
 </script>
 </body>
 </html>
