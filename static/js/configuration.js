@@ -122,3 +122,31 @@ export function download(configuration, suffix = "") {
   document.body.removeChild(downloadElement);
 }
 
+export function createExampleSelectOptions(selectElement) {
+  const baseValue = selectElement.firstElementChild.value;
+  selectElement.value = baseValue;
+  const configurationDirectory = "configurations";
+  const defaultConfiguration = "discussion.json"
+  loadFromUrl(configurationDirectory + "/" + defaultConfiguration);
+  fetch(configurationDirectory)
+    .then(response => response.json())
+    .then(configurationFiles => {
+        for (const configurationFile of configurationFiles) {
+          const optionElement = document.createElement("option");
+          optionElement.innerText = configurationFile.split(".")[0];
+          optionElement.setAttribute("value", configurationFile);
+          selectElement.appendChild(optionElement);
+        }
+        selectElement.addEventListener("change", async event => {
+          const value = selectElement.value;
+          if (value.match("\.json$")) {
+            const success = await configuration.loadFromUrl(configurationDirectory + "/" + value);
+            dropZone.fade(configurationDropZone, success);
+            setTimeout(() => {
+              selectElement.value = baseValue;
+            }, 500);
+          }
+        });
+      });
+}
+

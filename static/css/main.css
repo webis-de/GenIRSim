@@ -30,30 +30,43 @@ main .pane {
   margin-left: 5px;
   margin-right: 5px;
 }
-main #simulation {
+main #simulation[open] {
   min-width: 400px;
   flex-shrink: 0.5;
+}
+main details.pane > summary {
+  display: block;
+  padding: 0px;
 }
 main .pane > .area {
   flex-grow: 1;
   margin-bottom: 5px;
   height: 600px;
 }
+
 main details.pane:not([open]) {
-  width: 30px;
+  background: #EEE;
+  cursor: pointer;
 }
-main details.pane > summary {
-  display: block;
-  padding: 0px;
-}
-main details.pane:not([open]) > summary {
-  transform: rotate(90deg) translateX(-5px);
-  transform-origin: bottom left;
-  width: min-content;
-  transform-box: content-box;
-}
-main details.pane:not([open]) > summary h2 {
-  margin: 0px;
+
+@media (min-width: 1001px) {
+  main details.pane:not([open]) {
+    width: 30px;
+    position: relative;
+    bottom: 5px;
+  }
+  main details.pane:not([open]):hover {
+    background-color: lightgray;
+  }
+  main details.pane:not([open]) > summary {
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    width: min-content;
+    transform-box: content-box;
+  }
+  main details.pane:not([open]) > summary h2 {
+    margin: 0px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -62,9 +75,6 @@ main details.pane:not([open]) > summary h2 {
   }
   main .pane {
     height: initial;
-  }
-  main #configuration {
-    min-height: initial;
   }
 }
 

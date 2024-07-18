@@ -15,10 +15,11 @@
 <main>
 
 <details id="configuration" class="pane" open><summary><h2>Configuration</h2></summary>
-<div class="drop-zone" data-target="configuration"><select id="configurationSelect"><option>pick</option></select> or upload: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
+<div class="drop-zone" data-target="configuration"> or upload: drop or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
+<div class="buttons"><select id="configurationSelect"><option>or pick an example ...</option></select></div>
+<div id="editor"></div>
 <div class="buttons">Download:
 <button id="downloadConfiguration" type="button">complete</button><button id="downloadConfigurationSimulation" type="button">simulation</button><button id="downloadConfigurationEvaluation" type="button">evaluation</button></div>
-<div id="editor"></div>
 </details> <!-- #configuration -->
 
 <div id="simulation" class="pane"><h2>Simulation</h2>
@@ -28,9 +29,9 @@
 <div id="chat" class="area"></div>
 </div> <!-- #simulation -->
 
-<details id="log" class="pane" open><summary><h2>Log</h2></summary>
+<div id="log" class="pane"><h2>Log</h2>
 <div id="messages" class="area"></div>
-</details> <!-- #log -->
+</div> <!-- #log -->
 
 </main>
 <script type="module">
@@ -59,30 +60,15 @@ document.getElementById("runEvaluation").addEventListener("click",
   () => simulation.run("evaluate", configuration.get().evaluation));
 document.getElementById("runEvaluation").setAttribute("disabled", "");
 
-const configurationDirectory = "configurations";
-const defaultConfiguration = "discussion.json"
-configuration.loadFromUrl(configurationDirectory + "/" + defaultConfiguration);
-fetch(configurationDirectory)
-  .then(response => response.json())
-  .then(configurationFiles => {
-      const configurationSelectElement = document.getElementById("configurationSelect");
-      for (const configurationFile of configurationFiles) {
-        const optionElement = document.createElement("option");
-        optionElement.innerText = configurationFile.split(".")[0];
-        optionElement.setAttribute("value", configurationFile);
-        configurationSelectElement.appendChild(optionElement);
-      }
-      configurationSelectElement.addEventListener("change", async event => {
-        const value = configurationSelectElement.value;
-        if (value.match("\.json$")) {
-          const success = await configuration.loadFromUrl(configurationDirectory + "/" + value);
-          dropZone.fade(configurationDropZone, success);
-          setTimeout(() => {
-            configurationSelectElement.value = "pick";
-          }, 500);
-        }
-      });
-    });
+configuration.createExampleSelectOptions(document.getElementById("configurationSelect"));
+
+for (const paneElement of Array.from(document.querySelectorAll(".pane"))) {
+  paneElement.addEventListener("click", event => {
+    if (event.target === paneElement && !paneElement.hasAttribute("open")) {
+      paneElement.querySelector("summary").click();
+    }
+  });
+}
 </script>
 </body>
 </html>
