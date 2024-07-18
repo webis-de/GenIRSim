@@ -12,6 +12,8 @@ function get() {
 }
 
 const logElement = document.getElementById("messages");
+const logHistory = [];
+
 let lastEntry = {};
 let logContainerElement = null;
 let loaderElement = null;
@@ -142,6 +144,15 @@ function createDownloadButton(name, result) {
   return buttonElement;
 }
 
+function createLogDownloadButton() {
+  const buttonsElement = document.createElement("div");
+  buttonsElement.classList.add("buttons");
+  buttonsElement.innerText = "Download: ";
+  buttonsElement.appendChild(createDownloadButton("log", logHistory));
+  logElement.appendChild(buttonsElement);
+  logElement.scrollTop = logElement.scrollHeight;
+}
+
 function createResultBubble(result, simulationOnly) {
   const chatBubble = ensureChatBubble("controller");
   const loaderElement = chatBubble.querySelector(".loader");
@@ -201,6 +212,7 @@ export async function run(call, configuration) {
     }
   }
   logElement.innerHTML = '';
+  logHistory.length = 0;
   loaderElement = document.createElement("span");
   loaderElement.classList.add("loader");
   logElement.appendChild(loaderElement);
@@ -211,6 +223,7 @@ export async function run(call, configuration) {
     const release = await mutex.acquire();
     const message = JSON.parse(event.data);
     if (message.source) { // logEntry
+      logHistory.push(message);
       log(message);
       if (message.source === "user" || message.source === "system") {
         const chatBubble = ensureChatBubble(message.source);
@@ -238,8 +251,10 @@ export async function run(call, configuration) {
       }
     } else if (message.userTurns) { // only simulation result
       createResultBubble(message, true);
+      createLogDownloadButton();
     } else if (message.overallEvaluations) { // evaluation result
       createResultBubble(message, false);
+      createLogDownloadButton();
     } else { // something else => error
       console.error(message);
     }

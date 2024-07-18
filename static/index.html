@@ -15,7 +15,7 @@
 <main>
 
 <details id="configuration" class="pane" open><summary><h2>Configuration</h2></summary>
-<div class="drop-zone" data-target="configuration"> or upload: drop or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
+<div class="drop-zone" data-target="configuration">upload: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
 <div class="buttons"><select id="configurationSelect"><option>or pick an example ...</option></select></div>
 <div id="editor"></div>
 <div class="buttons">Download:
@@ -62,7 +62,7 @@ document.getElementById("runEvaluation").setAttribute("disabled", "");
 
 configuration.createExampleSelectOptions(document.getElementById("configurationSelect"));
 
-for (const paneElement of Array.from(document.querySelectorAll(".pane"))) {
+for (const paneElement of Array.from(document.querySelectorAll("details.pane"))) {
   paneElement.addEventListener("click", event => {
     if (event.target === paneElement && !paneElement.hasAttribute("open")) {
       paneElement.querySelector("summary").click();
