@@ -13,17 +13,17 @@ Flexible and easy-to-use simulation and evaluation framework for generative IR.
 Quickstart:
 ```
 npm install
-npm exec genirsim configurations/default-configuration.json > eval.json
+node bin/genirsim static/configurations/discussion.json > eval.json
 ```
 
 To run the [web server](http://localhost:8000):
 ```
 npm install
-npm exec genirsim-server
+node bin/genirsim-server
 ```
 or
 ```
-docker run --rm -it -v 8000:8000 ghcr.io/webis-de/genirsim:$(jq -r '.version' package.json)
+docker run --rm -it -p 8000:8000 ghcr.io/webis-de/genirsim:$(jq -r '.version' package.json)
 ```
 
 
