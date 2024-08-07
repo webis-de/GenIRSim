@@ -9,6 +9,7 @@ Flexible and easy-to-use simulation and evaluation framework for generative IR.
 [![npm workflow](https://img.shields.io/github/actions/workflow/status/webis-de/GenIRSim/npm.yml?label=nodejs)](https://www.npmjs.com/package/@webis-de/gen-ir-sim)
 [![docker workflow](https://img.shields.io/github/actions/workflow/status/webis-de/GenIRSim/ghcr.yml?label=docker)](https://github.com/webis-de/GenIRSim/pkgs/container/GenIRSim)
 [![license](https://img.shields.io/github/license/webis-de/GenIRSim)](https://github.com/webis-de/GenIRSim/blob/main/LICENSE)
+[[demo](https://genirsim.webis.de/)]
 
 <sup>Tested in node 21.7.2 with npm 10.5.0</sup>
 

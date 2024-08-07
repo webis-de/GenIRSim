@@ -59,6 +59,7 @@ const MIME_TYPES = {
   html: "text/html; charset=UTF-8",
   js: "application/javascript",
   json: "application/json",
+  svg: "image/svg+xml",
   tsv: "text/tab-separated-values"
 };
 

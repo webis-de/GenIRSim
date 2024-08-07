@@ -172,3 +172,14 @@ details.empty summary::marker {
   transition: background 500ms linear;
 }
 
+.link {
+  font-size: initial;
+}
+.link a {
+  color: #0645ad;
+  text-decoration: none;
+}
+.link a:hover {
+  text-decoration: underline;
+}
+
