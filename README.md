@@ -2,7 +2,7 @@
 
 # GenIRSim
 
-Flexible and easy-to-use simulation and evaluation framework for generative IR.
+Flexible simulation and evaluation framework for generative IR.
 [[demo](https://genirsim.webis.de/)]
 
 [![latest version](https://img.shields.io/github/v/tag/webis-de/GenIRSim?label=latest&sort=semver)](https://github.com/webis-de/GenIRSim)
@@ -13,7 +13,9 @@ Flexible and easy-to-use simulation and evaluation framework for generative IR.
 
 <sup>Tested in node 21.7.2 with npm 10.5.0</sup>
 
-Quickstart:
+Quickstart
+
+If you are not within the Webis network, you first need to replace all occurrences of the URL `https://llm.srv.webis.de/api/chat` and the `model` (`default`) in the [configuration](static/configurations) with the values for a server you have access to (OpenAI-compatible API). Then,
 ```
 npm install
 node bin/genirsim static/configurations/discussion.json > eval.json

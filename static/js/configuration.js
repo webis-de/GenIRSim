@@ -1,3 +1,5 @@
+import * as dropZone from "./drop-zone.js";
+
 function makeFoldable(title, open = false) {
   const element = document.createElement("details");
   const titleElement = document.createElement("summary");
@@ -123,6 +125,7 @@ export function download(configuration, suffix = "") {
 }
 
 export function createExampleSelectOptions(selectElement) {
+  const configurationDropZone = document.querySelector(".drop-zone[data-target='configuration']");
   const baseValue = selectElement.firstElementChild.value;
   selectElement.value = baseValue;
   const configurationDirectory = "configurations";
@@ -140,7 +143,7 @@ export function createExampleSelectOptions(selectElement) {
         selectElement.addEventListener("change", async event => {
           const value = selectElement.value;
           if (value.match("\.json$")) {
-            const success = await configuration.loadFromUrl(configurationDirectory + "/" + value);
+            const success = await loadFromUrl(configurationDirectory + "/" + value);
             dropZone.fade(configurationDropZone, success);
             setTimeout(() => {
               selectElement.value = baseValue;
