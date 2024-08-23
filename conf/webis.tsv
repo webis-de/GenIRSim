@@ -1,0 +1,2 @@
+LLM
+{"url": "https://llm.srv.webis.de/api/chat","model":"default","keep_alive":"24h"}
