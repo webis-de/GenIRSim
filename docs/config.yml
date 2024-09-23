@@ -4,6 +4,8 @@ toc:
       Flexible and easy-to-use simulation and evaluation framework for generative IR
 
       [[code](https://github.com/webis-de/GenIRSim)] [[docker](https://github.com/webis-de/GenIRSim/pkgs/container/GenIRSim)] [[package](https://www.npmjs.com/package/@webis-de/gen-ir-sim)]
+
+      A run of GenIRSim consists of two stages, which are executed sequentially by the main [run](#run) function: simulation and evaluation. During simulation (see the [simulate](#simulate) function), a [user](#user) converses with a generative IR [system](#system). During evaluation (see the [evaluate](#evaluate) function), the generated conversation is judged by one or more [evaluator](#evaluator)s. The run is defined using a configuration in JSON format (see the `configuration` parameter of the above mentioned functions and see [the configurations directory](https://github.com/webis-de/GenIRSim/tree/main/static/configurations) for examples). If you create your own user, system, or evaluator classes, make sure to register them using the `options.additionalUsers/Systems/Evaluators` parameters of the above mentioned functions.
   - run
   - simulate
   - evaluate
