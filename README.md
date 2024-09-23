@@ -36,7 +36,11 @@ docker run --rm -it -p 8000:8000 ghcr.io/webis-de/genirsim:${GENIRSIM_VERSION}
 
 If you use GenIRSim in your publication, cite it using the following publication:
 ```
-Johannes Kiesel, Marcel Gohsen, Nailia Mirzakhmedova, Matthias Hagen, and Benno Stein. Who Will Evaluate the Evaluators? Exploring the Gen-IR User Simulation Space. In Lorraine Goeuriot et al., editors, Experimental IR Meets Multilinguality, Multimodality, and Interaction. 15th International Conference of the CLEF Association (CLEF 2024), volume 14958 of Lecture Notes in Computer Science, pages 166–171, September 2024. Springer.
+Johannes Kiesel, Marcel Gohsen, Nailia Mirzakhmedova, Matthias Hagen, and Benno Stein.
+Who Will Evaluate the Evaluators? Exploring the Gen-IR User Simulation Space.
+In Lorraine Goeuriot et al., editors, Experimental IR Meets Multilinguality, Multimodality, and Interaction.
+15th International Conference of the CLEF Association (CLEF 2024),
+volume 14958 of Lecture Notes in Computer Science, pages 166–171, September 2024. Springer.
 ```
 See [the paper's entry on the Webis publication page](https://webis.de/publications.html#kiesel_2024c) for the BibTeX entry, additional links, and the paper itself.
 
