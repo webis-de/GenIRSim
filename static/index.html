@@ -11,27 +11,27 @@
 </head>
 <body>
 
-<h1>GenIRSim <span class="link">[<a href="https://github.com/webis-de/GenIRSim">code</a>]</span></h1>
+<h1><img src="img/genirsim-logo.png"> GenIRSim <span class="link">[<a href="https://github.com/webis-de/GenIRSim">code</a>]</span></h1>
 <main>
 
-<details id="configuration" class="pane" open><summary><h2>Configuration</h2></summary>
-<div class="drop-zone" data-target="configuration">upload configuration: drop here or <label for="configurationPicker">browse</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></div>
+<div class="pane">
+
+<details class="drop-zone" data-target="configuration" open><summary class="pane-summary"><h2>Configuration <label for="configurationPicker">load</label><input type="file" id="configurationPicker" name="configuration" accept="text/plain, application/json"></h2></summary>
 <div class="buttons"><select id="configurationSelect"><option>or pick an example ...</option></select></div>
 <div id="editor"></div>
-<div class="buttons">Download configuration:
-<button id="downloadConfiguration" type="button">complete</button><button id="downloadConfigurationSimulation" type="button">simulation</button><button id="downloadConfigurationEvaluation" type="button">evaluation</button></div>
+<div class="buttons">Download configuration: <button id="downloadConfiguration" type="button">complete</button><button id="downloadConfigurationSimulation" type="button">simulation</button><button id="downloadConfigurationEvaluation" type="button">evaluation</button></div>
 </details> <!-- #configuration -->
 
-<div id="simulation" class="pane"><h2>Simulation</h2>
-<div class="drop-zone" data-target="simulation">upload simulation: drop here or <label for="simulationPicker">browse</label><input type="file" id="simulationPicker" name="simulation" accept="text/plain, application/json"></div>
-<div class="run-buttons" class="buttons">Run:
-<button id="run" type="button">complete</button><button id="runSimulation" type="button">simulation</button><button id="runEvaluation" type="button">evaluation</button></div>
+<h2>Execution</h2>
+<div class="run-buttons" class="buttons">Run: <button id="run" type="button">complete</button><button id="runSimulation" type="button">simulation</button><button id="runEvaluation" type="button">evaluation</button></div>
+<div id="messages" class="area"></div>
+
+</div> <!-- pane -->
+
+<div id="simulation" class="pane drop-zone" data-target="simulation">
+<h2>Simulation <label for="simulationPicker">load</label><input type="file" id="simulationPicker" name="simulation" accept="text/plain, application/json"></h2>
 <div id="chat" class="area"></div>
 </div> <!-- #simulation -->
-
-<div id="log" class="pane"><h2>Log</h2>
-<div id="messages" class="area"></div>
-</div> <!-- #log -->
 
 </main>
 <script type="module">
