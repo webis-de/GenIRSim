@@ -34,7 +34,7 @@ webSocketServer.on('connection', socket => {
       }
       socket.close();
     } catch (error) {
-      socket.send(JSON.stringify({error: error}));
+      socket.send(JSON.stringify(error, Object.getOwnPropertyNames(error)));
       console.error(error);
     }
   });

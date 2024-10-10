@@ -1,0 +1,36 @@
+{
+  "topic": {
+    "description": "Television is bad for people."
+  },
+  "user": {
+    "class": "Touche25RADUser",
+    "url": "https://touche25-rad.webis.de/user-sim/api/chat",
+    "model": "base-user"
+  },
+  "system": {
+    "class": "GenerativeElasticSystem",
+    "llm": {
+      "url": "https://llm.srv.webis.de/api/chat",
+      "model": "default",
+      "keep_alive": "24h"
+    },
+    "search": {
+      "url": "https://elastic-genirsim.web.webis.de/kialo/",
+      "query": {
+        "match": {
+          "claim": {
+            "query": "{{variables.userTurn.utterance}}"
+          }
+        }
+      },
+      "size": 5
+    },
+    "generation": {
+      "message": "\n\nIn order to counter the argument '{{variables.userTurn.utterance}}' you found the following counters:\n\n{{variables.results}}\n\nSelect the most convicing counter to their original argument from these counters and respond to them in about 20 words using your selected counter.\n\nFormat your message as JSON with exactly these keys:\n- key='reasoning': A step-by-step explanation of why you selected the specific counter.\n- key='counter': The text of the counter you selected.\n- key='utterance': Your message.\n\n",
+      "searchResultKeys": [
+        "counter"
+      ]
+    }
+  },
+  "maxTurns": 3
+}

@@ -1,0 +1,92 @@
+{
+  "simulation": {
+    "topic": {},
+    "user": {
+      "class": "Touche25RADUser",
+      "url": "https://touche25-rad.webis.de/user-sim/api/chat",
+      "model": "base-user"
+    },
+    "system": {
+      "class": "GenerativeElasticSystem",
+      "llm": {
+        "url": "https://llm.srv.webis.de/api/chat",
+        "model": "default",
+        "keep_alive": "24h"
+      },
+      "search": {
+        "url": "https://elastic-genirsim.web.webis.de/kialo/",
+        "query": {
+          "match": {
+            "claim": {
+              "query": "{{variables.userTurn.utterance}}"
+            }
+          }
+        },
+        "size": 5
+      },
+      "generation": {
+        "message": "\n\nIn order to counter the argument '{{variables.userTurn.utterance}}' you found the following counters:\n\n{{variables.results}}\n\nSelect the most convicing counter to their original argument from these counters and respond to them in about 20 words using your selected counter.\n\nFormat your message as JSON with exactly these keys:\n- key='reasoning': A step-by-step explanation of why you selected the specific counter.\n- key='counter': The text of the counter you selected.\n- key='utterance': Your message.\n\n",
+        "searchResultKeys": [
+          "counter"
+        ]
+      }
+    },
+    "maxTurns": 3
+  },
+  "evaluation": {
+    "evaluators": {
+      "Readability": {
+        "class": "ReadabilityEvaluator",
+        "measure": "fleschKincaidGrade"
+      },
+      "Clarity": {
+        "class": "PromptedEvaluator",
+        "llm": {
+          "url": "https://llm.srv.webis.de/api/chat",
+          "model": "default",
+          "keep_alive": "24h"
+        },
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "requiredKeys": [
+          "explanation"
+        ],
+        "dimension": {
+          "name": "Clarity",
+          "definition": "The author uses clear, grammatically correct and unambiguous language. The author sticks to the main topic and does not make things overly complicated."
+        }
+      },
+      "Global Relevance": {
+        "class": "PromptedEvaluator",
+        "llm": {
+          "url": "https://llm.srv.webis.de/api/chat",
+          "model": "default",
+          "keep_alive": "24h"
+        },
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "requiredKeys": [
+          "explanation"
+        ],
+        "dimension": {
+          "name": "Global Relevance",
+          "definition": "The counter-argument (assuming it is true), is relevant for resolving a discussion around the issue."
+        }
+      },
+      "Local Relevance": {
+        "class": "PromptedEvaluator",
+        "llm": {
+          "url": "https://llm.srv.webis.de/api/chat",
+          "model": "default",
+          "keep_alive": "24h"
+        },
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A step-by-step explanation for your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "requiredKeys": [
+          "explanation"
+        ],
+        "dimension": {
+          "name": "Local Relevance",
+          "definition": "The counter-argument (assuming it is true), is relevant to the argument: it tells why one could refute the argument."
+        }
+      }
+    }
+  }
+}

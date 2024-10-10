@@ -3,8 +3,10 @@ import * as templates from "./templates.js";
 
 import { USER_TURN } from "./user.js";
 import { StaticUser } from "./users/static-user.js";
+import { Touche25RADUser } from "./users/touche25-rad-user.js";
 const users = {
-  StaticUser
+  StaticUser,
+  Touche25RADUser
 }
 
 import { GenerativeElasticSystem } from "./systems/generative-elastic-system.js";
