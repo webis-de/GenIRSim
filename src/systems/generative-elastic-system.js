@@ -5,6 +5,11 @@ import { LLM } from "../llm.js"
 
 async function queryElastic(query, searchConfiguration, logbook) {
   const data = {query: query};
+  for (const optionalAttribute of [ "_source" ]) {
+    if (optionalAttribute in searchConfiguration) {
+      data[optionalAttribute] = searchConfiguration[optionalAttribute];
+    }
+  }
   const body = JSON.stringify(data);
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
@@ -15,6 +20,9 @@ async function queryElastic(query, searchConfiguration, logbook) {
     searchConfiguration.url + "_search?size=" + searchConfiguration.size,
     params);
   const responseJson = await response.json();
+  if ("error" in responseJson) {
+    throw new Error("Elasticsearch error: " + JSON.stringify(responseJson));
+  }
   const results = responseJson.hits.hits.map((hit, index) => {
     const result = Object.assign({}, hit["_source"]);
     result.key = index + 1;
@@ -53,14 +61,16 @@ async function queryElastic(query, searchConfiguration, logbook) {
  *   `variables.userTurn.utterance`
  * @param {Array} [configuration.preprocessing.requiredKeys] - The properties
  * that the preprocessing response must have (none by default)
+ * @param {Object} configuration.search
+ * @param {string} configuration.search.url - The complete URL of the
+ * Elasticsearch server's API endpoint (up to but excluding `_search`)
  * @param {string} configuration.search.query - The Elasticsearch query object
  * for retrieving results, but every string in it is treated as a template.
  * Variables are the same as for `configuration.preprocessing.message`, plus:
  * - `{{variables.preprocessing}}`: The parsed output of the preprocessing (if
  *   preprocessing was performed)
- * @param {Object} configuration.search
- * @param {string} configuration.search.url - The complete URL of the
- * Elasticsearch server's API endpoint (up to but excluding `_search`)
+ * @param {Array} [configuration.search._source_excludes] - A comma-separated
+ * list of source fields to exclude from the response
  * @param {number} configuration.search.size - The number of results to retrieve
  * @param {Object} configuration.generation
  * @param {string} configuration.generation.message - Template for the
