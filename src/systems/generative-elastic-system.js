@@ -69,8 +69,9 @@ async function queryElastic(query, searchConfiguration, logbook) {
  * Variables are the same as for `configuration.preprocessing.message`, plus:
  * - `{{variables.preprocessing}}`: The parsed output of the preprocessing (if
  *   preprocessing was performed)
- * @param {Array} [configuration.search._source_excludes] - A comma-separated
- * list of source fields to exclude from the response
+ * @param {Object} [configuration.search._source] - An object that specifies
+ * which source attributes to include in the response, see
+ * {@link https://www.elastic.co/guide/en/elasticsearch/reference/current/search-fields.html#source-filtering|the Elasticsearch documentation}
  * @param {number} configuration.search.size - The number of results to retrieve
  * @param {Object} configuration.generation
  * @param {string} configuration.generation.message - Template for the
