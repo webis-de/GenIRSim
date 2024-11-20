@@ -67,8 +67,8 @@ function parseJson(message, requiredKeys) {
   let failed = 0;
   let processedMessage = message
     .trim()
-    .replace(/^```(json)?/, "")
-    .replace(/```$/, "")
+    .replace(/^[^`]*?```(json)?/, "")
+    .replace(/```.*$/, "")
     .trim();
   try {
     return JSON.parse(processedMessage);
@@ -130,7 +130,7 @@ function parseJson(message, requiredKeys) {
    *   "foo2": "bar"
    * }
    */
-  processedMessage = processedMessage.replaceAll(/},\s*{/g, ",");
+  processedMessage = processedMessage.replaceAll(/},?\s*{/g, ",");
   try {
     return JSON.parse(processedMessage);
   } catch (error) {
