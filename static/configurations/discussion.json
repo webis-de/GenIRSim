@@ -10,8 +10,8 @@
         "model": "default",
         "keep_alive": "24h"
       },
-      "start": "You try to convice someone that {{variables.topic.description}}. Write them a message in about 20 words that states your point of view.\n\nFormat your message as JSON with exactly one key, 'utterance', that has your message.\n\n",
-      "followUp": "Someone told you: '{{variables.systemResponse.utterance}}'\n\nBut you want to convince them that {{variables.topic.description}}. Follow up on their argument by writing them a message in about 20 words that counters their argument. Format your message as JSON with exactly these keys:\n- key='reasoning': A step-by-step explanation of why you think your message is a good counter to their argument.\n- key='utterance': Your message.\n\n"
+      "start": "You try to convice someone that {{variables.topic.description}}. Write them a message in about 20 words that states your point of view.\n\nFormat your message as only one JSON object with exactly one key, 'utterance', that has your message.\nExample:\n{\"utterance\":\"your message\"}\n\n",
+      "followUp": "Someone told you: '{{variables.systemResponse.utterance}}'\n\nBut you want to convince them that {{variables.topic.description}}. Follow up on their argument by writing them a message in about 20 words that counters their argument. Format your message as only one JSON object with exactly these keys:\n- key='reasoning': A step-by-step explanation of why you think your message is a good counter to their argument.\n- key='utterance': Your message.\nExample:\n{\"reasoning\":\"your explanation\",\"utterance\":\"your message\"}\n\n"
     },
     "system": {
       "class": "GenerativeElasticSystem",
@@ -32,7 +32,7 @@
         "size": 5
       },
       "generation": {
-        "message": "\n\nIn order to counter the argument '{{variables.userTurn.utterance}}' you found the following counters:\n\n{{variables.results}}\n\nSelect the most convicing counter to their original argument from these counters and respond to them in about 20 words using your selected counter.\n\nFormat your message as JSON with exactly these keys:\n- key='reasoning': A step-by-step explanation of why you selected the specific counter.\n- key='counter': The text of the counter you selected.\n- key='utterance': Your message.\n\n",
+        "message": "\n\nIn order to counter the argument '{{variables.userTurn.utterance}}' you found the following counters:\n\n{{variables.results}}\n\nSelect the most convicing counter to their original argument from these counters and respond to them in about 20 words using your selected counter.\n\nFormat your message as only one JSON object with exactly these keys:\n- key='reasoning': A step-by-step explanation of why you selected the specific counter.\n- key='counter': The text of the counter you selected.\n- key='utterance': Your message.\nExample:\n{\"reasoning\":\"your explanation\",\"counter\":\"the text of your selected counter\",\"utterance\":\"your message\"}\n\n",
         "searchResultKeys": [
           "counter"
         ]
@@ -53,7 +53,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='reasoning': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as only one JSON object with exactly these keys:\n- key='reasoning': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\nExample:\n{\"reasoning\":\"your explanation\",\"score\":0.5}\n\n",
         "dimension": {
           "name": "Clarity",
           "definition": "The author uses clear, grammatically correct and unambiguous language. The author sticks to the main topic and does not make things overly complicated."
@@ -66,7 +66,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
         "requiredKeys": [ "explanation" ],
         "dimension": {
           "name": "Clarity",
@@ -80,7 +80,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
         "requiredKeys": [ "explanation" ],
         "dimension": {
           "name": "Global Relevance",
@@ -94,7 +94,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A step-by-step explanation for your score.\n- key='score': The score as number between 0 and 1.\n\n",
+        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
         "requiredKeys": [ "explanation" ],
         "dimension": {
           "name": "Local Relevance",

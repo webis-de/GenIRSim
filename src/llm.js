@@ -67,8 +67,8 @@ function parseJson(message, requiredKeys) {
   let failed = 0;
   let processedMessage = message
     .trim()
-    .replace(/^[^`]*?```(json)?/, "")
-    .replace(/```.*$/, "")
+    .replace(/^[^{\[]*/, "")
+    .replace(/[^}\]]*$/, "")
     .trim();
   try {
     return JSON.parse(processedMessage);

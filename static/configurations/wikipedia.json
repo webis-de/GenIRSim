@@ -12,7 +12,7 @@
       },
       "start": "### Task:\n{{variables.topic.description}}\n\nNow write a message for a conversational search system to request the information you are lacking.\n\n{{formatting}}\n\n",
       "followUp": "### Task:\n{{variables.topic.description}}\n\n### Information:\n{{variables.systemResponse.utterance}}\n\n### Instruction: Follow-up questions are the questions elicited from readers as they naturally read through text. Given the information, write a follow-up questions that you would ask if you were reading this information for the first time.\n\n{{formatting}}\n\n",
-      "formatting": "Format your message as JSON with exactly these keys:\n- key='expectation': A description of what you expect the system's answer to your message to contain.\n- key='utterance': Your short message."
+      "formatting": "Format your message as only one JSON object with exactly these keys:\n- key='expectation': A description of what you expect the system's answer to your message to contain.\n- key='utterance': Your short message.\nExample:\n{\"expectation\":\"your expectation\",\"utterance\":\"your message\"}\n\n"
     },
     "system": {
       "class": "GenerativeElasticSystem",
@@ -38,7 +38,7 @@
           "title",
           "text"
         ],
-        "formatting": "Format your message as JSON with the single key 'utterance'."
+        "formatting": "Format your message as only one JSON object with the single key 'utterance'.\n{\"utterance\":\"your message\"}\n\n"
       }
     },
     "maxTurns": 2
@@ -56,7 +56,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Task:\n{{variables.simulation.configuration.topic.description}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the topic relevance of the response: whether the response is relevant for fulfilling the task.\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to topic) and 1 (response completely fulfills the task).",
+        "prompt": "### Task:\n{{variables.simulation.configuration.topic.description}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the topic relevance of the response: whether the response is relevant for fulfilling the task.\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to topic) and 1 (response completely fulfills the task).\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
         "requiredKeys": [ "explanation" ]
       },
       "Request Relevance": {
@@ -66,7 +66,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Request:\n{{variables.userTurn.utterance}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the request relevance of the response: whether the response is relevant for answering the request.\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to request) and 1 (response completely answers the request).",
+        "prompt": "### Task:\n{{variables.simulation.configuration.topic.description}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the topic relevance of the response: whether the response is relevant for fulfilling the task.\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to topic) and 1 (response completely fulfills the task).\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
         "requiredKeys": [ "explanation" ]
       },
       "Expectation Match": {
@@ -76,7 +76,7 @@
           "model": "default",
           "keep_alive": "24h"
         },
-        "prompt": "### Expectation:\n{{variables.userTurn.expectation}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the expectation match of the response: whether the response matches the expectation.\n\nFormat your message as JSON with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (no connection between response and expectation) and 1 (response completely matches the expectation).",
+        "prompt": "### Task:\n{{variables.simulation.configuration.topic.description}}\n\n### Response:\n{{variables.userTurn.systemResponse.utterance}}\n\nScore from 0 (extremely bad) to 1 (extremely good) the topic relevance of the response: whether the response is relevant for fulfilling the task.\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A brief explanation of how you got to the score\n- key='score': The score you give between 0 (response not relevant to topic) and 1 (response completely fulfills the task).\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
         "requiredKeys": [ "explanation" ]
       }
     }
