@@ -10,7 +10,9 @@ const users = {
 }
 
 import { GenerativeElasticSystem } from "./systems/generative-elastic-system.js";
+import { BasicChatSystem } from "./systems/basic-chat-system.js";
 const systems = {
+  BasicChatSystem,
   GenerativeElasticSystem
 }
 
