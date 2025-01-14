@@ -13,7 +13,7 @@ if (process.argv.length < 3 || process.argv.length > 4) {
     : [{}];
   const runs = await genirsim.run(configuration, options, replacements);
   for (const run of runs) {
-    console.log(JSON.stringify(runs));
+    console.log(JSON.stringify(run));
   }
 }
 
