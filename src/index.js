@@ -196,40 +196,46 @@ async function evaluateTurn(instantiatedEvaluators, logbook, simulation, userTur
 export async function evaluate(simulation, configuration, options = undefined) {
   const millisecondsStartEvaluation = performance.now();
   const logCallback = (options || {}).logCallback || defaultLogCallback;
-  const additionalEvaluators = (options || {}).additionalEvaluators || {};
   const controllerLogbook = new Logbook("controller", logCallback);
+  if (configuration) {
+    const logbook = new Logbook("evaluation", logCallback);
+    const additionalEvaluators = (options || {}).additionalEvaluators || {};
+    const availableEvaluators =
+      Object.assign(Object.assign({}, evaluators), additionalEvaluators);
 
-  const logbook = new Logbook("evaluation", logCallback);
-  const availableEvaluators =
-    Object.assign(Object.assign({}, evaluators), additionalEvaluators);
+    const instantiatedEvaluators = {};
+    Object.keys(configuration.evaluators || {}).forEach(name => {
+      const evaluatorLogbook = new Logbook("evaluation", logCallback, name + ".");
+      const evaluatorConfiguration = configuration.evaluators[name];
+      instantiatedEvaluators[name] = new availableEvaluators[evaluatorConfiguration.class](
+        evaluatorConfiguration, evaluatorLogbook);
+    });
 
-  const instantiatedEvaluators = {};
-  Object.keys(configuration.evaluators || {}).forEach(name => {
-    const evaluatorLogbook = new Logbook("evaluation", logCallback, name + ".");
-    const evaluatorConfiguration = configuration.evaluators[name];
-    instantiatedEvaluators[name] = new availableEvaluators[evaluatorConfiguration.class](
-      evaluatorConfiguration, evaluatorLogbook);
-  });
-
-  const userTurnsEvaluations = [];
-  for (let userTurnIndex = 0; userTurnIndex < simulation.userTurns.length; userTurnIndex += 1) {
-    controllerLogbook.log("evaluate turn " + userTurnIndex);
-    if (simulation.userTurns[userTurnIndex].systemResponse !== undefined) {
-      const evaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex);
-      userTurnsEvaluations.push(evaluations);
+    const userTurnsEvaluations = [];
+    for (let userTurnIndex = 0; userTurnIndex < simulation.userTurns.length; userTurnIndex += 1) {
+      controllerLogbook.log("evaluate turn " + userTurnIndex);
+      if (simulation.userTurns[userTurnIndex].systemResponse !== undefined) {
+        const evaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation, userTurnIndex);
+        userTurnsEvaluations.push(evaluations);
+      }
     }
-  }
-  controllerLogbook.log("evaluate overall simulation");
-  const overallEvaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation);
+    controllerLogbook.log("evaluate overall simulation");
+    const overallEvaluations = await evaluateTurn(instantiatedEvaluators, logbook, simulation);
 
-  controllerLogbook.log("done");
-  return {
-    configuration: configuration,
-    simulation: simulation,
-    userTurnsEvaluations: userTurnsEvaluations,
-    overallEvaluations: overallEvaluations,
-    millisecondsEvaluation: performance.now() - millisecondsStartEvaluation
-  };
+    controllerLogbook.log("done");
+    return {
+      configuration: configuration,
+      simulation: simulation,
+      userTurnsEvaluations: userTurnsEvaluations,
+      overallEvaluations: overallEvaluations,
+      millisecondsEvaluation: performance.now() - millisecondsStartEvaluation
+    };
+  } else {
+    controllerLogbook.log("Skipping evaluation due to missing configuration");
+    return {
+      simulation: simulation
+    };
+  }
 }
 
 /**

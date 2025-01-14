@@ -11,9 +11,9 @@ if (process.argv.length < 3 || process.argv.length > 4) {
   const replacements = (process.argv.length === 4)
     ? genirsim.templates.tsv2Contexts(fs.readFileSync(process.argv[3], "utf8"))
     : [{}];
-  const evaluations = await genirsim.run(configuration, options, replacements);
-  for (const evaluation of evaluations) {
-    console.log(JSON.stringify(evaluation));
+  const runs = await genirsim.run(configuration, options, replacements);
+  for (const run of runs) {
+    console.log(JSON.stringify(runs));
   }
 }
 

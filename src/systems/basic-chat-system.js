@@ -57,7 +57,9 @@ export class BasicChatSystem extends System {
 
     const systemMessage = responseJson.message;
     this.messages.push(systemMessage);
-    return systemMessage.content;
+    return {
+      utterance: systemMessage.content
+    };
   }
 
 }

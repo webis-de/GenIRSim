@@ -128,7 +128,7 @@ export function tsv2Contexts(tsv) {
   if (lines.length === 0) { throw new Error("empty file"); }
   const header = lines[0];
   const rows = lines.splice(1);
-  return rows.entries().map((rowIndex, row) => {
+  return rows.map(row => {
     const context = {};
     for (const [headerIndex, key] of header.entries()) {
       context[key] = row[headerIndex];
