@@ -15,10 +15,12 @@ toc:
   - ReadabilityEvaluator
   - name: Systems
   - System
+  - BasicChatSystem
   - GenerativeElasticSystem
   - name: Users
   - User
   - StaticUser
+  - Touche25RADUser
   - name: Utility
   - templates
   - name: Types
