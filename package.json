@@ -1,6 +1,6 @@
 {
   "name": "@webis-de/gen-ir-sim",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "Framework for evaluating Generative Information Retrieval systems through simulation.",
   "main": "src/index.js",
   "files": [
@@ -9,6 +9,7 @@
   ],
   "bin": {
     "genirsim": "bin/genirsim.js",
+    "genirsim-evaluate": "bin/genirsim-evaluate.js",
     "genirsim-server": "bin/genirsim-server.js"
   },
   "scripts": {
