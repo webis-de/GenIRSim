@@ -9,8 +9,8 @@ import { System, SYSTEM_RESPONSE } from "../system.js";
  * the string property `role`, which is either `assistant` or `user`, and the
  * string property `content` that contains the message text.
  *
- * The API produces a JSON object that has at least the property `message`,
- * which is the response message (thus `role` has to be `assistant`).
+ * The API produces a JSON object that has at least the property `content`,
+ * which is the message text of the response.
  *
  * @class BasicChatSystem
  * @param {Object} configuration - The configuration for the system
@@ -33,8 +33,8 @@ export class BasicChatSystem extends System {
    * `utterance`
    * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
    * messages
-   * @returns {SystemResponse} - The system's response with a least the
-   * `utterance` set
+   * @returns {SystemResponse} - The system's response with the `utterance` set
+   * and the complete response of the system as `response`
    */
   async search(userTurn, logbook) {
     this.messages.push({role: "user", content: userTurn.utterance});
@@ -55,10 +55,10 @@ export class BasicChatSystem extends System {
     }
     logbook.log("retrieval.result", responseJson);
 
-    const systemMessage = responseJson.message;
-    this.messages.push(systemMessage);
+    this.messages.push({role: "assistant", content: responseJson.content});
     return {
-      utterance: systemMessage.content
+      utterance: responseJson.content,
+      response: responseJson
     };
   }
 
