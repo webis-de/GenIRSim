@@ -50,8 +50,8 @@ export class BasicChatSystem extends System {
     logbook.log("retrieval.query", {url: this.configuration.url, params: params});
     const response = await fetch(this.configuration.url, params);
     const responseJson = await response.json();
-    if (!("message" in responseJson)) {
-      throw new Error("Missing response message: " + JSON.stringify(responseJson));
+    if (!("content" in responseJson)) {
+      throw new Error("Missing response content: " + JSON.stringify(responseJson));
     }
     logbook.log("retrieval.result", responseJson);
 
