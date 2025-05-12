@@ -10,7 +10,7 @@ Flexible simulation and evaluation framework for generative IR.
 [![docker workflow](https://img.shields.io/github/actions/workflow/status/webis-de/GenIRSim/ghcr.yml?label=docker)](https://github.com/webis-de/GenIRSim/pkgs/container/GenIRSim)
 [![license](https://img.shields.io/github/license/webis-de/GenIRSim)](https://github.com/webis-de/GenIRSim/blob/main/LICENSE)
 
-Tested in node 21.7.2 with npm 10.9.0.
+Tested in node 22.15.0 with npm 11.3.0.
 
 ## Quickstart
 

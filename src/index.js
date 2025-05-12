@@ -16,9 +16,11 @@ const systems = {
   GenerativeElasticSystem
 }
 
+import { ApiBasedEvaluator } from "./evaluators/api-based-evaluator.js";
 import { PromptedEvaluator } from "./evaluators/prompted-evaluator.js";
 import { ReadabilityEvaluator } from "./evaluators/readability-evaluator.js";
 const evaluators = {
+  ApiBasedEvaluator,
   PromptedEvaluator,
   ReadabilityEvaluator
 }
