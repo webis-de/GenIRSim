@@ -56,7 +56,7 @@ export class Evaluator {
    * not be re-used to evaluate multiple conversations.
    *
    * @param {Simulation} simulation - The simulation to evaluate
-   * @param {number} turnIndex - Index of the user's turn (or rather the
+   * @param {number} userTurnIndex - Index of the user's turn (or rather the
    * response to that turn) to be evaluated, starting with 0, or undefined to
    * evaluate the entire conversation
    * @param {Logbook} logbook - Uses its {@link Logbook#log|log function} to log
@@ -65,7 +65,7 @@ export class Evaluator {
    * at least the score property, or `null` if the Evaluator does not evaluate
    * single turns or the complete conversation and that is what was asked
    */
-  async evaluate(simulation, turnIndex, logbook) {
+  async evaluate(simulation, userTurnIndex, logbook) {
     throw new Error("Not implemented");
   }
 

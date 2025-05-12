@@ -1,5 +1,5 @@
 import { Logbook } from "../logbook.js";
-import { System, SYSTEM_RESPONSE } from "../system.js";
+import { System } from "../system.js";
 
 /**
  * A blackbox retrieval system that implements a basic chat API.

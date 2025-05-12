@@ -2,8 +2,6 @@ import { Evaluator, EVALUATION_RESULT } from "../evaluator.js";
 import { LLM } from "../llm.js";
 import { Logbook } from "../logbook.js";
 import { render } from "../templates.js";
-import { SYSTEM_RESPONSE } from "../system.js";
-import { USER_TURN } from "../user.js";
 
 /**
  * An evaluator that prompts a language model for a score.
@@ -12,14 +10,14 @@ import { USER_TURN } from "../user.js";
  * @param {Object} configuration - The configuration for the evaluator
  * @param {LLMConfiguration} configuration.llm - The configuration for the
  * language model to be prompted
- * @param {string} configuration.promt - Template for the prompt to evaluate
+ * @param {string} configuration.prompt - Template for the prompt to evaluate
  * the system response. Variables:
  * - `{{x}}`: A property `x` of the configuration for the evaluator
  * - `{{variables.simulation}}`: The entire {@link Simulation}
  * - `{{variables.userTurn}}`: The specific user turn, especially with
  *   `variables.userTurn.utterance` and
  *   `variables.userTurn.SystemResponse.utterance`
-* @param {Array} [configuration.requiredKeys] - The properties
+ * @param {Array} [configuration.requiredKeys] - The properties
  * that the language model's response must have (in addition to
  * {@link EVALUATION_RESULT.SCORE})
  * @param {Logbook} log - A function that takes log messages
