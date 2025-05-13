@@ -59,20 +59,6 @@
           "definition": "The author uses clear, grammatically correct and unambiguous language. The author sticks to the main topic and does not make things overly complicated."
         }
       },
-      "Clarity": {
-        "class": "PromptedEvaluator",
-        "llm": {
-          "url": "https://llm.srv.webis.de/api/chat",
-          "model": "default",
-          "keep_alive": "24h"
-        },
-        "prompt": "### Issue:\n{{variables.simulation.configuration.topic.description}}\n\n### Argument:\n{{variables.userTurn.utterance}}\n\n### Counter-argument:\n{{variables.userTurn.systemResponse.utterance}}\n\n### Definition of {{dimension.name}}:\n{{dimension.definition}}\n\nOn a scale from 0 (extremely bad) to 1 (extremely good), how would you rate the {{dimension.name}} of the counter-argument?\n\nFormat your message as only one JSON object with exactly these keys:\n- key='explanation': A step-by-step explanation of your score.\n- key='score': The score as number between 0 and 1.\nExample:\n{\"explanation\":\"your explanation\",\"score\":0.5}\n\n",
-        "requiredKeys": [ "explanation" ],
-        "dimension": {
-          "name": "Clarity",
-          "definition": "The author uses clear, grammatically correct and unambiguous language. The author sticks to the main topic and does not make things overly complicated."
-        }
-      },
       "Global Relevance": {
         "class": "PromptedEvaluator",
         "llm": {

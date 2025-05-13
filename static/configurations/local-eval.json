@@ -1,0 +1,10 @@
+{    
+  "evaluation": {
+    "evaluators": {
+      "LocalEval": {
+        "class": "ApiBasedEvaluator",
+        "url": "http://localhost:8080"
+      }
+    }
+  }
+}
