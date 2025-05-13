@@ -14,8 +14,8 @@ import { Logbook } from "../logbook.js";
  *   "userTurnIndex": ...
  * }
  * ```
- * The properties should be the same as for {@link Evaluator.evaluate}. The
- * response object should be again the same as for {@link Evaluator.evaluate},
+ * The properties should be the same as for {@link Evaluator#evaluate}. The
+ * response object should be again the same as for {@link Evaluator#evaluate},
  * except that in the case the Evaluator does not evaluate single turns or the
  * complete conversation and that is what was asked, the response should be a
  * valid JSON object with the property {@link EVALUATION_RESULT.SCORE} set to

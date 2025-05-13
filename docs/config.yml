@@ -11,6 +11,7 @@ toc:
   - evaluate
   - name: Evaluators
   - Evaluator
+  - ApiBasedEvaluator
   - PromptedEvaluator
   - ReadabilityEvaluator
   - name: Systems
