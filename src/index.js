@@ -300,11 +300,19 @@ export async function run(
     }
   } else if (typeof(replacements) === "object") {
     if (Array.isArray(replacements)) {
+      const evaluations = [];
+      for (let index = 0; index < replacements.length; index += 1) {
+        logbook.log("run", index);
+        evaluations.push(await run(configuration, options, replacements[index]))
+      }
+      return evaluations;
+      /*
       return await Promise.all(replacements.map(
         async (singleReplacements, index) => {
           logbook.log("run", index);
           return await run(configuration, options, singleReplacements);
         }));
+      */
     } else {
       return await run(
         templates.render(configuration, replacements, { ignoreMissing: true }),
