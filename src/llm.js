@@ -51,7 +51,7 @@ async function generate(messages, configuration, logbook, action) {
     let responseMessage = ""
     const handler = (response) => {
       if (!response.done) {
-        const content = response.message.content;
+        const content = response.message ? response.message.content : response.response;
         logbook.log(action + ".response", content);
         responseMessage += content;
       } else {
